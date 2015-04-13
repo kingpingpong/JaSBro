@@ -1,0 +1,3 @@
+<?xml version="1.0" ?><jasbro.game.items.UsableItem><value>100000</value><name>Protein Shake</name><description>Toughens up the muscles
+
+- Fragile Trait</description><type>USABLE</type><spawnData><jasbro.game.items.ItemSpawnData><itemLocation>APOTHECARY</itemLocation><chance>50</chance><minAmount>1</minAmount><maxAmount>1</maxAmount></jasbro.game.items.ItemSpawnData></spawnData><imageSelection><image>Protein Shake.png</image><imageLocation>LOCAL</imageLocation><background>false</background><target>character</target></imageSelection><itemEffect class="jasbro.game.items.usableItemEffects.UsableItemRemoveTrait"><trait>FRAGILE</trait></itemEffect></jasbro.game.items.UsableItem>

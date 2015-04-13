@@ -1,0 +1,20 @@
+<?xml version="1.0" ?><jasbro.game.world.customContent.WorldEvent><id>contestQuestDancerContestGeneration</id><triggers></triggers><effects><jasbro.game.world.customContent.effects.WorldEventEffectContainer><subEffects><jasbro.game.world.customContent.effects.WorldEventCreateQuest><questId>dancerContestQuest</questId></jasbro.game.world.customContent.effects.WorldEventCreateQuest><jasbro.game.world.customContent.effects.WorldEventSaveVariable><source>difficulty</source><target>difficulty</target></jasbro.game.world.customContent.effects.WorldEventSaveVariable><jasbro.game.world.customContent.effects.WorldEventSetQuestStage><questStage>1</questStage></jasbro.game.world.customContent.effects.WorldEventSetQuestStage><jasbro.game.world.customContent.effects.WorldEventSetQuestStatus><questStatus>ACTIVE</questStatus></jasbro.game.world.customContent.effects.WorldEventSetQuestStatus><jasbro.game.world.customContent.effects.WorldEventCode><code>if (difficulty == 1) {
+    message = "There is a striptease contest in a small local stripbar. ";
+}
+else if (difficulty == 2) {
+    message = "There is a striptease competition in a well known strip bar today. ";
+}
+else {
+    message = "Some of the more prominent local stripbars are working together to hold a grand striptease competition for their well paying customers today. ";
+}
+if (Util.getRnd().nextBoolean()) {
+  bonusPointsVersion = 1;
+  message  += "Bonus points will be awarded for playing with oneself on stage.";
+}
+else {
+  bonusPointsVersion = 2;
+  message  += "Bonus points will be awarded for seducing the customers.";
+}
+
+message += "\n\nAny of your characters can participate by visiting the streets during any time of  the day.";
+</code><displayHeight>3</displayHeight></jasbro.game.world.customContent.effects.WorldEventCode><jasbro.game.world.customContent.effects.WorldEventSimpleMessage><message>&lt;message&gt;</message><images><jasbro.game.world.customContent.ImageSelection><image>danceContest2.png</image><imageLocation>LOCAL</imageLocation><imageTags><jasbro.gui.pictures.ImageTag>STANDARD</jasbro.gui.pictures.ImageTag></imageTags><background>false</background><target>character</target></jasbro.game.world.customContent.ImageSelection></images><background><image>backgrounds/sky.jpg</image><imageLocation>GLOBAL</imageLocation><imageTags><jasbro.gui.pictures.ImageTag>STANDARD</jasbro.gui.pictures.ImageTag></imageTags><background>false</background><target>character</target></background><importantMessage>true</importantMessage></jasbro.game.world.customContent.effects.WorldEventSimpleMessage><jasbro.game.world.customContent.effects.WorldEventSaveVariable><source>bonusPointsVersion</source><target>bonusPointsVersion</target></jasbro.game.world.customContent.effects.WorldEventSaveVariable><jasbro.game.world.customContent.effects.WorldEventSaveVariable><source>message</source><target>questDescription</target></jasbro.game.world.customContent.effects.WorldEventSaveVariable></subEffects></jasbro.game.world.customContent.effects.WorldEventEffectContainer></effects></jasbro.game.world.customContent.WorldEvent>

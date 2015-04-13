@@ -1,0 +1,12 @@
+<?xml version="1.0" ?><jasbro.game.world.customContent.WorldEvent><id>contestQuestMaidContestGeneration</id><triggers></triggers><effects><jasbro.game.world.customContent.effects.WorldEventEffectContainer><subEffects><jasbro.game.world.customContent.effects.WorldEventCreateQuest><questId>maidContestQuest</questId></jasbro.game.world.customContent.effects.WorldEventCreateQuest><jasbro.game.world.customContent.effects.WorldEventSaveVariable><source>difficulty</source><target>difficulty</target></jasbro.game.world.customContent.effects.WorldEventSaveVariable><jasbro.game.world.customContent.effects.WorldEventSetQuestStage><questStage>1</questStage></jasbro.game.world.customContent.effects.WorldEventSetQuestStage><jasbro.game.world.customContent.effects.WorldEventSetQuestStatus><questStatus>ACTIVE</questStatus></jasbro.game.world.customContent.effects.WorldEventSetQuestStatus><jasbro.game.world.customContent.effects.WorldEventCode><code>if (difficulty == 1) {
+    message = "There is a beginner level maid contest going on.";
+}
+else if (difficulty == 2) {
+    message = "There is a medium level maid contest going on.";
+}
+else {
+    message = "There is a local championship for maids happening today.";
+}
+
+message += "\n\nAny of your characters can participate by visiting the streets during any time of  the day.";
+</code><displayHeight>3</displayHeight></jasbro.game.world.customContent.effects.WorldEventCode><jasbro.game.world.customContent.effects.WorldEventSimpleMessage><message>&lt;message&gt;</message><images><jasbro.game.world.customContent.ImageSelection><image>maidContest.jpg</image><imageLocation>LOCAL</imageLocation><imageTags><jasbro.gui.pictures.ImageTag>STANDARD</jasbro.gui.pictures.ImageTag></imageTags><background>false</background><target>character</target></jasbro.game.world.customContent.ImageSelection></images><background><image>backgrounds/sky.jpg</image><imageLocation>GLOBAL</imageLocation><imageTags><jasbro.gui.pictures.ImageTag>STANDARD</jasbro.gui.pictures.ImageTag></imageTags><background>false</background><target>character</target></background><importantMessage>true</importantMessage></jasbro.game.world.customContent.effects.WorldEventSimpleMessage><jasbro.game.world.customContent.effects.WorldEventSaveVariable><source>message</source><target>questDescription</target></jasbro.game.world.customContent.effects.WorldEventSaveVariable></subEffects></jasbro.game.world.customContent.effects.WorldEventEffectContainer></effects></jasbro.game.world.customContent.WorldEvent>

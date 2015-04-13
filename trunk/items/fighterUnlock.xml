@@ -1,0 +1,1 @@
+<?xml version="1.0" ?><jasbro.game.items.UnlockItem><value>0</value><name>fighterUnlock</name><type>UNLOCK</type><spawnData></spawnData><unlockObject class="jasbro.game.character.specialization.SpecializationType">FIGHTER</unlockObject><unlockMessage>You survived Ard's training and unlocked the fighter specialization</unlockMessage></jasbro.game.items.UnlockItem>

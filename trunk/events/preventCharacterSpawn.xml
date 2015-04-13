@@ -1,0 +1,21 @@
+<?xml version="1.0" ?><jasbro.game.world.customContent.WorldEvent><id>preventCharacterSpawn</id><triggers></triggers><effects><jasbro.game.world.customContent.effects.WorldEventEffectContainer><subEffects><jasbro.game.world.customContent.effects.WorldEventCode><code>if (characterIds != null) {
+    for (int i = 0; i &lt; characterIds.length; i++) {
+        characterIds[i] = characterIds[i].toLowerCase();
+    }
+}</code><displayHeight>1</displayHeight></jasbro.game.world.customContent.effects.WorldEventCode><jasbro.game.world.customContent.effects.WorldEventCode><code>if (characterIds != null) {
+    for (int i = 0; i &lt; characterIds.length; i++) {
+        String characterId = characterIds[i];
+        for (int j = 0; j &lt; data.auctionHouse.slaves.size(); j++) {
+            if (characterId.equals(data.auctionHouse.slaves.get(j).base.id.toLowerCase())) {
+                data.auctionHouse.slaves.remove(j);
+                 j--;
+            }
+        }
+        for (int j = 0; j &lt; data.auctionHouse.trainers.size(); j++) {
+            if (characterId.equals(data.auctionHouse.trainers.get(j).base.id.toLowerCase())) {
+                data.auctionHouse.trainers.remove(j);
+                j--;
+            }
+        }
+    }
+}</code><displayHeight>2</displayHeight></jasbro.game.world.customContent.effects.WorldEventCode></subEffects></jasbro.game.world.customContent.effects.WorldEventEffectContainer></effects></jasbro.game.world.customContent.WorldEvent>

@@ -1,0 +1,3 @@
+<?xml version="1.0" ?><jasbro.game.items.UnlockItem><value>10000</value><name>Dungeon Map</name><type>UNLOCK</type><spawnData></spawnData><unlockObject class="jasbro.game.world.locations.LocationType">DUNGEON1</unlockObject><unlockMessage>During the night you hear strange shuffling sounds from outside of the house. Then there is a noise, that sounds like a muffled scream. When you go outside to check, there is nothing there except for an old piece of paper, marred with splatches of blood. It is a map that points somewhere into the nearby forest.
+
+Dungeon unlocked!</unlockMessage></jasbro.game.items.UnlockItem>

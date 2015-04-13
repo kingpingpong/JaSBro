@@ -1,0 +1,27 @@
+<?xml version="1.0" ?><jasbro.game.world.customContent.WorldEvent><id>contestQuestSexContestGeneration</id><triggers></triggers><effects><jasbro.game.world.customContent.effects.WorldEventEffectContainer><subEffects><jasbro.game.world.customContent.effects.WorldEventCreateQuest><questId>sexContestQuest</questId></jasbro.game.world.customContent.effects.WorldEventCreateQuest><jasbro.game.world.customContent.effects.WorldEventSaveVariable><source>difficulty</source><target>difficulty</target></jasbro.game.world.customContent.effects.WorldEventSaveVariable><jasbro.game.world.customContent.effects.WorldEventSetQuestStage><questStage>1</questStage></jasbro.game.world.customContent.effects.WorldEventSetQuestStage><jasbro.game.world.customContent.effects.WorldEventSetQuestStatus><questStatus>ACTIVE</questStatus></jasbro.game.world.customContent.effects.WorldEventSetQuestStatus><jasbro.game.world.customContent.effects.WorldEventCode><code>if (difficulty == 1) {
+    message = "A small local brothel is having a sex contest for whores. ";
+}
+else if (difficulty == 2) {
+    message = "Some local brothels have organized a sex competition. ";
+}
+else {
+    message = "The Slave Trainer Guild has organized a grand sex competition for pleasure slaves especially, but anyone else is free to register as well. ";
+}
+List possibleEvents = new ArrayList();
+List events = new ArrayList();
+List eventStrings = new ArrayList();
+for (Sextype sextype : Sextype.values()) {
+  possibleEvents.add(sextype);
+}
+
+for (int i = 0; i &lt; 3; i++) {
+  int rnd = Util.getInt(0, possibleEvents.size());
+  events.add(possibleEvents.get(rnd));
+  eventStrings.add(possibleEvents.get(rnd).getText());
+  possibleEvents.remove(rnd);
+}
+
+message += "The disciplines are: " + TextUtil.getInstance().listStrings(eventStrings) + ". ";
+
+message += "\n\nAny of your characters can participate by visiting the streets during any time of  the day.";
+</code><displayHeight>4</displayHeight></jasbro.game.world.customContent.effects.WorldEventCode><jasbro.game.world.customContent.effects.WorldEventSimpleMessage><message>&lt;message&gt;</message><images><jasbro.game.world.customContent.ImageSelection><image>sexContest1.jpeg</image><imageLocation>LOCAL</imageLocation><imageTags><jasbro.gui.pictures.ImageTag>STANDARD</jasbro.gui.pictures.ImageTag></imageTags><background>false</background><target>character</target></jasbro.game.world.customContent.ImageSelection></images><background><image>backgrounds/sky.jpg</image><imageLocation>GLOBAL</imageLocation><imageTags><jasbro.gui.pictures.ImageTag>STANDARD</jasbro.gui.pictures.ImageTag></imageTags><background>false</background><target>character</target></background><importantMessage>true</importantMessage></jasbro.game.world.customContent.effects.WorldEventSimpleMessage><jasbro.game.world.customContent.effects.WorldEventSaveVariable><source>events</source><target>events</target></jasbro.game.world.customContent.effects.WorldEventSaveVariable><jasbro.game.world.customContent.effects.WorldEventSaveVariable><source>message</source><target>questDescription</target></jasbro.game.world.customContent.effects.WorldEventSaveVariable></subEffects></jasbro.game.world.customContent.effects.WorldEventEffectContainer></effects></jasbro.game.world.customContent.WorldEvent>
