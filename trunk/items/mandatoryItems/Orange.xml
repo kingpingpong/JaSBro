@@ -1,5 +1,0 @@
-<?xml version="1.0" ?><jasbro.game.items.UsableItem><value>500</value><name>Orange</name><description>A juicy orange full of vitamins.
-
-
-    increase Energy by 10-20
-</description><type>USABLE</type><spawnData><jasbro.game.items.ItemSpawnData><itemLocation>SHOP</itemLocation><chance>0</chance><minAmount>0</minAmount><maxAmount>0</maxAmount></jasbro.game.items.ItemSpawnData></spawnData><imageSelection><image>145758787320080110183952.png</image><imageLocation>LOCAL</imageLocation><background>false</background><target>character</target></imageSelection><itemEffect class="jasbro.game.items.usableItemEffects.UsableItemEffectContainerImpl"><subEffects><jasbro.game.items.usableItemEffects.UsableItemChangeAttribute><attribute class="jasbro.game.character.attributes.EssentialAttributes">ENERGY</attribute><minChange>10</minChange><maxChange>20</maxChange></jasbro.game.items.usableItemEffects.UsableItemChangeAttribute></subEffects></itemEffect></jasbro.game.items.UsableItem>

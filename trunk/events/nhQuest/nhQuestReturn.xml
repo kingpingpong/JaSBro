@@ -1,5 +1,0 @@
-<?xml version="1.0" ?><jasbro.game.world.customContent.WorldEvent><id>nhQuestReturn</id><triggers></triggers><effects><jasbro.game.world.customContent.effects.WorldEventEffectContainer><subEffects><jasbro.game.world.customContent.effects.WorldEventCode><code>naruto = CharacterSpawner.create("naruto_uzumaki", CharacterType.TRAINER);
-if (naruto == null) {
-	naruto = CharacterSpawner.create("naruto", CharacterType.TRAINER);
-}
-data.auctionHouse.trainers.add(naruto);</code></jasbro.game.world.customContent.effects.WorldEventCode><jasbro.game.world.customContent.effects.WorldEventSaveVariable><source>naruto</source><target>character</target></jasbro.game.world.customContent.effects.WorldEventSaveVariable></subEffects></jasbro.game.world.customContent.effects.WorldEventEffectContainer></effects></jasbro.game.world.customContent.WorldEvent>

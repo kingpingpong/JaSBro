@@ -1,7 +1,0 @@
-<?xml version="1.0" ?><jasbro.game.items.UsableItem><value>500</value><name>Mushroom</name><description>A somewhat dangerous mushroom.
-Depending on how it was picked up, it can be very nutritious or very poisonous.
-
-Random Effect:
-    Decrease Health by 10-30
-    Increase Health by 10-30
-</description><type>USABLE</type><spawnData><jasbro.game.items.ItemSpawnData><itemLocation>SHOP</itemLocation><chance>0</chance><minAmount>0</minAmount><maxAmount>0</maxAmount></jasbro.game.items.ItemSpawnData></spawnData><imageSelection><image>Plant_Penishroom.png</image><imageLocation>LOCAL</imageLocation><background>false</background><target>character</target></imageSelection><itemEffect class="jasbro.game.items.usableItemEffects.UsableItemEffectContainerImpl"><subEffects><jasbro.game.items.usableItemEffects.UsableItemChooseOneEffectContainer><subEffects><jasbro.game.items.usableItemEffects.UsableItemChangeAttribute><attribute class="jasbro.game.character.attributes.EssentialAttributes">HEALTH</attribute><minChange>10</minChange><maxChange>30</maxChange></jasbro.game.items.usableItemEffects.UsableItemChangeAttribute><jasbro.game.items.usableItemEffects.UsableItemChangeAttribute><attribute class="jasbro.game.character.attributes.EssentialAttributes">HEALTH</attribute><minChange>10</minChange><maxChange>30</maxChange></jasbro.game.items.usableItemEffects.UsableItemChangeAttribute></subEffects></jasbro.game.items.usableItemEffects.UsableItemChooseOneEffectContainer></subEffects></itemEffect></jasbro.game.items.UsableItem>
