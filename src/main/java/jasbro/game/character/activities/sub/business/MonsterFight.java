@@ -191,6 +191,11 @@ public class MonsterFight extends RunningActivity implements BusinessMainActivit
             if (charactersWon) {
                 entertainmentRating *= 2;
             }
+            
+            if (getCharacter().getTraits().contains(Trait.ADRENALINEADDICT)) {
+            	entertainmentRating *= 1.3;
+            }
+            
             int winnings = 0;
             for (Customer customer : getCustomers()) {
                 winnings += customer.pay(entertainmentRating);

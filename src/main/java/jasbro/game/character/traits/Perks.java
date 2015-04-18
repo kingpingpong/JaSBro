@@ -3,8 +3,10 @@ package jasbro.game.character.traits;
 import jasbro.Jasbro;
 import jasbro.Util;
 import jasbro.game.character.CharacterStuffCounter.CounterNames;
+import jasbro.game.character.CharacterType;
 import jasbro.game.character.Charakter;
 import jasbro.game.character.Condition;
+import jasbro.game.character.activities.ActivityType;
 import jasbro.game.character.activities.BusinessMainActivity;
 import jasbro.game.character.activities.RunningActivity;
 import jasbro.game.character.activities.RunningActivity.TargetType;
@@ -38,10 +40,13 @@ import jasbro.game.character.attributes.CalculatedAttribute;
 import jasbro.game.character.attributes.EssentialAttributes;
 import jasbro.game.character.attributes.Sextype;
 import jasbro.game.character.battle.Attack;
+import jasbro.game.character.battle.Battle;
+import jasbro.game.character.battle.Defender;
 import jasbro.game.character.conditions.BattleCondition;
 import jasbro.game.character.conditions.Buff;
 import jasbro.game.character.conditions.OvipositionPregnancy;
 import jasbro.game.character.conditions.SunEffect;
+//import jasbro.game.character.conditions.TraitEffect;
 import jasbro.game.character.specialization.SpecializationAttribute;
 import jasbro.game.events.AttributeChangedEvent;
 import jasbro.game.events.CustomersArriveEvent;
@@ -1698,7 +1703,7 @@ public class Perks {
 					for (AttributeModification attributeModification : activity.getAttributeModifications()) {
 						if (attributeModification.getAttributeType() == EssentialAttributes.ENERGY) {
 							float modification = attributeModification.getBaseAmount();
-							float change = Math.abs(modification)*0.2f;
+							float change = Math.abs(modification)*0.3f;
 							attributeModification.addModificator(change);
 						}
 					}
@@ -2560,6 +2565,10 @@ public class Perks {
 						character.getAttribute(BaseAttributeTypes.STRENGTH).addToValue(1.0f, activity);						
 						activity.getMessages().get(0).addToMessage("\n"+TextUtil.t("ALWAYSABIGGERFISH.eat", character));
 					}
+					
+					for (Customer custom : activity.getCustomers()) {
+						custom.addToSatisfaction((int) (custom.getSatisfactionAmount()*0.25),trait);
+					}
 				}
 			}
 		}
@@ -2581,12 +2590,22 @@ public class Perks {
 							}
 						}
 					});
-
 				}
 			}
 		}
 	}	
 	public static class IveSeenWorse extends TraitEffect {
+		
+		@Override
+		public double getAttributeModified(CalculatedAttribute calculatedAttribute, double currentValue, Charakter character) {
+			if (calculatedAttribute == CalculatedAttribute.AMOUNTCUSTOMERSPERSHIFT) {
+				return currentValue + 2;
+			}
+			else {
+				return currentValue;
+			}
+		}
+		
 		@Override
 		public void handleEvent(MyEvent e, Charakter character, Trait trait) {
 			if (e.getType() == EventType.ACTIVITY) {
@@ -2595,14 +2614,19 @@ public class Perks {
 					for (AttributeModification attributeModification : activity.getAttributeModifications()) {
 						if (attributeModification.getAttributeType() == EssentialAttributes.ENERGY) {
 							float modification = attributeModification.getBaseAmount();
-							float change = Math.abs(modification)*0.4f;
+							float change = Math.abs(modification)*0.3f;
 							attributeModification.addModificator(change);
 						}
+					}
+					if (Util.getInt(0,10) < 2) { //apathetic
+						activity.getMainCustomers().get(0).addToSatisfaction(-100, trait);
+						activity.getMessages().get(0).addToMessage("\n"+TextUtil.t("IVESEENWORSE.apathetic", character)); //I have no idea where messages are kept, so I just typed something there.
 					}
 				}
 			}
 		}
 	}
+	
 	public final static class MonsterHunter extends TraitEffect { //done
 		@Override
 		public void handleEvent(MyEvent e, Charakter character, Trait trait) {
@@ -2721,6 +2745,7 @@ public class Perks {
 	}
 
 	public final static class PrimalInstincts extends TraitEffect { // done
+		
 		@Override
 		public void handleEvent(MyEvent e, final Charakter character, Trait trait) {
 			if (e.getType() == EventType.ACTIVITY) {
@@ -2799,6 +2824,7 @@ public class Perks {
 			}
 		}
 	}
+	
 	public static class LetsDoItLikeRabbits extends TraitEffect{
 		@Override
 		public void handleEvent(MyEvent e, Charakter character, Trait trait) {
@@ -2808,6 +2834,7 @@ public class Perks {
 					activity.getAttributeModifications().add(new AttributeModification(-10f, EssentialAttributes.ENERGY, character));
 
 					character.addCondition(new BattleCondition(character) {
+
 						@Override
 						public double modifyCalculatedAttribute(CalculatedAttribute calculatedAttribute, double currentValue, Person person) {
 							if (calculatedAttribute == CalculatedAttribute.PREGNANCYCHANCE) {
@@ -2872,24 +2899,30 @@ public class Perks {
 		public void handleEvent(MyEvent e, Charakter character, Trait trait) {
 			if (e.getType() == EventType.NEXTDAY) {
 				int random = Util.getInt(1, 10);
-				if(random==1){
-					character.addCondition(new Buff.HornyBuff(character));
+				switch(random) {
+					case 1: 
+						character.addCondition(new Buff.HornyBuff(character));
+						break;
+					case 2:
+						character.addCondition(new Buff.Angry(character));
+						break;
+					case 3:
+						character.addCondition(new Buff.MotivatedTwo(character));
+						break;
+					case 4:
+						character.addCondition(new Buff.Happy(character));
+						break;
+					case 5:
+						character.addCondition(new Buff.Hyperactive(character));
+						break;
+					case 6:
+					case 7:
+					case 8:
+					case 9:
+					default:
+						character.addCondition(new Buff.Depressed(character));
+						break;
 				}
-				else if(random==2){ 
-					character.addCondition(new Buff.Angry(character));
-				}
-				else if(random==3){ 
-					character.addCondition(new Buff.MotivatedTwo(character));
-				}
-				else if(random==4){ 
-					character.addCondition(new Buff.Happy(character));
-				}				
-				else if(random==5){ 
-					character.addCondition(new Buff.Hyperactive(character));
-				}
-				else {
-					character.addCondition(new Buff.Depressed(character));
-				}         			
 			}
 		}	
 	}
@@ -2914,6 +2947,11 @@ public class Perks {
 		}
 	}
 
+	/*
+	 * Slave has a ~10% Chance each day to get pregnant with an egg (if not already pregnant).
+	 * This egg has a ~20% chance to birth a human and a ~80% chance to be a monster egg.
+	 * Pregnancy lasts 30 days.
+	 */
 	public static class Oviposition extends TraitEffect {
 		@Override
 		public void handleEvent(MyEvent e, Charakter character, Trait trait) {
@@ -2926,10 +2964,10 @@ public class Perks {
 					}
 				}
 
-				if (notPregnant && Util.getInt(0, 100) < 5) {
+				if (notPregnant && Util.getInt(0, 100) < 10) {
 					character.addCondition(new OvipositionPregnancy());
 
-					MessageData messageData = new MessageData("", //TODO
+					MessageData messageData = new MessageData("oviposition.message", //TODO
 							ImageUtil.getInstance().getImageDataByTag(ImageTag.MASTURBATION, character),
 							character.getBackground(), true);
 					messageData.createMessageScreen();
@@ -2963,4 +3001,227 @@ public class Perks {
 			}
 		}
 	}
+	
+	
+	/**
+	 * @author Scythless
+	 * 
+	 * Increases one stat at random every 7 days on day turnover
+	 * Increase by 1
+	 *
+	 */
+	
+	public static class TonightWeDineOnMonsterMeat extends TraitEffect{
+		
+		@Override
+		public void handleEvent(MyEvent e, Charakter character, Trait trait) {
+			if (e.getType() == EventType.NEXTDAY) {
+				int day = Jasbro.getInstance().getData().getDay();
+				if (day%7 == 0) {
+					int selection = Util.getInt(0, 4);
+					switch(selection) {
+					case 0: 
+						character.getAttribute(BaseAttributeTypes.INTELLIGENCE).addToValue(1.0f);
+						break;
+					case 1:
+						character.getAttribute(BaseAttributeTypes.CHARISMA).addToValue(1.0f);
+						break;
+					case 2:
+						character.getAttribute(BaseAttributeTypes.STRENGTH).addToValue(1.0f);
+						break;
+					case 3: 
+						character.getAttribute(BaseAttributeTypes.STAMINA).addToValue(1.0f);
+						break;
+					default:
+						break;
+					}
+				}
+			}				
+		}
+	}
+	
+	/**
+	 * @author Scythless
+	 * 
+	 * Increases pregnancy chance by a fixed 30%
+	 * Also increases chance of Additional Offsprings by 50%
+	 *
+	 */
+	public static class HeartOfTheSwarm extends TraitEffect {
+		@Override
+		public double getAttributeModified(CalculatedAttribute calculatedAttribute, double currentValue, Charakter character) {
+			if (calculatedAttribute == CalculatedAttribute.PREGNANCYCHANCE) {
+				return currentValue + 30;
+			}
+			else if (calculatedAttribute == CalculatedAttribute.CHANCEADDITIONALCHILD) {
+				return currentValue + 50;
+			}
+			else {
+				return currentValue;
+			}
+		}
+	}
+	
+	/**
+	 * @author Scythless
+	 * 
+	 * Increases Obedience for every slave in the house by 0.2 at the end of every night
+	 * Excludes the slave itself.
+	 *
+	 */
+	public static class LeatherMistress extends TraitEffect {
+		@Override
+		public void handleEvent(MyEvent e, Charakter character, Trait trait) {
+			if (e.getType() == EventType.NEXTDAY) {	// At the end of the day
+				// Get all houses the player has and iterate through them
+				List<House> listHouses = Jasbro.getInstance().getData().getHouses();
+				for (House thisHouse : listHouses) {
+					// get all Rooms and iterate through them
+					List<Room> listRooms = thisHouse.getRooms();
+					for (Room firstWalkThroughRooms : listRooms) {
+						// if the character with the trait is in a room
+						if (firstWalkThroughRooms.getCurrentUsage().getCharacters().contains(character)) {
+							for (Room iterateAllRooms : listRooms) {
+								// get all other characters in the house and modify their obedience
+								List<Charakter> listCharacter = iterateAllRooms.getCurrentUsage().getCharacters();
+								for (Charakter thisCharacter : listCharacter) {
+									if (thisCharacter != character) { // No obedience gain for the character itself
+										if (thisCharacter.getType() == CharacterType.SLAVE) { // character hast do be a slave
+											AttributeModification attributeModification = 
+													new AttributeModification(
+															0.2f,
+															BaseAttributeTypes.OBEDIENCE, 
+															thisCharacter
+														);
+											attributeModification.applyModification();
+										}
+									}
+								}
+							}
+							break;
+						}
+						
+					}
+				}
+				
+			}
+		}
+	}
+	
+	/**
+	 * @author Scythless
+	 * 
+	 * Increases the amount of customers per Shift while pregnant by +1+10%
+	 * Also gives a buff that increases vaginal by 20%.
+	 * Buff lasts 1 Day (3 Shifts) and is re-applied every day change as long as the caracter is pregnant.
+	 * 
+	 * Increasing the amount of customers through the buff didn't yield any results, so I altered the amount outside of it.
+	 * It doesn't show up as Mouse-over but at least it works.
+	 */
+	public static class ShesAlreadyFull extends TraitEffect {
+		
+		@Override
+		public double getAttributeModified(CalculatedAttribute calculatedAttribute, double currentValue, Charakter character) {
+			if (calculatedAttribute == CalculatedAttribute.AMOUNTCUSTOMERSPERSHIFT) {
+				for (Condition con : character.getConditions()) {
+					if (con instanceof PregnancyInterface)
+						return currentValue * 1.1 + 1;
+				}
+			}
+			return currentValue;
+		}
+		
+		@Override
+		public void handleEvent(MyEvent e, Charakter character, Trait trait) {
+			if (e.getType() == EventType.NEXTDAY) {	// At the end of the day
+				boolean pregnant = false;
+				for (Condition condition : character.getConditions()) {
+                    if (condition instanceof PregnancyInterface) {
+                    	pregnant = true;
+                    }
+				}
+				if (pregnant) {
+					character.addCondition(new Buff.AlreadyFull());
+				}
+			}
+		}
+	}
+	
+	/*
+	 * TODO: Check if it works the way it is now
+	 */
+	public final static class Nutbuster extends TraitEffect {
+		@Override
+		public void modifyPossibleAttacks(List<Attack> attacks, Charakter character) {
+			attacks.add(new Attack.Nutbuster(character));
+		}
+	}
+	
+	
+	
+	/**
+	 * @author Scythless
+	 *	
+	 *	Intended to increase pregnancy chance for upper class customers.
+	 *	Couldn't get it to work.
+	 *	handleEvent doesn't access calculated Attributes and getAttributeModified can't get Access to customers
+	 *	Increasing pregnancy chance for the character itself didn't yield a result, as the character is only updated every shift or day, not every customer.
+	 */
+	public static class ImOnThePill extends TraitEffect {
+		
+		
+	}
+	
+	/**
+	 * @author Scythless
+	 * 
+	 * +25% Satisfaction bonus for Titfuck and Foreplay while pregnant
+	 * 
+	 */
+	public static class MotherlyWarmth extends TraitEffect {
+		@Override
+		public void handleEvent(MyEvent e, Charakter character, Trait trait) {
+			if (e.getType() == EventType.ACTIVITY) {
+				RunningActivity activity = (RunningActivity) e.getSource();
+				if (activity instanceof Whore) {
+					for (Condition con : character.getConditions()) {
+						if (con instanceof PregnancyInterface) {
+							if(((Whore) activity).getSexType()==Sextype.TITFUCK){
+								activity.getMainCustomers().get(0).addToSatisfaction(activity.getMainCustomers().get(0).getSatisfactionAmount()/4, trait);
+							}
+							else if(((Whore) activity).getSexType()==Sextype.FOREPLAY){
+								activity.getMainCustomers().get(0).addToSatisfaction(activity.getMainCustomers().get(0).getSatisfactionAmount()/4, trait);
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	
+	/**
+	 * 
+	 * Increases customer satisfaction for monster fight
+	 * SHOULD only increase when the fight is won, but I don't know how to realise that, so it's globally at the moment.
+	 * 
+	 * @author Scythless
+	 *
+	 */
+	
+	public static class WhenTheHunterBecomesPrey extends TraitEffect {
+		@Override
+		public void handleEvent(MyEvent e, Charakter character, Trait trait) {
+			if (e.getType() == EventType.ACTIVITY) {
+				RunningActivity activity = (RunningActivity) e.getSource();
+				if (activity.getType() == ActivityType.MONSTERFIGHT) {
+					for (Customer custom : activity.getCustomers()) {
+						custom.addToSatisfaction((int) (custom.getSatisfactionAmount()*0.25),trait);
+					}
+				}
+			}
+		}
+	}
+	
+	
 }

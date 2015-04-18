@@ -1,6 +1,7 @@
 package jasbro.game.character.battle;
 
 import jasbro.game.character.Charakter;
+import jasbro.game.character.Gender;
 
 import java.util.EnumMap;
 import java.util.Map;
@@ -183,6 +184,18 @@ public class Attack {
             getDamageMap().put(DamageType.REGULAR, getDamageMap().get(DamageType.REGULAR) * 1.5f);
             setAttackMessageKey("EXTRACTABLECLAWS.attack");
         }        
+    }
+    
+    public static class Nutbuster extends Attack {
+    	
+    	public Nutbuster(Unit unit) {
+    		super(unit);
+    		if (unit.getGender() == Gender.MALE || unit.getGender() == Gender.FUTA) {
+    			getDamageMap().put(DamageType.REGULAR, getDamageMap().get(DamageType.REGULAR) * 5f);
+    			setAttackMessageKey("NUTBUSTER.attack");
+    		}
+    	}
+    		
     }
 }
 
