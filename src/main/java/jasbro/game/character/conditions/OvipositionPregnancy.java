@@ -7,6 +7,7 @@ import jasbro.game.events.MyEvent;
 import jasbro.game.interfaces.PregnancyInterface;
 import jasbro.gui.pictures.ImageData;
 import jasbro.gui.pictures.ImageTag;
+import jasbro.texts.TextUtil;
 
 import java.util.List;
 
@@ -16,7 +17,9 @@ public class OvipositionPregnancy extends Condition implements PregnancyInterfac
     @Override
     public void init() {
         super.init();
-        if (Util.getRnd().nextBoolean()) {
+        int selection = Util.getInt(0, 10);
+        if (selection < 2) {
+        //if (Util.getRnd().nextBoolean()) {
             realPregnancy = new Pregnancy(getCharacter(), null, null, false);
         }
         else {
@@ -28,10 +31,13 @@ public class OvipositionPregnancy extends Condition implements PregnancyInterfac
     
     @Override
     public void handleEvent(MyEvent e) {
-        realPregnancy.handleEvent(e);
-        if (realPregnancy.getDays() <= 0 && e.getType() == EventType.NEXTDAY) {
-            getCharacter().removeCondition(this);
-        }
+    	if (e.getType() == EventType.NEXTDAY) {
+    		modifyDays(-1);
+    		if (this.getDays() <= 0) {
+    			realPregnancy.handleEvent(e);
+            	getCharacter().removeCondition(this);
+    		}
+    	}
     }
     
     @Override
@@ -47,6 +53,17 @@ public class OvipositionPregnancy extends Condition implements PregnancyInterfac
     @Override
     public int getDays() {
         return realPregnancy.getDays();
+    }
+    
+    @Override
+    public String getName() {
+    		return TextUtil.t("oviposition", getCharacter());
+    }
+    
+    @Override
+    public String getDescription() {
+        return getName() + "\n" +
+                TextUtil.t("oviposition.description", new Object[]{realPregnancy.getDays()});
     }
 
     @Override
