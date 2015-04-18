@@ -446,4 +446,49 @@ public class Buff extends Condition {
 			super.init();
 		}
 	}
+	
+	public static class Heat1 extends Buff {
+		public Heat1() {
+			super("buff.heat1", new ImageData(), 4);
+		}
+		@Override
+		public void init() {
+			setIcon(new ImageData("images/icons/heart1.png"));
+			super.init();
+		}
+		@Override
+		public String getDescription() {
+			return TextUtil.t("buff.heat1.description", getCharacter());
+		}
+	}
+	public static class Heat2 extends Buff {
+		public Heat2() {
+			super("buff.heat2", new ImageData(), 4);
+		}
+		@Override
+		public void init() {
+			setIcon(new ImageData("images/icons/heart2.png"));
+			super.init();
+		}
+		@Override
+		public String getDescription() {
+			return TextUtil.t("buff.heat2.description", getCharacter());
+		}
+	}
+	public static class Heat3 extends Buff {
+		public Heat3() {
+			super("buff.heat3", new ImageData(), 3);
+		}
+		@Override
+		public void init() {
+			setIcon(new ImageData("images/icons/heart3.png"));
+			super.init();
+		}
+		@Override
+		public String getDescription() {
+			return TextUtil.t("buff.heat3.description", getCharacter());
+		}
+	}
+	
+	
 }

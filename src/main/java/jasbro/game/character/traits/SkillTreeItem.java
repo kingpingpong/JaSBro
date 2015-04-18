@@ -1054,7 +1054,7 @@ public class SkillTreeItem {
             create(Trait.MONSTERHUNTER, map, new ImageData("images/icons/perks/monsterhunter.png"));           
             create(Trait.IVESEENWORSE, map, new ImageData("images/icons/perks/iveseenworse.png"));
             create(Trait.MONSTERPEDIA, map, new ImageData("images/icons/perks/monsterpedia.png"));
-            create(Trait.TONIGHTWEDINEONMEAT, map, new ImageData("images/icons/perks/meat.png"));
+            create(Trait.FASTMETABOLISM, map, new ImageData("images/icons/perks/meat.png"));
             create(Trait.WHENTHEHUNTERBECOMESPREY, map, new ImageData("images/icons/perks/when_the_hunter_become_prey.png"));            
             create(Trait.MONSTERSOW, map, new ImageData("images/icons/perks/brain-freeze.png"));
             create(Trait.BEASTBREEDER, map, new ImageData("images/icons/perks/beastbreeder.png"));
@@ -1064,7 +1064,6 @@ public class SkillTreeItem {
             create(Trait.RULESOFNATURE, map, new ImageData("images/icons/perks/rulesofnature.png"));
             create(Trait.PRIMALINSTINCTS, map, new ImageData("images/icons/perks/primal_instincts.png"));
             create(Trait.PHEROMONES, map, new ImageData("images/icons/perks/burning-passion.png"));
-            create(Trait.TONIGHTWEDINEONMEAT, map, new ImageData("images/icons/perks/meat.png"));
             create(Trait.LETSDOITLIKERABBITS, map, new ImageData("images/icons/perks/letsdoitlikerabbits.png"));
             create(Trait.CUMCOMBS, map, new ImageData("images/icons/perks/cumcombs.png"));
             create(Trait.OVIPOSITION, map, new ImageData("images/icons/perks/oviposition.png"));
@@ -1072,8 +1071,8 @@ public class SkillTreeItem {
             create(Trait.FLUCTUATINGHORMONES, map, new ImageData("images/icons/perks/fluctuatinghormones.png"));
             create(Trait.INHERITANCE, map, new ImageData("images/icons/perks/inheritance.png"));
             create(Trait.TOPOFTHEFOODCHAIN, map, new ImageData("images/icons/perks/topofthefoodchain.png"));
-            create(Trait.SHESALREADYFULL, map, new ImageData("images/icons/perks/shesalreadyfull.png"));
-            create(Trait.ISWEARIMONTHEPILL, map, new ImageData("images/icons/perks/iswearimonthepill.png"));
+            create(Trait.HONEYLACTATION, map, new ImageData("images/icons/perks/shesalreadyfull.png"));
+            create(Trait.BESTIALFEATURES, map, new ImageData("images/icons/perks/iswearimonthepill.png"));
             create(Trait.MOTHERLYWARMTH, map, new ImageData("images/icons/perks/motherlywarmth.png"));
             create(Trait.HEARTOFTHESWARM, map, new ImageData("images/icons/perks/heartoftheswarm.png"));
             create(Trait.THEBEASTWITHIN, map, new ImageData("images/icons/perks/thebeastwithin.png"));
@@ -1096,11 +1095,11 @@ public class SkillTreeItem {
             link(Trait.FREAKY, Trait.THEBEASTWITHIN, map);
 
             link(Trait.MONSTERHUNTER, Trait.THEBEASTWITHIN, map); 
-            link(Trait.MONSTERHUNTER, Trait.TONIGHTWEDINEONMEAT, map);  
+            link(Trait.MONSTERHUNTER, Trait.FASTMETABOLISM, map);  
             
             link(Trait.THEBEASTWITHIN, Trait.MONSTERPEDIA, map);
             link(Trait.THEBEASTWITHIN, Trait.RELENTLESSBEAST, map); 
-            link(Trait.TONIGHTWEDINEONMEAT, Trait.MONSTERPEDIA, map);
+            link(Trait.FASTMETABOLISM, Trait.MONSTERPEDIA, map);
             
             link(Trait.MOTHERLYWARMTH, Trait.INHUMANPREGNANCY, map);         
             link(Trait.PHEROMONES, Trait.TRUECAT, map);
@@ -1108,7 +1107,7 @@ public class SkillTreeItem {
             link(Trait.CUMCOMBS, Trait.INHUMANPREGNANCY, map);
             link(Trait.CUMCOMBS, Trait.TRUECAT, map);
  
-            link(Trait.TRUECAT, Trait.ISWEARIMONTHEPILL, map);
+            link(Trait.TRUECAT, Trait.BESTIALFEATURES, map);
             link(Trait.TRUECAT, Trait.IVESEENWORSE, map);
          
             link(Trait.RELENTLESSBEAST, Trait.IVESEENWORSE, map);
@@ -1116,7 +1115,7 @@ public class SkillTreeItem {
             
             link(Trait.INHUMANPREGNANCY, Trait.BEASTBREEDER, map);
             link(Trait.INHUMANPREGNANCY, Trait.OVIPOSITION, map);
-            link(Trait.INHUMANPREGNANCY, Trait.ISWEARIMONTHEPILL, map);
+            link(Trait.INHUMANPREGNANCY, Trait.BESTIALFEATURES, map);
             
             link(Trait.MONSTERPEDIA, Trait.THEBIGGERTHEYARE, map); 
             link(Trait.MONSTERPEDIA, Trait.TOPOFTHEFOODCHAIN, map); 
@@ -1126,12 +1125,12 @@ public class SkillTreeItem {
             link(Trait.OVIPOSITION, Trait.INHERITANCE, map);
             
             link(Trait.OVIPOSITION, Trait.FLUCTUATINGHORMONES, map);
-            link(Trait.ISWEARIMONTHEPILL, Trait.FLUCTUATINGHORMONES, map);
+            link(Trait.BESTIALFEATURES, Trait.FLUCTUATINGHORMONES, map);
             
             link(Trait.IVESEENWORSE, Trait.HIBERNATION, map);
             link(Trait.IVESEENWORSE, Trait.CONSUMEANDADAPT, map);
             
-            link(Trait.ISWEARIMONTHEPILL, Trait.HIBERNATION, map);
+            link(Trait.BESTIALFEATURES, Trait.HIBERNATION, map);
             
             link(Trait.HIBERNATION, Trait.MONSTERSOW, map);
             
@@ -1147,13 +1146,13 @@ public class SkillTreeItem {
             link(Trait.TOPOFTHEFOODCHAIN, Trait.WHENTHEHUNTERBECOMESPREY, map);
             link(Trait.PRIMALINSTINCTS, Trait.WHENTHEHUNTERBECOMESPREY, map);
    
-            link(Trait.INHERITANCE, Trait.SHESALREADYFULL, map); 
-            link(Trait.FLUCTUATINGHORMONES, Trait.SHESALREADYFULL, map);           
+            link(Trait.INHERITANCE, Trait.HONEYLACTATION, map); 
+            link(Trait.FLUCTUATINGHORMONES, Trait.HONEYLACTATION, map);           
             
             link(Trait.RULESOFNATURE, Trait.ADRENALINEADDICT, map); 
             link(Trait.WHENTHEHUNTERBECOMESPREY, Trait.ADRENALINEADDICT, map); 
  
-            link(Trait.SHESALREADYFULL, Trait.HEARTOFTHESWARM, map);            
+            link(Trait.HONEYLACTATION, Trait.HEARTOFTHESWARM, map);            
             
             link(Trait.ADRENALINEADDICT, Trait.NUMBERFORTYSEVEN, map); 
  

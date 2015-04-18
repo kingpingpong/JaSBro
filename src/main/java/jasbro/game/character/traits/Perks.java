@@ -40,8 +40,6 @@ import jasbro.game.character.attributes.CalculatedAttribute;
 import jasbro.game.character.attributes.EssentialAttributes;
 import jasbro.game.character.attributes.Sextype;
 import jasbro.game.character.battle.Attack;
-import jasbro.game.character.battle.Battle;
-import jasbro.game.character.battle.Defender;
 import jasbro.game.character.conditions.BattleCondition;
 import jasbro.game.character.conditions.Buff;
 import jasbro.game.character.conditions.OvipositionPregnancy;
@@ -80,6 +78,10 @@ import java.util.Map;
 
 public class Perks {
 
+	static Buff h1 = new Buff.Heat1(),
+			 h2 = new Buff.Heat2(),
+			 h3 = new Buff.Heat3();
+	
 	//Kinky Tree
 	public static class Pervert extends TraitEffect {//Adds 5000 Fame
 		@Override
@@ -2880,19 +2882,133 @@ public class Perks {
 			}
 		}
 	}
+	/**
+	 * 
+	 * Every 30 days the slave goes into heat.
+	 * within a 3 day period the slave gets conditions with increasing bonuses.
+	 * Day 1: +10% Pregnancy Chance, +50% Customer Satisfaction
+	 * Day 2: +20% Pregnancy Chance, +75% Customer Satisfaction
+	 * Day 3: +50% Pregnancy Chance, +150% Customer Satisfaction, +10 Customers per Shift
+	 * 
+	 * @author Scythless
+	 *
+	 */
 	public static class BeastInHeat extends TraitEffect{
 		@Override
 		public void handleEvent(MyEvent e, Charakter character, Trait trait) {
-			if (e.getType() == EventType.NEXTDAY && Jasbro.getInstance().getData().getDay()%29 == 0) {
-				character.addCondition(new Buff.HornyBuff(character));
-			}
-			if (e.getType() == EventType.ACTIVITY) {
-				RunningActivity activity = (RunningActivity) e.getSource();
-				if (activity instanceof SubmitToMonster && Jasbro.getInstance().getData().getDay()%30 == 0 && activity.getMainCustomer() != null) {
-					activity.getMainCustomers().get(0).addToSatisfaction(500+activity.getMainCustomers().get(0).getSatisfactionAmount(), trait);
+			if (e.getType() == EventType.NEXTDAY) {
+				
+				boolean heat = false;
+				if (Jasbro.getInstance().getData().getDay()%30 == 0) {
+					heat = true;
 				}
+				
+				List<Condition> list = character.getConditions();
+				if (heat) {
+					
+					character.addCondition(h1);
+					
+					character.addCondition(new BattleCondition(character) {
+
+						@Override
+						public double modifyCalculatedAttribute(CalculatedAttribute calculatedAttribute, double currentValue, Person person) {
+							if (calculatedAttribute == CalculatedAttribute.PREGNANCYCHANCE) {
+								return currentValue + 10;
+							}						                
+							else {
+								return currentValue;
+							}
+						}
+
+						@Override
+						public void handleEvent(MyEvent e) {
+							if (e.getType() == EventType.ACTIVITY) {
+								RunningActivity activity = (RunningActivity) e.getSource();
+								activity.getMainCustomer().addToSatisfaction(
+										(int) (activity.getMainCustomer().getSatisfactionAmount()/2),
+										trait
+										);
+							} else if (e.getType() == EventType.NEXTDAY) {
+								
+								getCharacter().removeCondition(this);
+								
+							}
+							super.handleEvent(e);
+						}
+					});
+
+				} else if(list.contains(h1)) {
+					
+					character.addCondition(h2);
+					character.removeCondition(h1);
+					
+					character.addCondition(new BattleCondition(character) {
+
+						@Override
+						public double modifyCalculatedAttribute(CalculatedAttribute calculatedAttribute, double currentValue, Person person) {
+							if (calculatedAttribute == CalculatedAttribute.PREGNANCYCHANCE) {
+								return currentValue + 20;
+							}						                
+							else {
+								return currentValue;
+							}
+						}
+
+						@Override
+						public void handleEvent(MyEvent e) {
+							if (e.getType() == EventType.ACTIVITY) {
+								RunningActivity activity = (RunningActivity) e.getSource();
+								activity.getMainCustomer().addToSatisfaction(
+										(int) (activity.getMainCustomer().getSatisfactionAmount()*0.75),
+										trait
+										);
+							} else if (e.getType() == EventType.NEXTDAY) {
+								getCharacter().removeCondition(this);
+								
+							}
+							super.handleEvent(e);
+						}
+						
+					});
+					
+				} else if (list.contains(h2)) {
+					
+					character.addCondition(h3);
+					character.removeCondition(h2);
+					
+					character.addCondition(new BattleCondition(character) {
+						
+						@Override
+						public double modifyCalculatedAttribute(CalculatedAttribute calculatedAttribute, double currentValue, Person person) {
+							if (calculatedAttribute == CalculatedAttribute.PREGNANCYCHANCE) {
+								return currentValue + 50;
+							} else if (calculatedAttribute == CalculatedAttribute.AMOUNTCUSTOMERSPERSHIFT)
+								return currentValue +10;
+							else {
+								return currentValue;
+							}
+						}
+
+						@Override
+						public void handleEvent(MyEvent e) {
+							if (e.getType() == EventType.NEXTDAY) {
+								getCharacter().removeCondition(this);
+							}
+							else if (e.getType() == EventType.ACTIVITY) {
+								RunningActivity activity = (RunningActivity) e.getSource();
+								activity.getMainCustomer().addToSatisfaction(
+										(int) (activity.getMainCustomer().getSatisfactionAmount()*1.5),
+										trait
+										);
+							}
+						}
+						
+					});
+				}
+									
 			}
-		}
+
+		}	
 	}
 	public static class FluctuatingHormones extends TraitEffect{
 		@Override
@@ -3011,7 +3127,7 @@ public class Perks {
 	 *
 	 */
 	
-	public static class TonightWeDineOnMonsterMeat extends TraitEffect{
+	public static class FastMetabolism extends TraitEffect{
 		
 		@Override
 		public void handleEvent(MyEvent e, Charakter character, Trait trait) {
@@ -3045,6 +3161,8 @@ public class Perks {
 	 * 
 	 * Increases pregnancy chance by a fixed 30%
 	 * Also increases chance of Additional Offsprings by 50%
+	 * 
+	 * Also reduces Pregnancy Time by ~66% (but that's not shown here)
 	 *
 	 */
 	public static class HeartOfTheSwarm extends TraitEffect {
@@ -3111,37 +3229,23 @@ public class Perks {
 	/**
 	 * @author Scythless
 	 * 
-	 * Increases the amount of customers per Shift while pregnant by +1+10%
-	 * Also gives a buff that increases vaginal by 20%.
-	 * Buff lasts 1 Day (3 Shifts) and is re-applied every day change as long as the caracter is pregnant.
-	 * 
-	 * Increasing the amount of customers through the buff didn't yield any results, so I altered the amount outside of it.
-	 * It doesn't show up as Mouse-over but at least it works.
+	 * Increases Satisfaction during sex while pregnant by 50%
 	 */
-	public static class ShesAlreadyFull extends TraitEffect {
-		
-		@Override
-		public double getAttributeModified(CalculatedAttribute calculatedAttribute, double currentValue, Charakter character) {
-			if (calculatedAttribute == CalculatedAttribute.AMOUNTCUSTOMERSPERSHIFT) {
-				for (Condition con : character.getConditions()) {
-					if (con instanceof PregnancyInterface)
-						return currentValue * 1.1 + 1;
-				}
-			}
-			return currentValue;
-		}
+	public static class HoneyLactation extends TraitEffect {
 		
 		@Override
 		public void handleEvent(MyEvent e, Charakter character, Trait trait) {
-			if (e.getType() == EventType.NEXTDAY) {	// At the end of the day
-				boolean pregnant = false;
+			if (e.getType() == EventType.ACTIVITY) {
+				RunningActivity activity = (RunningActivity) e.getSource();
+				
 				for (Condition condition : character.getConditions()) {
                     if (condition instanceof PregnancyInterface) {
-                    	pregnant = true;
+                    	if (activity.getType() == ActivityType.WHORE)
+                    	activity.getMainCustomer().addToSatisfaction(
+                    				activity.getMainCustomer().getSatisfactionAmount()/2, 
+                    				trait
+                    			);
                     }
-				}
-				if (pregnant) {
-					character.addCondition(new Buff.AlreadyFull());
 				}
 			}
 		}
@@ -3167,8 +3271,23 @@ public class Perks {
 	 *	handleEvent doesn't access calculated Attributes and getAttributeModified can't get Access to customers
 	 *	Increasing pregnancy chance for the character itself didn't yield a result, as the character is only updated every shift or day, not every customer.
 	 */
-	public static class ImOnThePill extends TraitEffect {
+	public static class BestialFeatures extends TraitEffect {
 		
+		@Override
+		public void handleEvent(MyEvent e, Charakter character, Trait trait) {
+			if (!character.getTraits().contains(Trait.ANTHRO)) {
+				character.addTrait(Trait.ANTHRO);
+			}
+			
+			if (e.getType() == EventType.ACTIVITY) {
+				RunningActivity activity = (RunningActivity) e.getSource();
+				if (activity instanceof Whore) {
+					if (Util.getInt(0, 100) < 25) {
+						activity.getMainCustomers().get(0).addToSatisfaction(activity.getMainCustomers().get(0).getSatisfactionAmount()/2, trait);
+					}
+				}
+			}
+		}
 		
 	}
 	
