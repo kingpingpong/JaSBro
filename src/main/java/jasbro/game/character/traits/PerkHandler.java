@@ -125,6 +125,8 @@ public class PerkHandler implements Serializable {
     public static void resetPerks(Charakter character) {
         List<Trait> traits = new ArrayList<Trait>(character.getTraits());
         for (Trait trait : traits) {
+        	if (trait == Trait.ANTHRO)
+        		character.removeTrait(Trait.ANTHRO);
             if (trait.isPerk()) {
                 character.removeTrait(trait);
             }

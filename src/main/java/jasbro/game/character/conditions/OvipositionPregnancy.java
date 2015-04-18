@@ -25,7 +25,9 @@ public class OvipositionPregnancy extends Condition implements PregnancyInterfac
         else {
             realPregnancy = new MonsterPregnancy(getCharacter(), null, false);
         }
-        realPregnancy.modifyDays(-realPregnancy.getDays()+30);
+        if (realPregnancy.getDays() > 30) {
+        	realPregnancy.modifyDays(-realPregnancy.getDays()+30);
+        }
         realPregnancy.setCharacter(getCharacter());
     }
     

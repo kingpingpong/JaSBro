@@ -67,6 +67,7 @@ public enum Trait implements MinObedienceModifier {
 	LOLI(200, new TraitEffect.Loli()),
 	SHOTA(200, new TraitEffect.Loli()),	
 	FURRY(150, new TraitEffect.Furry()),	
+	ANTHRO(150, new TraitEffect.Anthro()),
 	
 	FEISTY(-300, new TraitEffect.Feisty()), 
 	OBEDIENT(300, FEISTY, new TraitEffect.Obedient()), 
@@ -126,7 +127,7 @@ public enum Trait implements MinObedienceModifier {
   	MONSTERSOW(true,100, new Perks.MonsterSow()), //done
   	BEASTBREEDER(true, 300), // done / Thanks Teferus ^^
   	ADRENALINEADDICT(true, 300), //increased reward/customer satisfaction missing (Increased Entertainment Rating by 30%, Should also increase the rest)
-  	TONIGHTWEDINEONMEAT(true, 300, new Perks.TonightWeDineOnMonsterMeat()), // done
+  	FASTMETABOLISM(true, 300, new Perks.FastMetabolism()), // done TODO: rename the perk itself
   	PHEROMONES(true, 300), //done
   	NUMBERFORTYSEVEN(true, 300, new Perks.NumberFortySeven()), //done
   	PRIMALINSTINCTS(true, 300, new Perks.PrimalInstincts()), //done
@@ -137,8 +138,8 @@ public enum Trait implements MinObedienceModifier {
   	FLUCTUATINGHORMONES(true, 300, new Perks.FluctuatingHormones()), //started, but not finished
   	INHERITANCE(true, 300), // done
   	TOPOFTHEFOODCHAIN(true, 300),
-  	SHESALREADYFULL(true, 300, new Perks.ShesAlreadyFull()), // done
-  	ISWEARIMONTHEPILL(true, 300, new Perks.ImOnThePill()), // TODO: actually make it work
+  	HONEYLACTATION(true, 300, new Perks.HoneyLactation()), // done TODO: rename the perk itself
+  	BESTIALFEATURES(true, 300, new Perks.BestialFeatures()), // TODO: Rename and make it work
   	MOTHERLYWARMTH(true, 300, new Perks.MotherlyWarmth()), // done
   	HEARTOFTHESWARM(true, 300, new Perks.HeartOfTheSwarm()), // done
   	THEBEASTWITHIN(true, 300),

@@ -332,6 +332,30 @@ public abstract class TraitEffect {
         }
     }    
     
+    public final static class Anthro extends TraitEffect {
+        @Override
+        public void handleEvent(MyEvent e, Charakter character, Trait trait) {
+            if (e.getType() == EventType.ACTIVITY) {
+                RunningActivity activity = (RunningActivity) e.getSource();
+                if (activity instanceof Whore) {
+                    BusinessMainActivity businessMainActivity = (BusinessMainActivity) activity;
+                    if (businessMainActivity.getMainCustomers().size() == 1) {
+                        int rnd = Util.getInt(0, 100); // 40% dislike, 40% like, 20% don't mind
+                        MessageData message = activity.getMessages().get(0);
+                        if (rnd < 40) {
+                            message.addToMessage("\n"+TextUtil.t("ANTHRO.like", character));
+                            businessMainActivity.getMainCustomers().get(0).addToSatisfaction(60, trait);
+                        } else if (rnd > 60) {
+                            message.addToMessage("\n"+TextUtil.t("ANTHRO.dislike", character));
+                            businessMainActivity.getMainCustomers().get(0).addToSatisfaction(-60, trait);
+                        }
+                    }
+
+                }
+            }
+        }
+    }    
+    
     public final static class Absorption extends TraitEffect {
         @Override
         public void handleEvent(MyEvent e, Charakter character, Trait trait) {
