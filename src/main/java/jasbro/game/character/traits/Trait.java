@@ -105,7 +105,7 @@ public enum Trait implements MinObedienceModifier {
   	SEXMANIAC(true, 300, new Perks.SexManiac()),
   	SEXFREAK(true, 400, new TraitEffect.MultipleAttributeChangeInfluence(0.9f, Sextype.GROUP, Sextype.MONSTER, Sextype.BONDAGE)),
   	CUMSLUT(true, 300, new Perks.CumSlut()),
-  	LEATHERMISTRESS(true, 300, new Perks.LeatherMistress()),
+  	LEATHERMISTRESS(true, 300),
   	PUBLICUSE(true,100), //I have no idea how I could do that... Soldiers and lower cost no energy and only count as 1/4th of an action. Groups ratings set to 0 (won't serve groups) 
   	BREEDER(true, 300, new Perks.Breeder()),
   	GANGBANGQUEEN(true, 300, new Perks.GangbangQueen()),
@@ -118,29 +118,29 @@ public enum Trait implements MinObedienceModifier {
   	THEBIGGERTHEYARE(true,100, new Perks.TheBiggerTheyAre()), //done
   	FREAKY(true,400, new TraitEffect.MultipleAttributeChangeInfluence(0.2f, Sextype.MONSTER, SpecializationAttribute.GENETICADAPTABILITY)), //done
   	MONSTERHUNTER(true,100, new Perks.MonsterHunter()), //done
-  	IVESEENWORSE(true,100, new Perks.IveSeenWorse()), // done
+  	IVESEENWORSE(true,100, new Perks.IveSeenWorse()), // to stupid to get it to work...  Energy loss during whoring-40%, max customers+4. 20% chance to be kinda apathetic (satisfaction-100, flavor text)
   	MONSTERPEDIA(true, 200,new Perks.Monsterpedia()), //done
-  	CONSUMEANDADAPT(true,1000), //customer satisfaction bonus is still missing (Should be done now)
+  	CONSUMEANDADAPT(true,1000), //customer satisfaction bonus is still missing
   	RULESOFNATURE(true, 200, new Perks.RulesOfNature()), //done
-  	WHENTHEHUNTERBECOMESPREY(true, 200, new Perks.WhenTheHunterBecomesPrey()), // TODO: Customer Satisfaction only after win (atm: always)
+  	WHENTHEHUNTERBECOMESPREY(true, 200), //customer satisfaction bonus after a win is missing
   	MONSTERSOW(true,100, new Perks.MonsterSow()), //done
   	BEASTBREEDER(true, 300), // done / Thanks Teferus ^^
-  	ADRENALINEADDICT(true, 300), //increased reward/customer satisfaction missing (Increased Entertainment Rating by 30%, Should also increase the rest)
-  	TONIGHTWEDINEONMEAT(true, 300, new Perks.TonightWeDineOnMonsterMeat()), // done
+  	ADRENALINEADDICT(true, 300), //increased reward/customer satisfaction missing
+  	TONIGHTWEDINEONMEAT(true, 300), // not started yet
   	PHEROMONES(true, 300), //done
   	NUMBERFORTYSEVEN(true, 300, new Perks.NumberFortySeven()), //done
   	PRIMALINSTINCTS(true, 300, new Perks.PrimalInstincts()), //done
   	LETSDOITLIKERABBITS(true, 300, new Perks.LetsDoItLikeRabbits()), //done
   	CUMCOMBS(true, 300, new Perks.CumCombs()), //done
-  	OVIPOSITION(true, 300, new Perks.Oviposition()), // done
+  	OVIPOSITION(true, 300, new Perks.Oviposition()),
   	INHUMANPREGNANCY(true, 300, new Perks.InhumanPregnancy()), //done
   	FLUCTUATINGHORMONES(true, 300, new Perks.FluctuatingHormones()), //started, but not finished
-  	INHERITANCE(true, 300), // done
+  	INHERITANCE(true, 300),
   	TOPOFTHEFOODCHAIN(true, 300),
-  	SHESALREADYFULL(true, 300, new Perks.ShesAlreadyFull()), // done
-  	ISWEARIMONTHEPILL(true, 300, new Perks.ImOnThePill()), // TODO: actually make it work
-  	MOTHERLYWARMTH(true, 300, new Perks.MotherlyWarmth()), // done
-  	HEARTOFTHESWARM(true, 300, new Perks.HeartOfTheSwarm()), // done
+  	SHESALREADYFULL(true, 300),
+  	ISWEARIMONTHEPILL(true, 300),
+  	MOTHERLYWARMTH(true, 300),
+  	HEARTOFTHESWARM(true, 300),
   	THEBEASTWITHIN(true, 300),
   	BEASTINHEAT(true, 300, new Perks.BeastInHeat()), //done
   	HIBERNATION(true, 300, new Perks.Hibernation()), //done
@@ -360,10 +360,11 @@ public enum Trait implements MinObedienceModifier {
     BEAUTICIAN(true, 100), 
     EROTIC_MASSAGE(true, 100, new Perks.AttributeInfluence(SpecializationAttribute.WELLNESS, BaseAttributeTypes.CHARISMA, 0.25f)), 
     NAIAD(true, 100, new Perks.Naiad()), 
+    DOCTOR(true, 100, new Perks.AttributeInfluence(SpecializationAttribute.MEDICALKNOWLEDGE, BaseAttributeTypes.INTELLIGENCE, 0.5f)),
     DERMATOLOGIST(true, 100, new Perks.Dermatologist()), 
     DEEPBREATH(true, 100), 
     MEDIC(true, 100, new Perks.Medic()), 
-    DOCTOR(true, 100, new Perks.AttributeInfluence(SpecializationAttribute.MEDICALKNOWLEDGE, BaseAttributeTypes.INTELLIGENCE, 0.5f)),
+    
     COSMETICS(true, 100), 
     SEXTHERAPIST(true, 100, new Perks.AttributeInfluence(SpecializationAttribute.SEDUCTION, BaseAttributeTypes.INTELLIGENCE, 0.5f)), 
     SEXPERT(true, 100, new Perks.SeXpert());

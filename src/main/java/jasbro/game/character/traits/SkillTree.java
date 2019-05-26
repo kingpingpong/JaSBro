@@ -19,21 +19,21 @@ import jasbro.gui.pictures.ImageData;
 import jasbro.texts.TextUtil;
 
 public enum SkillTree {
-    TRAINER(new TrainerSkillTreeStart(), new ImageData("images/icons/perks/azula_on_the_iron_throne_by_kissyushka-d5y518a.jpg")),
-    SLAVE(new SlaveSkillTreeStart(), new ImageData("images/icons/perks/leia_turner_by_valadaz.jpg")),
-    FIGHTER(new WarriorSkillTreeStart(), new ImageData("images/icons/perks/warrior_by_Wen_Xaeroaaa.jpg")),
-    MAID(new MaidTreeStart(), new ImageData("images/icons/perks/Superior_robo_waifu_maid.png")),
-    THIEF(new ThiefTreeStart(), new ImageData("images/icons/perks/200px-NightingaleSentinel.png")),
-    KINKYSEX(new KinkySexTreeStart(), new ImageData("images/icons/perks/women_bondage.png")),
+    TRAINER(new TrainerSkillTreeStart(), new ImageData("images/icons/perks/trainer.png")),
+    SLAVE(new SlaveSkillTreeStart(), new ImageData("images/icons/perks/slave.png")),
+    FIGHTER(new WarriorSkillTreeStart(), new ImageData("images/icons/perks/warrior.png")),
+    MAID(new MaidTreeStart(), new ImageData("images/icons/perks/maid.png")),
+    THIEF(new ThiefTreeStart(), new ImageData("images/icons/perks/thief.png")),
+    KINKYSEX(new KinkySexTreeStart(), new ImageData("images/icons/perks/kinky.png")),
     MUTANT(new MutantTreeStart(), new ImageData("images/icons/perks/monster.png")),    
     WHORE(new WhoreTreeStart(), new ImageData("images/icons/perks/whore.png")),
-    BARTENDER(new BartenderTreeStart(), new ImageData("images/icons/perks/bartender.jpg")),
-    SEX(new SexTreeStart(), new ImageData("images/icons/perks/sex.jpg")),
-    MARKETINGEXPERT(new AdvertisingTreeStart(), new ImageData("images/icons/perks/marketing.jpg")),
-    DANCER(new DancerTreeStart(), new ImageData("images/icons/perks/dance.jpg")),
-    CATGIRL(new CatgirlTreeStart(), new ImageData("images/icons/perks/catgirl.jpg")),
+    BARTENDER(new BartenderTreeStart(), new ImageData("images/icons/perks/bartender.png")),
+    SEX(new SexTreeStart(), new ImageData("images/icons/perks/sex.png")),
+    MARKETINGEXPERT(new AdvertisingTreeStart(), new ImageData("images/icons/perks/marketing.png")),
+    DANCER(new DancerTreeStart(), new ImageData("images/icons/perks/dancer.png")),
+    CATGIRL(new CatgirlTreeStart(), new ImageData("images/icons/perks/catgirl.png")),
     ALCHEMIST(new AlchemistTreeStart(), new ImageData("images/icons/perks/alchemy.png")),
-    NURSE(new NurseTreeStart(), new ImageData("images/icons/perks/nurse.jpg"));
+    NURSE(new NurseTreeStart(), new ImageData("images/icons/perks/nurse.png"));
     
     
     private SkillTreeItem firstItem;

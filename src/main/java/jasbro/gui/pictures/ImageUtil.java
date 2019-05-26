@@ -115,7 +115,7 @@ public class ImageUtil implements ImageObserver {
                         image = ImageIO.read(input);
                     }
                     
-                    images.put(imageData.getKey(), image);               
+                    images.put(imageData.getKey(), image);  
                     return image;
                 }
                 else {
@@ -179,7 +179,7 @@ public class ImageUtil implements ImageObserver {
         		imagePool = imageList;
         	}
             ImageData image = imagePool.get(Util.getRnd().nextInt(imagePool.size()));
-            log.info("No image found, going random " + orginalTag + " " + image.getKey());
+            //log.info("No image found, going random " + orginalTag + " " + image.getKey());
             return image;
         }
         ImageData image = imagesTag.get(Util.getRnd().nextInt(imagesTag.size()));

@@ -137,61 +137,9 @@ public class CharacterSpawner {
             }
         }
         
-        /*
-         * Inheritance Perk
-         * Every Child becomes a mutant and gets a random specialization of the mother. 
-         */
-        for (Trait trait : mother.getTraits()) {
-        	if (trait == Trait.INHERITANCE) {
-                character.getSpecializations().add(SpecializationType.UNDERAGE);
-                character.getSpecializations().add(SpecializationType.MUTANT);
-                if (mother.getSpecializations().size() > 3) {
-                	SpecializationType spec = null;
-                	while (true) {
-                		spec = getMotherSpec(mother);
-                		if (null == spec) continue;
-                		else if (SpecializationType.SEX != spec) break;
-                		else if (SpecializationType.SLAVE != spec) break;
-                		else if (SpecializationType.TRAINER != spec) break;
-                	}
-                	character.getSpecializations().add(spec);
-                }
-                
-        	}
-        } // Inheritance END
-        
-        character.addCondition(new ItemCooldown(0, "Tome_of_time"));
+        character.addCondition(new ItemCooldown(30, "Tome_of_time"));
                 
         return character;
-    }
-    
-    /**
-     * A help function for the inheritance perk.
-     * Selects an integer between 0 and the number of specializations.
-     * If the selection is Mutant, Sex, Slave or Trainer it will return NULL
-     * 
-     * @author Scythless
-     * 
-     * @param mother
-     * 			The mother of the character to get the specs for.
-     * @return
-     * 		returns a SpecializationType other than Mutant, Sex, Slave and Trainer. May be NULL.
-     */
-    private static SpecializationType getMotherSpec(Charakter mother) {
-    	
-    		int i = 0;
-    		int selection = Util.getInt(0, mother.getSpecializations().size());
-			for (SpecializationType spec : mother.getSpecializations()) {
-    			if (spec == SpecializationType.MUTANT || spec == SpecializationType.SEX || spec == SpecializationType.SLAVE || spec == SpecializationType.TRAINER ) {
-    				i += 1;
-    				continue;
-    			}
-    			else {
-    				if (i == selection) return spec;
-    				else i += 1;
-    			}
-			}
-			return null;
     }
     
     private static CharacterBase selectCharacterBase(Charakter mother, Person otherParent) {

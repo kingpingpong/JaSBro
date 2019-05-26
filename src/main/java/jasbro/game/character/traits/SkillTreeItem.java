@@ -979,42 +979,63 @@ public class SkillTreeItem {
             Map<Trait, SkillTreeItem> map = new HashMap<Trait, SkillTreeItem>();
             map.put(Trait.FIRSTAID, this);
             
-            create(Trait.INDULGENCE, map, new ImageData("images/icons/perks/indulgence.png"));
-            create(Trait.NAIAD, map, new ImageData("images/icons/perks/naiad.png"));
+            create(Trait.MANUALLABOR, map, new ImageData("images/icons/perks/manual_labour.png"));
+            create(Trait.NAIAD, map, new ImageData("images/icons/perks/naiad.png"));           
+            create(Trait.MEDIC, map, new ImageData("images/icons/perks/medic.png")); 
             create(Trait.DEEPBREATH, map, new ImageData("images/icons/perks/deep_breath.png"));
+            create(Trait.BEAUTICIAN, map, new ImageData("images/icons/perks/beautician.png"));
+            
             create(Trait.EROTIC_MASSAGE, map, new ImageData("images/icons/perks/erotic_massage.png"));
-            create(Trait.TANTRIC, map, new ImageData("images/icons/perks/tantric.png"));
+            create(Trait.SEXPERT, map, new ImageData("images/icons/perks/sexpert.png"));
+            create(Trait.DOCTOR, map, new ImageData("images/icons/perks/doctor.png"));
+            create(Trait.DERMATOLOGIST, map, new ImageData("images/icons/perks/dermatologist.png"));
+            
             create(Trait.OILY, map, new ImageData("images/icons/perks/oily.png"));
             create(Trait.SOAPY, map, new ImageData("images/icons/perks/soapy.png"));
-            create(Trait.MANUALLABOR, map, new ImageData("images/icons/perks/manual_labour.png"));
-            create(Trait.COSMETICS, map, new ImageData("images/icons/perks/cosmetics.png"));
-            create(Trait.BEAUTICIAN, map, new ImageData("images/icons/perks/beautician.png"));
-            create(Trait.DERMATOLOGIST, map, new ImageData("images/icons/perks/dermatologist.png"));
-            create(Trait.MEDIC, map, new ImageData("images/icons/perks/medic.png"));
-            create(Trait.DOCTOR, map, new ImageData("images/icons/perks/doctor.png"));
+            create(Trait.INDULGENCE, map, new ImageData("images/icons/perks/indulgence.png"));
+            
+            
+            create(Trait.TANTRIC, map, new ImageData("images/icons/perks/tantric.png"));
+            create(Trait.COSMETICS, map, new ImageData("images/icons/perks/cosmetics.png"));       
             create(Trait.SEXTHERAPIST, map, new ImageData("images/icons/perks/sex_therapist.png"));
-            create(Trait.SEXPERT, map, new ImageData("images/icons/perks/sexpert.png"));
             
-            link(Trait.FIRSTAID, Trait.INDULGENCE, map);
+            
+            link(Trait.FIRSTAID, Trait.MANUALLABOR, map);
             link(Trait.FIRSTAID, Trait.NAIAD, map);
-            link(Trait.FIRSTAID, Trait.COSMETICS, map);
+            link(Trait.FIRSTAID, Trait.DEEPBREATH, map);
             link(Trait.FIRSTAID, Trait.MEDIC, map);
-            link(Trait.MEDIC, Trait.DOCTOR, map);
-            link(Trait.DOCTOR, Trait.DERMATOLOGIST, map);
-            link(Trait.DOCTOR, Trait.SEXTHERAPIST, map);
-            link(Trait.SEXTHERAPIST, Trait.SEXPERT, map);
-
-            link(Trait.INDULGENCE, Trait.EROTIC_MASSAGE, map);
-            link(Trait.EROTIC_MASSAGE, Trait.TANTRIC, map);
-            link(Trait.TANTRIC, Trait.SEXPERT, map);
+            link(Trait.FIRSTAID, Trait.BEAUTICIAN, map);
             
-            link(Trait.EROTIC_MASSAGE, Trait.MANUALLABOR, map);
-            link(Trait.SOAPY,  Trait.DEEPBREATH, map);
-            link(Trait.COSMETICS, Trait.BEAUTICIAN, map);
+            link(Trait.MANUALLABOR, Trait.EROTIC_MASSAGE, map);
+            link(Trait.NAIAD, Trait.SEXPERT, map);            
+            link(Trait.MEDIC, Trait.DOCTOR, map);
+            link(Trait.DEEPBREATH, Trait.SEXPERT, map);
             link(Trait.BEAUTICIAN, Trait.DERMATOLOGIST, map);
-            link(Trait.NAIAD,  Trait.SOAPY, map);
-            link(Trait.SOAPY, Trait.OILY, map);
-            link(Trait.BEAUTICIAN, Trait.OILY, map);
+            
+
+            link(Trait.EROTIC_MASSAGE, Trait.OILY, map);
+            link(Trait.SEXPERT, Trait.OILY, map);
+            link(Trait.DOCTOR, Trait.OILY, map);
+            link(Trait.DERMATOLOGIST, Trait.OILY, map);
+            link(Trait.EROTIC_MASSAGE, Trait.SOAPY, map);
+            link(Trait.SEXPERT, Trait.SOAPY, map);
+            link(Trait.DOCTOR, Trait.SOAPY, map);
+            link(Trait.DERMATOLOGIST, Trait.SOAPY, map);
+            link(Trait.EROTIC_MASSAGE, Trait.INDULGENCE, map);
+            link(Trait.SEXPERT, Trait.INDULGENCE, map);
+            link(Trait.DOCTOR, Trait.INDULGENCE, map);
+            link(Trait.DERMATOLOGIST, Trait.INDULGENCE, map);
+            
+            link(Trait.OILY, Trait.TANTRIC, map);
+            link(Trait.SOAPY,  Trait.TANTRIC, map);
+            link(Trait.INDULGENCE, Trait.TANTRIC, map);
+            link(Trait.OILY, Trait.COSMETICS, map);
+            link(Trait.SOAPY,  Trait.COSMETICS, map);
+            link(Trait.INDULGENCE, Trait.COSMETICS, map);
+            link(Trait.OILY, Trait.SEXTHERAPIST, map);
+            link(Trait.SOAPY,  Trait.SEXTHERAPIST, map);
+            link(Trait.INDULGENCE, Trait.SEXTHERAPIST, map);
+            
     	}
     
     }

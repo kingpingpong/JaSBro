@@ -242,27 +242,27 @@ public class Fight extends RunningActivity implements BusinessMainActivity, Busi
 							message += "\n\n" + TextUtil.t("fight.lost", getCharacter());
 							if(getMainCustomer().getPreferredSextype()==Sextype.ANAL){
 								image2 = ImageUtil.getInstance().getImageDataByTag(ImageTag.ANAL, getCharacter());
-								addAttributeModification(this,1.0f, getCharacter(), Sextype.ANAL);
+								this.getAttributeModifications().add(new AttributeModification(2.5f,Sextype.ANAL, getCharacter()));
 								message+="\n" + TextUtil.t("fight.lost.anal", getCharacter());
 							}
 							else if(getMainCustomer().getPreferredSextype()==Sextype.VAGINAL){
 								image2 = ImageUtil.getInstance().getImageDataByTag(ImageTag.VAGINAL, getCharacter());
-								addAttributeModification(this,1.0f, getCharacter(), Sextype.VAGINAL);
+								this.getAttributeModifications().add(new AttributeModification(2.5f,Sextype.VAGINAL, getCharacter()));
 								message+="\n" + TextUtil.t("fight.lost.vaginal", getCharacter());
 							}
 							else if(getMainCustomer().getPreferredSextype()==Sextype.ORAL){
 								image2 = ImageUtil.getInstance().getImageDataByTag(ImageTag.ORAL, getCharacter());
-								addAttributeModification(this,1.0f, getCharacter(), Sextype.ORAL);
+								this.getAttributeModifications().add(new AttributeModification(2.5f,Sextype.ORAL, getCharacter()));
 								message+="\n" + TextUtil.t("fight.lost.oral", getCharacter());
 							}
 							else if(getMainCustomer().getPreferredSextype()==Sextype.BONDAGE){
 								image2 = ImageUtil.getInstance().getImageDataByTag(ImageTag.BONDAGE, getCharacter());
-								addAttributeModification(this,1.0f, getCharacter(), Sextype.BONDAGE);
+								this.getAttributeModifications().add(new AttributeModification(2.5f,Sextype.BONDAGE, getCharacter()));
 								message+="\n" + TextUtil.t("fight.lost.bondage", getCharacter());
 							}
 							else{
 								image2 = ImageUtil.getInstance().getImageDataByTag(ImageTag.GROUP, getCharacter());
-								addAttributeModification(this,1.0f, getCharacter(), Sextype.GROUP);
+								this.getAttributeModifications().add(new AttributeModification(2.5f,Sextype.GROUP, getCharacter()));
 								message+="\n" + TextUtil.t("fight.lost.group", getCharacter());
 							}
 							

@@ -7,11 +7,9 @@ import jasbro.Jasbro;
 import jasbro.game.character.Charakter;
 import jasbro.game.character.activities.ActivityDetails;
 import jasbro.game.events.MyEvent;
-import jasbro.game.housing.Room;
 import jasbro.game.housing.RoomSlot;
 import jasbro.game.interfaces.MyEventListener;
 import jasbro.game.world.CharacterLocation;
-import jasbro.game.world.locations.LocationType;
 import jasbro.gui.GuiUtil;
 import jasbro.gui.dnd.CanReceiveCharacterDrop;
 import jasbro.gui.dnd.MyCharacterTransferHandler;
@@ -453,23 +451,18 @@ public class LocationPanel extends MyImage implements MyEventListener, CanReceiv
 		@Override
 		protected void paintComponent(Graphics g) {
 			if (characterLocation != null) {
-				if(characterLocation.getLocationType()!=LocationType.BEACH
-						&& characterLocation.getLocationType()!=LocationType.RESTAURANT
-						&& characterLocation.getLocationType()!=LocationType.LIBRARY
-						&& characterLocation.getLocationType()!=LocationType.STREETS
-						&& characterLocation.getLocationType()!=LocationType.DUNGEON1
-						&& characterLocation.getLocationType()!=LocationType.DUNGEON2
-						&& characterLocation.getLocationType()!=LocationType.DUNGEON3
-						&& characterLocation.getLocationType()!=LocationType.DUNGEON4){
+				if (characterLocation instanceof RoomSlot) {
 					RoomSlot room = (RoomSlot) characterLocation;
-					if(room.getDownTime()>0){
-						setText(characterLocation.getName() + "   " + characterLocation.getAmountPeople() + " / " +characterLocation.getMaxPeople() + " Availables in :" + room.getDownTime()+ " days");} 
-
-					else{
-						setText(characterLocation.getName() + "   " + characterLocation.getAmountPeople() + " / " +characterLocation.getMaxPeople() + " ");}
-
+					if (room.getDownTime()>0){
+						setText(characterLocation.getName() + "   " + characterLocation.getAmountPeople() + " / " +characterLocation.getMaxPeople() + " Availables in :" + room.getDownTime()+ " days");
+					} 
+					else {
+						setText(characterLocation.getName() + "   " + characterLocation.getAmountPeople() + " / " +characterLocation.getMaxPeople() + " ");
+					}
+				} 
+				else {
+					setText(characterLocation.getName() + "   " + characterLocation.getAmountPeople() + " / " +characterLocation.getMaxPeople() + " ");
 				}
-				else{setText(characterLocation.getName() + "   " + characterLocation.getAmountPeople() + " / " +characterLocation.getMaxPeople() + " ");}
 			}
 			super.paintComponent(g);
 		}

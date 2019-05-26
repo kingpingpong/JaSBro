@@ -1,10 +1,12 @@
 package jasbro.game.character.activities.sub.business;
 
 import jasbro.Util;
+import jasbro.game.character.CharacterType;
 import jasbro.game.character.Charakter;
 import jasbro.game.character.Gender;
 import jasbro.game.character.activities.BusinessSecondaryActivity;
 import jasbro.game.character.activities.RunningActivity;
+import jasbro.game.character.attributes.AttributeModification;
 import jasbro.game.character.attributes.BaseAttributeTypes;
 import jasbro.game.character.attributes.EssentialAttributes;
 import jasbro.game.character.attributes.Sextype;
@@ -13,6 +15,8 @@ import jasbro.game.character.traits.Trait;
 import jasbro.game.events.MessageData;
 import jasbro.game.events.business.Customer;
 import jasbro.game.events.business.CustomerStatus;
+import jasbro.game.housing.Room;
+import jasbro.gui.pictures.ImageData;
 import jasbro.gui.pictures.ImageTag;
 import jasbro.gui.pictures.ImageUtil;
 import jasbro.texts.TextUtil;
@@ -31,282 +35,132 @@ import org.apache.log4j.Logger;
  * Activity class for serving customers who take a bath in the spa.
  */
 public class BathAttendant extends RunningActivity implements BusinessSecondaryActivity  {
-
-	/**
-	 * Further differentiate attend activities. 
-	 */
-	private enum AttendType {
-		/**
-		 * No customers.
-		 */
-		BORED,
-		
-		/**
-		 * Business as usual.
-		 */
-		BASIC,
-		
-		/**
-		 * Attendant joins the bathing customers for some foreplay.
-		 */
-		FOREPLAY,
-
-		/**
-		 * Attendant joins the bathing customers for oral sex.
-		 */
-		ORAL,
-		
-		/**
-		 * Attendant joins the bathing customers and lets them have fun with her tits.
-		 */
-		TITFUCK,
-		
-		/**
-		 * Attendant gets dragged into bath by customers and lets them do as they please.
-		 */
-		SUBMISSIVE,
-		
-		SEXY,
-		VAGINAL,
-		ANAL,
-		
-		
+	private enum Action {
+		NORMAL, 
+		SWIMSUIT, NAKED, OIL,
+		LAZY, RELAX, 
+		CLEAN, COCKTAILS, 
+		MASSAGE, SOAP, INCENCE, 
 	}
-	
-	private final Logger log = Logger.getLogger(BathAttendant.class);
-	
+	private Map<Charakter, Action> characterAction=new HashMap<Charakter, Action>();
 	private MessageData messageData;
-
-	private Map<Charakter, AttendType> characterAttendTypeMap=new HashMap<Charakter, AttendType>();
-	
 	@Override
 	public int getAppeal() {
-        int appeal = Util.getInt(0, 8);
-        for (Charakter character : getCharacters()) {
-            appeal += (character.getCharisma() + character.getFinalValue(SpecializationAttribute.SEDUCTION) / 4 )/ 6;
-        }
-        return appeal;
+		int appeal = Util.getInt(0, 8);
+		for (Charakter character : getCharacters()) {
+			appeal += (character.getCharisma() + character.getFinalValue(SpecializationAttribute.SEDUCTION) / 4 )/ 6;
+		}
+		return appeal;
 	}
-
 	@Override
 	public int getMaxAttendees() {
 		return 15+getCharacters().size()*5;
 	}
 
-	/**
-	 * Initialization figures out what each slave does exactly.
-	 */
 	@Override
 	public void init() {
 		List<Charakter> characters = new ArrayList<Charakter>(getCharacters());
-		final Map<AttendType, Integer> supplyCounters=new EnumMap<>(AttendType.class);
-		final Map<AttendType, Integer> demandCounters=new EnumMap<>(AttendType.class);
-		final Map<Gender, Integer> genderCounters=new EnumMap<>(Gender.class);
-		
-		// initialize attend type counters 
-		for (AttendType attendType: AttendType.values()) {
-			supplyCounters.put(attendType, 1);  // demand will be divided by supply (keep this value above zero)
-			demandCounters.put(attendType, 0);
-		}
-		for (Gender gender: Gender.values()) {
-			genderCounters.put(gender, 0);
-		}
-		
-		// figure out customer demand
-		for (Customer customer: getCustomers()) {
-			switch (customer.getPreferredSextype()) {
-			case BONDAGE:
-				demandCounters.put(AttendType.SUBMISSIVE, demandCounters.get(AttendType.SUBMISSIVE)+30);
-				demandCounters.put(AttendType.SEXY, demandCounters.get(AttendType.SEXY)+20);
-				break;
-			case GROUP:
-				demandCounters.put(AttendType.SUBMISSIVE, demandCounters.get(AttendType.SUBMISSIVE)+Util.getInt(15, 30));
-				demandCounters.put(AttendType.VAGINAL, demandCounters.get(AttendType.VAGINAL)+Util.getInt(5, 15));
-				demandCounters.put(AttendType.ANAL, demandCounters.get(AttendType.ANAL)+Util.getInt(5, 15));
-				demandCounters.put(AttendType.ORAL, demandCounters.get(AttendType.ORAL)+Util.getInt(5, 15));
-				break;
-			case MONSTER:
-				demandCounters.put(AttendType.SUBMISSIVE, demandCounters.get(AttendType.SUBMISSIVE)+45);
-				demandCounters.put(AttendType.SEXY, demandCounters.get(AttendType.SEXY)+40);
-				break;
-			case FOREPLAY:
-				demandCounters.put(AttendType.FOREPLAY, demandCounters.get(AttendType.FOREPLAY)+30);
-				demandCounters.put(AttendType.SEXY, demandCounters.get(AttendType.SEXY)+20);
-				break;
-			case VAGINAL:
-				demandCounters.put(AttendType.SUBMISSIVE, demandCounters.get(AttendType.SUBMISSIVE)+20);
-				demandCounters.put(AttendType.VAGINAL, demandCounters.get(AttendType.VAGINAL)+30);
-				break;
-			case ORAL:
-				demandCounters.put(AttendType.ORAL, demandCounters.get(AttendType.ORAL)+30);
-				if (customer.getGender()==Gender.FEMALE) {
-					demandCounters.put(AttendType.FOREPLAY, demandCounters.get(AttendType.FOREPLAY)+30);
-				} 
-				else {
-					demandCounters.put(AttendType.ORAL, demandCounters.get(AttendType.ORAL)+30);
-				}
-				break;
-			case ANAL:
-				
-				if (customer.getGender()==Gender.FEMALE) {
-					demandCounters.put(AttendType.FOREPLAY, demandCounters.get(AttendType.FOREPLAY)+30);
-				} 
-				else {
-					demandCounters.put(AttendType.ANAL, demandCounters.get(AttendType.ANAL)+30);
-				}
-				demandCounters.put(AttendType.SUBMISSIVE, demandCounters.get(AttendType.SUBMISSIVE)+20);
-				break;
-			case TITFUCK:
-				if (customer.getGender()==Gender.FEMALE) {
-					demandCounters.put(AttendType.FOREPLAY, demandCounters.get(AttendType.FOREPLAY)+30);
-				} 
-				else {
-					demandCounters.put(AttendType.TITFUCK, demandCounters.get(AttendType.TITFUCK)+40);
-				}
-				demandCounters.put(AttendType.ORAL, demandCounters.get(AttendType.ORAL)+40);
-				break;
-			default:
-				// this should never happen
-				log.error("Don't know how to handle customer with preference for "+customer.getPreferredSextype()+".");
-				break;
-			}
-			
-			genderCounters.put(customer.getGender(), genderCounters.get(customer.getGender())+1);
-		}
-		demandCounters.put(AttendType.BASIC, getCustomers().size()*12);  // basic services are always needed
-		
-		// process characters in random order
-		Collections.shuffle(characters);
-		
-		for (Charakter character: characters) {
-			List<AttendType> qualifiedFor=new ArrayList<AttendType>();
-			AttendType selected;
-			
-			if (getCustomers().size()>0) {
-				int chance = Util.getInt(0, 99);
-				int servicableCustomers=0;
-				
-				if (character.getAllowedServices().isServiceMales()) {
-					servicableCustomers+=genderCounters.get(Gender.MALE);
-				}
-				if (character.getAllowedServices().isServiceFemales()) {
-					servicableCustomers+=genderCounters.get(Gender.FEMALE);
-				}
-				if (character.getAllowedServices().isServiceFutas()) {
-					servicableCustomers+=genderCounters.get(Gender.FUTA);
-				}
 
-				
-				// check which attend types are suitable for the character 
-				qualifiedFor.add(AttendType.BASIC);
-				
-				// only added sex activities if at least one customer of allowed gender is present
-				if (servicableCustomers>0) {
-					if (chance + character.getCharisma() > 40 && character.getAllowedServices().isAllowed(Sextype.FOREPLAY) && character.getTraits().contains(Trait.MANUALLABOR)) {
-						qualifiedFor.add(AttendType.FOREPLAY);
-					}
-					if (chance + character.getCharisma() > 40) {
-						qualifiedFor.add(AttendType.SEXY);
-					}
-					if (chance + character.getFinalValue(SpecializationAttribute.SEDUCTION) > 50 && character.getAllowedServices().isAllowed(Sextype.ORAL) && character.getTraits().contains(Trait.DEEPBREATH)) {
-						qualifiedFor.add(AttendType.ORAL);
-					}
-					if (chance + character.getFinalValue(SpecializationAttribute.SEDUCTION) > 50 && character.getAllowedServices().isAllowed(Sextype.ANAL) && character.getTraits().contains(Trait.NAIAD)) {
-						qualifiedFor.add(AttendType.ANAL);
-					}
-					if (chance + character.getFinalValue(SpecializationAttribute.SEDUCTION) > 50 && character.getAllowedServices().isAllowed(Sextype.VAGINAL) && character.getTraits().contains(Trait.NAIAD)) {
-						qualifiedFor.add(AttendType.VAGINAL);
-					}
-					if (chance + servicableCustomers>=3 && character.getCharisma() > 50 
-							&& character.getRealMinObedience(Sextype.GROUP.getObedienceRequired(), this) <= character.getObedience()
-							 && character.getAllowedServices().isAllowed(Sextype.VAGINAL)  && character.getAllowedServices().isAllowed(Sextype.ORAL)
-							 && character.getAllowedServices().isAllowed(Sextype.ANAL)) {
-						qualifiedFor.add(AttendType.SUBMISSIVE);
-					}
-					if (character.getTraits().contains(Trait.NAIAD) && character.getGender()!=Gender.MALE && chance + character.getFinalValue(SpecializationAttribute.SEDUCTION) > 50 
-							&& character.getAllowedServices().isAllowed(Sextype.TITFUCK) && !character.getTraits().contains(Trait.LOLI)) {
-						qualifiedFor.add(AttendType.TITFUCK);
-					}
-				}
-			}
-			else {
-				// nothing to do
-				qualifiedFor.add(AttendType.BORED);
-			}
-				
-			// sort attend types so highest demand comes first
-			Collections.sort(qualifiedFor, new Comparator<AttendType>() {
 
-				@Override
-				public int compare(AttendType o1, AttendType o2) {
-					int weighedDemand1=demandCounters.get(o1) / supplyCounters.get(o1);
-					int weighedDemand2=demandCounters.get(o2) / supplyCounters.get(o2);
-					return weighedDemand2-weighedDemand1;
-				}
-				
-			});
+		for(Charakter character : characters){
+			List<Action> actions = new ArrayList<Action>();
+			actions.add(Action.NORMAL);
+			actions.add(Action.LAZY);
+			actions.add(Action.RELAX);
+			if(character.getFinalValue(SpecializationAttribute.STRIP)>60
+					|| character.getTraits().contains(Trait.EXHIBITIONIST)
+					|| character.getTraits().contains(Trait.NICEBODY)
+					|| character.getTraits().contains(Trait.UNINHIBITED)){
+				actions.add(Action.NAKED);
+				actions.add(Action.SWIMSUIT);
+			}
+			if(character.getFinalValue(SpecializationAttribute.CLEANING)>60){
+				actions.add(Action.CLEAN);
+			}
+			if(character.getFinalValue(SpecializationAttribute.BARTENDING)>60){
+				actions.add(Action.COCKTAILS);
+			}
+			if(character.getTraits().contains(Trait.MANUALLABOR)){
+				actions.add(Action.MASSAGE);
+			}
+			if(character.getTraits().contains(Trait.OILY)){
+				actions.add(Action.OIL);
+			}
+			if(character.getTraits().contains(Trait.SOAPY)){
+				actions.add(Action.SOAP);
+			}
+			if(character.getTraits().contains(Trait.CALMINGINCENCES)){
+				actions.add(Action.INCENCE);
+			}
 
-			// pick highest rated attend type
-			selected = qualifiedFor.get(0);
-			characterAttendTypeMap.put(character, selected);
-			supplyCounters.put(selected, supplyCounters.get(selected)+1);
+			characterAction.put(character, actions.get(Util.getInt(0, actions.size())));
+
 		}
+
+
+
 	}
 
-	/**
-	 * Earns 
-	 */
 	@Override
 	public void perform() {
-		for (Charakter character: getCharacters()) {
-			int skill; 
-	        int amountEarned = 0;
-	        int amountHappy = 0;
-	        int overalltips = 0;
+		int skill=0; 
+		int amountEarned = 0;
+		int amountHappy = 0;
 
-	        switch (characterAttendTypeMap.get(character)) {
-			case BASIC:
-				skill = character.getCharisma() +1;
+		int amountVaginal=0;	int amountOral=0;		int amountGroup=0;
+		int amountAnal=0;		int amountForeplay=0;
+		for (Charakter character: getCharacters()) {
+			 amountVaginal=0;	 amountOral=0;		 amountGroup=0;
+			 amountAnal=0;		 amountForeplay=0;
+			amountHappy=0; amountEarned=0;
+			switch(characterAction.get(character)){
+			case NORMAL:
+				skill+=character.getCharisma()+character.getObedience();
 				break;
-			case FOREPLAY:
-				skill = (character.getCharisma() + character.getFinalValue(Sextype.FOREPLAY)) / 2;
+			case LAZY:
+				skill+=character.getCharisma()+character.getObedience();
+				skill/=2;
 				break;
-			case ORAL:
-				skill = (character.getCharisma() + character.getFinalValue(Sextype.ORAL)) / 2;
+			case RELAX:
+				skill+=character.getCharisma()+character.getObedience()/2+Util.getInt(0, 25);
 				break;
-			case TITFUCK:
-				skill = (character.getCharisma() + character.getFinalValue(Sextype.TITFUCK)) / 2;
+			case SWIMSUIT:
+				skill+=character.getCharisma()*2+character.getObedience()/2+character.getFinalValue(SpecializationAttribute.STRIP)/3;
 				break;
-			case SUBMISSIVE:
-				skill = (character.getCharisma() + character.getFinalValue(Sextype.GROUP) + character.getObedience()) / 3;
+			case NAKED:
+				skill+=character.getCharisma()*3+character.getObedience()/2+character.getFinalValue(SpecializationAttribute.SEDUCTION)/3;
 				break;
-			case ANAL:
-				skill = (character.getCharisma() + character.getFinalValue(Sextype.ANAL) + character.getObedience()) / 3;
+			case OIL:
+				skill+=character.getCharisma()*4+character.getObedience()/2+character.getStamina()/3;
 				break;
-			case VAGINAL:
-				skill = (character.getCharisma() + character.getFinalValue(Sextype.VAGINAL) + character.getObedience()) / 3;
+			case INCENCE:
+				skill+=character.getCharisma()+character.getObedience()/2+character.getFinalValue(SpecializationAttribute.PLANTKNOWLEDGE)/2;
 				break;
-			case SEXY:
-				skill = (character.getCharisma() + character.getFinalValue(SpecializationAttribute.STRIP));
+			case COCKTAILS:
+				skill+=character.getCharisma()+character.getObedience()/2+character.getFinalValue(SpecializationAttribute.BARTENDING)/2;
 				break;
-			case BORED:
-				skill = 1;
+			case CLEAN:
+				skill+=character.getCharisma()+character.getObedience()/2+character.getFinalValue(SpecializationAttribute.CLEANING)/2;
 				break;
-			default:
-				// this should never happen
-				log.error("Don't know how to handle bath attendant activity subtype "+characterAttendTypeMap.get(character)+".");
-				skill=1;
+			case SOAP:
+				skill+=character.getCharisma()+character.getObedience()/2+character.getFinalValue(SpecializationAttribute.WELLNESS);
 				break;
-	        }
-	        
-	        for (Customer customer : getCustomers()) {
+			case MASSAGE:
+				skill+=character.getCharisma()+character.getObedience()/2+character.getFinalValue(SpecializationAttribute.WELLNESS);
+				break;
+
+			}
+			for (Customer customer : getCustomers()) {
+				int tips = (this.getHouse().getValue());
+				for(Room room : this.getHouse().getRooms()){
+					tips+=room.getRoomType().getCost();
+				}
+				tips/=10000;
+				tips = customer.payFixed(tips);
+				amountEarned +=  tips;
 				if (Util.getInt(0, 50) + skill + customer.getSatisfactionAmount() > 50) {
 					amountHappy++;
 					customer.addToSatisfaction(skill, this);
-					int tips = (int)(customer.getMoney() / (200000.0 / skill) + Util.getInt(1, 5)+20);
-					tips = customer.pay(tips, character.getMoneyModifier());
-					overalltips += tips;
-					amountEarned +=  tips;
 					customer.changePayModifier(0.3f);
 				}
 				else {
@@ -314,171 +168,317 @@ public class BathAttendant extends RunningActivity implements BusinessSecondaryA
 				}
 				if(Util.getInt(1, 2)==1 && customer.getStatus()==CustomerStatus.TIRED){customer.setStatus(CustomerStatus.LIVELY);}
 				if(Util.getInt(1, 2)==1 && (customer.getStatus()==CustomerStatus.DRUNK || customer.getStatus()==CustomerStatus.VERYDRUNK)){customer.setStatus(CustomerStatus.TIRED);}
+
+				//private service
+				int obed=10;
+				if(character.getType()==CharacterType.SLAVE){obed+=character.getObedience();}
+				else{obed+=character.getCommand();}
+				if(obed>50){obed=50;}
+				if((obed/3 > Util.getInt(0, 100) || (obed/2>Util.getInt(0, 100) && character.getTraits().contains(Trait.SEXPERT)))){//customer gets private service
+					switch(customer.getPreferredSextype()){
+					case VAGINAL:
+						if(character.getTraits().contains(Trait.NAIAD)){
+						amountVaginal+=1;						
+						customer.addToSatisfaction(character.getFinalValue(Sextype.VAGINAL), this);
+						}
+					case ANAL:
+						if(character.getTraits().contains(Trait.NAIAD)){
+						amountAnal+=1;
+						customer.addToSatisfaction(character.getFinalValue(Sextype.ANAL), this);
+						}
+					case ORAL:
+						if(character.getTraits().contains(Trait.DEEPBREATH)){
+						amountOral+=1;
+						customer.addToSatisfaction(character.getFinalValue(Sextype.ORAL), this);
+						}
+					case TITFUCK:
+						if(character.getTraits().contains(Trait.DEEPBREATH)){
+						amountForeplay+=1;
+						customer.addToSatisfaction(character.getFinalValue(Sextype.FOREPLAY), this);
+						}
+					case FOREPLAY:
+						if(character.getTraits().contains(Trait.DEEPBREATH)){
+						amountForeplay+=1;
+						customer.addToSatisfaction(character.getFinalValue(Sextype.FOREPLAY), this);
+						}
+					default:
+						if(character.getTraits().contains(Trait.NAIAD)){
+						amountGroup+=1;
+						customer.addToSatisfaction(character.getFinalValue(Sextype.GROUP), this);
+						if(amountGroup>getCustomers().size()){amountGroup=getCustomers().size()-1;}
+						}
+					}
+				}
 			}
 			modifyIncome(amountEarned);
-			
-	    	Object arguments[] = {getCustomers().size(), amountHappy, getIncome(), overalltips};
-	    	messageData.addToMessage("\n    ");
-	        switch (characterAttendTypeMap.get(character)) {
-	        
-			case BASIC:
-	    	    messageData.addToMessage(TextUtil.t("attendBath.result.basic", character, arguments));
-				break;
-			case FOREPLAY:
-	    	    messageData.addToMessage(TextUtil.t("attendBath.result.join", character, arguments));
-				break;
-			case ORAL:
-	    	    messageData.addToMessage(TextUtil.t("attendBath.result.oral", character, arguments));
-				break;
-			case TITFUCK:
-	    	    messageData.addToMessage(TextUtil.t("attendBath.result.titfuck", character, arguments));
-				break;
-			case ANAL:
-	    	    messageData.addToMessage(TextUtil.t("attendBath.result.anal", character, arguments));
-				break;
-			case VAGINAL:
-	    	    messageData.addToMessage(TextUtil.t("attendBath.result.vaginal", character, arguments));
-				break;
-			case SEXY:
-	    	    messageData.addToMessage(TextUtil.t("attendBath.result.sexy", character, arguments));
-				break;
-			case SUBMISSIVE:
-				if (character.getRealMinObedience(Sextype.GROUP.getObedienceRequired(), this)*3 <= character.getObedience() ) {
-					messageData.addToMessage(TextUtil.t("attendBath.result.submissive2", character, arguments));
+			Object arg[] = {amountVaginal, amountAnal, amountOral, amountForeplay, amountGroup, amountVaginal+amountAnal+amountOral+amountForeplay};
+			if(amountVaginal > 2 && Util.getInt(0, 3)==1){
+				String message = null;
+				ImageData image;
+				image = ImageUtil.getInstance().getImageDataByTag(ImageTag.VAGINAL, character);
+				if(character.getFinalValue(Sextype.VAGINAL)>=300 && Util.getInt(1, 2)==1 && amountVaginal>5){
+					message=TextUtil.t("attendBath.extras.vaginal3", character, arg);
 				}
-				else {
-					messageData.addToMessage(TextUtil.t("attendBath.result.submissive1", character, arguments));
+				else if (amountVaginal>4 && Util.getInt(1, 2)==1){
+					message=TextUtil.t("attendBath.extras.vaginal2", character, arg);
 				}
+				else{
+					message=TextUtil.t("attendBath.extras.vaginal1", character, arg);
+				}
+				getMessages().add(new MessageData(message, image, character.getBackground()));
+				this.getAttributeModifications().add(new AttributeModification(amountVaginal*0.5f,Sextype.VAGINAL, character));
+			}
+			if(amountAnal > 2 && Util.getInt(0, 3)==1){
+				String message = null;
+				ImageData image;
+				image = ImageUtil.getInstance().getImageDataByTag(ImageTag.ANAL, character);
+				if(character.getFinalValue(Sextype.ANAL)>=300 && Util.getInt(1, 2)==1 && amountAnal>5){
+					message=TextUtil.t("attendBath.extras.anal3", character, arg);
+				}
+				else if (amountAnal>4 && Util.getInt(1, 2)==1){
+					message=TextUtil.t("attendBath.extras.anal2", character, arg);
+				}
+				else{
+					message=TextUtil.t("attendBath.extras.anal1", character, arg);
+				}
+				getMessages().add(new MessageData(message, image, character.getBackground()));
+				this.getAttributeModifications().add(new AttributeModification(amountAnal*0.5f,Sextype.ANAL, character));
+			}
+			if(amountOral > 2 && Util.getInt(0, 3)==1){
+				String message = null;
+				ImageData image;
+				image = ImageUtil.getInstance().getImageDataByTag(ImageTag.ORAL, character);
+				if(character.getFinalValue(Sextype.ORAL)>=300 && Util.getInt(1, 2)==1 && amountOral>5){
+					message=TextUtil.t("attendBath.extras.oral2", character, arg);
+				}
+				else{
+					message=TextUtil.t("attendBath.extras.oral1", character, arg);
+				}
+				getMessages().add(new MessageData(message, image, character.getBackground()));
+				this.getAttributeModifications().add(new AttributeModification(amountOral*0.5f,Sextype.ORAL, character));
+			}
+			if(amountForeplay > 2 && Util.getInt(0, 3)==1){
+				String message = null;
+				ImageData image;
+				image = ImageUtil.getInstance().getImageDataByTag(ImageTag.FOREPLAY, character);
+				switch (Util.getInt(0, 3)){
+				case 0:
+					message=TextUtil.t("attendBath.extras.foreplay1", character, arg);
+					image = ImageUtil.getInstance().getImageDataByTag(ImageTag.TOUCHING, character);
+					break;
+				case 1:
+					message=TextUtil.t("attendBath.extras.foreplay2", character, arg);
+					image = ImageUtil.getInstance().getImageDataByTag(ImageTag.TOUCHING, character);
+					break;
+				default:
+					message=TextUtil.t("attendBath.extras.foreplay3", character, arg);
+					image = ImageUtil.getInstance().getImageDataByTag(ImageTag.KISS, character);
+					break;
+				}
+				
+				getMessages().add(new MessageData(message, image, character.getBackground()));
+				this.getAttributeModifications().add(new AttributeModification(amountForeplay*0.5f,Sextype.FOREPLAY, character));
+			}
+			if(amountGroup >= 2 && Util.getInt(0, 3)==1){
+				String message = null;
+				ImageData image;
+				image = ImageUtil.getInstance().getImageDataByTag(ImageTag.GROUP, character);
+				if(character.getFinalValue(Sextype.GROUP)>=300 && Util.getInt(1, 2)==1 && amountGroup>5){
+					message=TextUtil.t("attendBath.extras.group3", character, arg);
+				}
+				else if (amountGroup>3 ){
+					message=TextUtil.t("attendBath.extras.group2", character, arg);
+				}
+				else if (amountGroup==3){
+					message=TextUtil.t("attendBath.extras.group11", character, arg);
+				}
+				else if (amountGroup==2){
+					message=TextUtil.t("attendBath.extras.group1", character, arg);
+				}
+				if(message!=null){getMessages().add(new MessageData(message, image, character.getBackground()));}
+				this.getAttributeModifications().add(new AttributeModification(amountGroup*0.5f,Sextype.GROUP, character));
+			}
+
+			messageData.addToMessage("\n");
+			switch(characterAction.get(character)){
+			case NORMAL:
+				messageData.addToMessage(TextUtil.t("attendBath.result.normal", character));
 				break;
-			case BORED:
-				// base message already says it all
+			case LAZY:
+				messageData.addToMessage(TextUtil.t("attendBath.result.lazy", character));			
 				break;
-	        }
-    	    if (overalltips>0) {
-    	    	messageData.addToMessage(" "+TextUtil.t("attendBath.result.tips", character, arguments));
-    	    }
+			case RELAX:
+				messageData.addToMessage(TextUtil.t("attendBath.result.relax", character));			
+				break;
+			case SWIMSUIT:
+				messageData.addToMessage(TextUtil.t("attendBath.result.swimsuit", character));				
+				break;
+			case NAKED:
+				messageData.addToMessage(TextUtil.t("attendBath.result.naked", character));			
+				break;
+			case OIL:
+				messageData.addToMessage(TextUtil.t("attendBath.result.oil", character));			
+				break;
+			case INCENCE:
+				messageData.addToMessage(TextUtil.t("attendBath.result.incence", character));			
+				break;
+			case COCKTAILS:
+				messageData.addToMessage(TextUtil.t("attendBath.result.cocktails", character));			
+				break;
+			case CLEAN:
+				messageData.addToMessage(TextUtil.t("attendBath.result.clean", character));			
+				break;
+			case SOAP:
+				messageData.addToMessage(TextUtil.t("attendBath.result.soap", character));			
+				break;
+			case MASSAGE:
+				messageData.addToMessage(TextUtil.t("attendBath.result.massage", character));			
+				break;
+			}
 		}
+
+
 	}
 
-    @Override
-    public List<ModificationData> getStatModifications() {
-        List<ModificationData> modifications = new ArrayList<ModificationData>();
-        for (Charakter character : getCharacters()) {
-        	if (characterAttendTypeMap.get(character)!=AttendType.BORED) {
-	            modifications.add(new ModificationData(TargetType.SINGLE, character, -30, EssentialAttributes.ENERGY));
-	            modifications.add(new ModificationData(TargetType.SINGLE, character, 0.02f, BaseAttributeTypes.CHARISMA));
-        	}
-        	else {
-        		// nothing to do: lose less energy
-	            modifications.add(new ModificationData(TargetType.SINGLE, character, -5, EssentialAttributes.ENERGY));
-        	}
-	        switch (characterAttendTypeMap.get(character)) {
-			case BASIC:
-	            modifications.add(new ModificationData(TargetType.SINGLE, character, 0.02f, BaseAttributeTypes.OBEDIENCE));
-				modifications.add(new ModificationData(TargetType.SINGLE, character, 0.005f, SpecializationAttribute.SEDUCTION));
+	@Override
+	public List<ModificationData> getStatModifications() {
+		List<ModificationData> modifications = new ArrayList<ModificationData>();
+		for (Charakter character : getCharacters()) {
+			switch(characterAction.get(character)){
+			case NORMAL:
+				modifications.add(new ModificationData(TargetType.SINGLE, character, -20, EssentialAttributes.ENERGY));	
+				modifications.add(new ModificationData(TargetType.SINGLE, character, 0.05f, BaseAttributeTypes.OBEDIENCE));
 				break;
-			case FOREPLAY:
-	            modifications.add(new ModificationData(TargetType.SINGLE, character, 1.00f, Sextype.FOREPLAY));
-				modifications.add(new ModificationData(TargetType.SINGLE, character, 0.05f, SpecializationAttribute.SEDUCTION));
+			case LAZY:
+				modifications.add(new ModificationData(TargetType.SINGLE, character, -6, EssentialAttributes.ENERGY));			
 				break;
-			case VAGINAL:
-	            modifications.add(new ModificationData(TargetType.SINGLE, character, 1.00f, Sextype.VAGINAL));
-				modifications.add(new ModificationData(TargetType.SINGLE, character, 0.02f, SpecializationAttribute.SEDUCTION));
+			case RELAX:
+				modifications.add(new ModificationData(TargetType.SINGLE, character, -6, EssentialAttributes.ENERGY));	
+				modifications.add(new ModificationData(TargetType.SINGLE, character, 5, EssentialAttributes.HEALTH));	
+				modifications.add(new ModificationData(TargetType.SINGLE, character, 0.05f, BaseAttributeTypes.OBEDIENCE));
 				break;
-			case TITFUCK:
-	            modifications.add(new ModificationData(TargetType.SINGLE, character, 1.00f, Sextype.TITFUCK));
-				modifications.add(new ModificationData(TargetType.SINGLE, character, 0.05f, SpecializationAttribute.SEDUCTION));
+			case SWIMSUIT:
+				modifications.add(new ModificationData(TargetType.SINGLE, character, -15, EssentialAttributes.ENERGY));			
+				modifications.add(new ModificationData(TargetType.SINGLE, character, 1.1f, SpecializationAttribute.STRIP));
+				modifications.add(new ModificationData(TargetType.SINGLE, character, 0.05f, BaseAttributeTypes.OBEDIENCE));
+				modifications.add(new ModificationData(TargetType.SINGLE, character, 0.05f, BaseAttributeTypes.CHARISMA));
 				break;
-			case ORAL:
-	            modifications.add(new ModificationData(TargetType.SINGLE, character, 1.00f, Sextype.ORAL));
-				modifications.add(new ModificationData(TargetType.SINGLE, character, 0.05f, SpecializationAttribute.SEDUCTION));
+			case NAKED:
+				modifications.add(new ModificationData(TargetType.SINGLE, character, -15, EssentialAttributes.ENERGY));		
+				modifications.add(new ModificationData(TargetType.SINGLE, character, 1.1f, SpecializationAttribute.STRIP));
+				modifications.add(new ModificationData(TargetType.SINGLE, character, 0.1f, BaseAttributeTypes.OBEDIENCE));
+				modifications.add(new ModificationData(TargetType.SINGLE, character, 0.05f, BaseAttributeTypes.CHARISMA));
 				break;
-			case ANAL:
-	            modifications.add(new ModificationData(TargetType.SINGLE, character, 1.00f, Sextype.ANAL));
-				modifications.add(new ModificationData(TargetType.SINGLE, character, 0.05f, SpecializationAttribute.SEDUCTION));
+			case OIL:
+				modifications.add(new ModificationData(TargetType.SINGLE, character, -15, EssentialAttributes.ENERGY));		
+				modifications.add(new ModificationData(TargetType.SINGLE, character, 1.1f, SpecializationAttribute.STRIP));
+				modifications.add(new ModificationData(TargetType.SINGLE, character, 0.05f, BaseAttributeTypes.OBEDIENCE));
+				modifications.add(new ModificationData(TargetType.SINGLE, character, 0.05f, BaseAttributeTypes.CHARISMA));
 				break;
-			case SEXY:
-	            modifications.add(new ModificationData(TargetType.SINGLE, character, 1.00f, SpecializationAttribute.STRIP));
-				modifications.add(new ModificationData(TargetType.SINGLE, character, 0.05f, SpecializationAttribute.SEDUCTION));
+			case INCENCE:
+				modifications.add(new ModificationData(TargetType.SINGLE, character, -10, EssentialAttributes.ENERGY));		
+				modifications.add(new ModificationData(TargetType.SINGLE, character, 1.1f, SpecializationAttribute.PLANTKNOWLEDGE));
+				modifications.add(new ModificationData(TargetType.SINGLE, character, 0.05f, BaseAttributeTypes.OBEDIENCE));
+				modifications.add(new ModificationData(TargetType.SINGLE, character, 0.05f, BaseAttributeTypes.INTELLIGENCE));
 				break;
-			case SUBMISSIVE:
-	            modifications.add(new ModificationData(TargetType.SINGLE, character, 0.75f, Sextype.GROUP));
-				modifications.add(new ModificationData(TargetType.SINGLE, character, 0.01f, SpecializationAttribute.SEDUCTION));
-	            modifications.add(new ModificationData(TargetType.SINGLE, character, 0.30f, BaseAttributeTypes.OBEDIENCE));
-	            modifications.add(new ModificationData(TargetType.SINGLE, character, -5, EssentialAttributes.HEALTH));
+			case COCKTAILS:
+				modifications.add(new ModificationData(TargetType.SINGLE, character, -15, EssentialAttributes.ENERGY));	
+				modifications.add(new ModificationData(TargetType.SINGLE, character, 1.1f, SpecializationAttribute.BARTENDING));
+				modifications.add(new ModificationData(TargetType.SINGLE, character, 0.05f, BaseAttributeTypes.OBEDIENCE));
 				break;
-			case BORED:
-				// no stat improvements
+			case CLEAN:
+				modifications.add(new ModificationData(TargetType.SINGLE, character, -15, EssentialAttributes.ENERGY));	
+				modifications.add(new ModificationData(TargetType.SINGLE, character, 1.1f, SpecializationAttribute.CLEANING));
+				modifications.add(new ModificationData(TargetType.SINGLE, character, 0.05f, BaseAttributeTypes.OBEDIENCE));
 				break;
-	        }
-        }
-        modifications.add(new ModificationData(TargetType.TRAINER, -0.3f, BaseAttributeTypes.COMMAND));
-        return modifications;
-    }
+			case SOAP:
+				modifications.add(new ModificationData(TargetType.SINGLE, character, -20, EssentialAttributes.ENERGY));		
+				modifications.add(new ModificationData(TargetType.SINGLE, character, 1.1f, SpecializationAttribute.WELLNESS));
+				modifications.add(new ModificationData(TargetType.SINGLE, character, 0.08f, BaseAttributeTypes.OBEDIENCE));
+				break;
+			case MASSAGE:
+				modifications.add(new ModificationData(TargetType.SINGLE, character, -25, EssentialAttributes.ENERGY));	
+				modifications.add(new ModificationData(TargetType.SINGLE, character, 1.1f, SpecializationAttribute.WELLNESS));
+				modifications.add(new ModificationData(TargetType.SINGLE, character, 0.05f, BaseAttributeTypes.OBEDIENCE));
+				break;
 
-	
+			}
+
+		}
+		modifications.add(new ModificationData(TargetType.TRAINER, -0.3f, BaseAttributeTypes.COMMAND));
+		return modifications;
+	}
+
+
 	@Override
 	public MessageData getBaseMessage() {
 		int numCustomers = getCustomers().size();
-        String messageText;
-        
-        if (numCustomers>0) {
-        	messageText=TextUtil.t("attendBath.basic", new Object[]{TextUtil.listCharacters(getCharacters()), numCustomers});
-        }
-        else {
-        	messageText=TextUtil.t("attendBath.nobody", new Object[]{TextUtil.listCharacters(getCharacters()), numCustomers});
-        }
-        this.messageData = new MessageData(messageText, null, getBackground());
-        for (Charakter character : getCharacters()) {
-        	List<ImageTag> tags=new ArrayList<ImageTag>();
-        	
-        	if (characterAttendTypeMap.get(character)==AttendType.BORED) {
-        		tags.add(ImageTag.STANDARD);
-        	} else {
-        		
-    	        switch (characterAttendTypeMap.get(character)) {
-    			case FOREPLAY:
-    				tags.add(ImageTag.KISS);
-    				tags.add(ImageTag.FOREPLAY);
-    				tags.add(ImageTag.TOUCHING);
-    				tags.add(ImageTag.LICKING);
-    				tags.add(ImageTag.LAPDANCE);
-    				break;
-    			case ORAL:
-    				tags.add(ImageTag.BLOWJOB);
-    				break;
-    			case ANAL:
-    				tags.add(ImageTag.ANAL);
-    				break;
-    			case VAGINAL:
-    				tags.add(ImageTag.VAGINAL);
-    				break;
-    			case SEXY:
-    				tags.add(ImageTag.SWIMSUIT);
-    				tags.add(ImageTag.NAKED);
-    				tags.add(ImageTag.DANCE);
-    				break;
-    			case TITFUCK:
-    				tags.add(ImageTag.TITFUCK);
-    				break;
-    			case SUBMISSIVE:
-    				tags.add(ImageTag.GROUP);
-    				break;
-    			default:
-    				tags.add(ImageTag.BATHE);
-    				// no additional tags
-    				break;
-    	        }
-        	}
-            this.messageData.addImage(ImageUtil.getInstance().getImageDataByTags(tags, character.getImages()));
-        }
-        return this.messageData;
+		String messageText;
+
+		if (numCustomers>0) {
+			int tips = (this.getHouse().getValue());
+			for(Room room : this.getHouse().getRooms()){
+				tips+=room.getRoomType().getCost();
+			}
+			tips/=10000;
+			tips*=getCustomers().size();
+			messageText=TextUtil.t("attendBath.basic", new Object[]{TextUtil.listCharacters(getCharacters()), numCustomers, tips});
+		}
+		else {
+			messageText=TextUtil.t("attendBath.nobody", new Object[]{TextUtil.listCharacters(getCharacters()), numCustomers});
+		}
+		this.messageData = new MessageData(messageText, null, getBackground());
+		for (Charakter character : getCharacters()) {
+			List<ImageTag> tags=new ArrayList<ImageTag>();
+
+			tags.add(ImageTag.BATHE);
+			switch(characterAction.get(character)){
+			case NORMAL:
+				tags.add(ImageTag.STANDARD);
+				break;
+			case LAZY:
+				tags.add(ImageTag.SLEEP);
+				break;
+			case RELAX:
+				tags.add(ImageTag.SUNBATHE);
+				break;
+			case SWIMSUIT:
+				tags.add(ImageTag.SWIMSUIT);	
+				break;
+			case NAKED:
+				tags.add(ImageTag.NAKED);	
+				break;
+			case OIL:
+				tags.add(ImageTag.DANCE);
+				break;
+			case INCENCE:
+				tags.add(ImageTag.STANDARD);
+				break;
+			case COCKTAILS:
+				tags.add(ImageTag.BARTEND);
+				break;
+			case CLEAN:
+				tags.add(ImageTag.CLEAN);
+				break;
+			case SOAP:
+				tags.add(ImageTag.STANDARD);		
+				break;
+			case MASSAGE:
+				tags.add(ImageTag.NURSE);		
+				break;
+
+			}
+
+			this.messageData.addImage(ImageUtil.getInstance().getImageDataByTags(tags, character.getImages()));
+
+		}
+
+
+		return this.messageData;
 	}
-	
+
 	/**
 	 * Check whether the given character enters the pool.
 	 */
-	public boolean getsWet(Charakter character) {
-		return characterAttendTypeMap.containsKey(character) && characterAttendTypeMap.get(character)!=AttendType.BASIC && characterAttendTypeMap.get(character)!=AttendType.BORED;
-	}
+
 }
