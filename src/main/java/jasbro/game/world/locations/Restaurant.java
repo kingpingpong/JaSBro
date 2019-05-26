@@ -13,19 +13,19 @@ import java.util.List;
 import java.util.Map;
 
 public class Restaurant extends OtherLocation {
-    
+	
 	public Restaurant() {
-    	Map<Time, PlannedActivity> roomUsageMap = getUsageMap();
-        for (Time time : Time.values()) {
-            roomUsageMap.put(time, new PlannedActivity(this, ActivityType.EAT));
-        }
+		Map<Time, PlannedActivity> roomUsageMap = getUsageMap();
+		for (Time time : Time.values()) {
+			roomUsageMap.put(time, new PlannedActivity(this, ActivityType.EAT));
+		}
 	}
 	
 	@Override
 	public ImageData getImage() {
 		return getType().getImage();
 	}
-
+	
 	@Override
 	public List<ActivityDetails> getPossibleActivities(Time time, TypeAmounts typeAmounts) {
 		List<ActivityDetails> possibleActivities = new ArrayList<ActivityDetails>();
@@ -35,28 +35,28 @@ public class Restaurant extends OtherLocation {
 	
 	@Override
 	public List<ActivityDetails> getPossibleActivitiesChildCare(Time time, TypeAmounts typeAmounts) {
-	    List<ActivityDetails> possibleActivities = new ArrayList<ActivityDetails>();
-        possibleActivities.add(new ActivityDetails(ActivityType.EAT));
-        return possibleActivities;
+		List<ActivityDetails> possibleActivities = new ArrayList<ActivityDetails>();
+		possibleActivities.add(new ActivityDetails(ActivityType.EAT));
+		return possibleActivities;
 	}
 	
-
-    @Override
-    public String getName() {
-        return getType().getText();
-    }
-
-    @Override
-    public String getDescription() {
-        return getType().getDescription();
-    }
 	
-    @Override
-    public LocationTypeInterface getLocationType() {
-        return getType();
-    }
-    
-    public LocationType getType() {
-        return LocationType.RESTAURANT;
-    }
+	@Override
+	public String getName() {
+		return getType().getText();
+	}
+	
+	@Override
+	public String getDescription() {
+		return getType().getDescription();
+	}
+	
+	@Override
+	public LocationTypeInterface getLocationType() {
+		return getType();
+	}
+	
+	public LocationType getType() {
+		return LocationType.RESTAURANT;
+	}
 }

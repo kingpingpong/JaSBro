@@ -11,26 +11,26 @@ public abstract class TriggerRequirement {
 	public abstract boolean isValid(TriggerParent triggerParent) throws EvalError;
 	
 	public boolean canAddRequirement(TriggerRequirement triggerRequirement) {
-	    return false;
+		return false;
 	}
 	
 	public List<TriggerRequirement> getSubRequirements() {
-	    return new ArrayList<TriggerRequirement>();
+		return new ArrayList<TriggerRequirement>();
 	}
 	
 	public abstract TriggerRequirementType getType();
 	
-    public static enum Comparison {
-        GREATERTHAN(">"), LESSTHAN("<"), EQUAL("=");
-        
-        private String displayName;
-
-        private Comparison(String displayName) {
-            this.displayName = displayName;
-        }
-        
-        public String getDisplayName() {
-            return displayName;
-        }
-    }
+	public static enum Comparison {
+		GREATERTHAN(">"), LESSTHAN("<"), EQUAL("=");
+		
+		private String displayName;
+		
+		private Comparison(String displayName) {
+			this.displayName = displayName;
+		}
+		
+		public String getDisplayName() {
+			return displayName;
+		}
+	}
 }

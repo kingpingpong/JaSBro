@@ -1,5 +1,8 @@
 package jasbro.game.character.activities.sub;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jasbro.Jasbro;
 import jasbro.Util;
 import jasbro.game.character.activities.RunningActivity;
@@ -11,21 +14,18 @@ import jasbro.gui.pictures.ImageTag;
 import jasbro.gui.pictures.ImageUtil;
 import jasbro.texts.TextUtil;
 
-import java.util.ArrayList;
-import java.util.List;
-
 
 
 public class Fish extends RunningActivity {
 	
-	private final static String smallFish = "Small Fish";
-	private final static String mediumFish = "Medium Fish";
-	private final static String bigFish = "Big Fish";
-
+	private final static String smallFish = "FISH_Small_Fish";
+	private final static String mediumFish = "FISH_Medium_Fish";
+	private final static String bigFish = "FISH_Big_Fish";
+	
 	@Override
 	public MessageData getBaseMessage() {
 		String message = TextUtil.t("fish.basic", getCharacter());
-		message += TextUtil.t("\n");
+		message += "\n";
 		int fishCatch=Util.getInt(0, 8);
 		int amount=Util.getInt(2, 3);
 		Object arguments[] = { amount, getCharacter()};
@@ -50,7 +50,7 @@ public class Fish extends RunningActivity {
 			message += TextUtil.t("fish.none", getCharacter(),arguments);
 			break;
 		}
-		message += TextUtil.t("\n");
+		message += "\n";
 		if(fishCatch>1 && fishCatch<5){
 			if(Util.getInt(0, 10)<5){
 				message += TextUtil.t("fish.eat", getCharacter());
@@ -67,31 +67,33 @@ public class Fish extends RunningActivity {
 					{
 					case 2:
 						Jasbro.getInstance().getData().getInventory().addItems(item, amount);
-
+						break;
 					case 3:
 						item = Jasbro.getInstance().getItems().get(mediumFish);
 						Jasbro.getInstance().getData().getInventory().addItems(item, amount);
-
+						break;
 					case 4:
 						item = Jasbro.getInstance().getItems().get(bigFish);
 						Jasbro.getInstance().getData().getInventory().addItems(item, amount);
+						break;
 					}
 				}
-
-
+				
+				
 			}
 		}
-
+		
 		return new MessageData(message, ImageUtil.getInstance().getImageDataByTag(ImageTag.SWIM, getCharacter()),
 				getCharacterLocation().getImage());
 	}
 	
 	@Override
 	public List<ModificationData> getStatModifications() {
-        List<ModificationData> modifications = new ArrayList<ModificationData>();
-        modifications.add(new ModificationData(TargetType.ALL, -10, EssentialAttributes.ENERGY));
-
-
-        return modifications;
+		List<ModificationData> modifications = new ArrayList<ModificationData>();
+		modifications.add(new ModificationData(TargetType.ALL, -10, EssentialAttributes.ENERGY));
+		modifications.add(new ModificationData(TargetType.ALL, 2.6f, EssentialAttributes.MOTIVATION));
+		
+		
+		return modifications;
 	}
 }

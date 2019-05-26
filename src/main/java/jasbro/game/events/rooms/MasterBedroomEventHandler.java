@@ -15,7 +15,7 @@ import jasbro.game.events.MyEvent;
  *
  */
 public class MasterBedroomEventHandler implements RoomEventHandler {
-
+	
 	@Override
 	public void handleEvent(MyEvent event) {
 		if (event.getType() == EventType.ACTIVITYPERFORMED) {
@@ -40,5 +40,5 @@ public class MasterBedroomEventHandler implements RoomEventHandler {
 			}
 		}
 	}
-
+	
 }

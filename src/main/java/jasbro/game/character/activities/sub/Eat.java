@@ -1,5 +1,8 @@
 package jasbro.game.character.activities.sub;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jasbro.Jasbro;
 import jasbro.game.character.Charakter;
 import jasbro.game.character.activities.RunningActivity;
@@ -10,9 +13,6 @@ import jasbro.gui.pictures.ImageData;
 import jasbro.gui.pictures.ImageTag;
 import jasbro.gui.pictures.ImageUtil;
 import jasbro.texts.TextUtil;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class Eat extends RunningActivity {
 	private final int foodRank;
@@ -81,10 +81,11 @@ public class Eat extends RunningActivity {
 	@Override
 	public List<ModificationData> getStatModifications() {
 		
-        List<ModificationData> modifications = new ArrayList<RunningActivity.ModificationData>();
-        modifications.add(new ModificationData(TargetType.ALL, 0.4f*foodRank, EssentialAttributes.ENERGY));
-        modifications.add(new ModificationData(TargetType.ALL, 0.4f*foodRank, EssentialAttributes.HEALTH));
-        
-        return modifications;
+		List<ModificationData> modifications = new ArrayList<RunningActivity.ModificationData>();
+		modifications.add(new ModificationData(TargetType.ALL, 0.4f*foodRank, EssentialAttributes.ENERGY));
+		modifications.add(new ModificationData(TargetType.ALL, 0.4f*foodRank, EssentialAttributes.HEALTH));
+		modifications.add(new ModificationData(TargetType.ALL, 0.2f*foodRank, EssentialAttributes.MOTIVATION));
+		
+		return modifications;
 	}
 }

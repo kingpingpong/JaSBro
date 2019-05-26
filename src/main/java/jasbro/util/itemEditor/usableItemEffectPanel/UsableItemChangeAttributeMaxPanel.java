@@ -26,7 +26,7 @@ import com.jgoodies.forms.layout.RowSpec;
 
 public class UsableItemChangeAttributeMaxPanel extends JPanel {
 	private UsableItemChangeAttributeMax itemEffect;
-
+	
 	public UsableItemChangeAttributeMaxPanel(UsableItemEffect usableItemEffect) {
 		setLayout(new FormLayout(new ColumnSpec[] {
 				ColumnSpec.decode("left:default"),
@@ -55,7 +55,7 @@ public class UsableItemChangeAttributeMaxPanel extends JPanel {
 			attributeTypeCombobox.addItem(attributeType);
 		}
 		attributeTypeCombobox.setSelectedItem(itemEffect.getAttribute());
-		attributeTypeCombobox.addActionListener(new ActionListener() {			
+		attributeTypeCombobox.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				itemEffect.setAttribute((AttributeType)attributeTypeCombobox.getSelectedItem());
@@ -65,7 +65,7 @@ public class UsableItemChangeAttributeMaxPanel extends JPanel {
 		final JSpinner spinner = new JSpinner();
 		spinner.setValue(itemEffect.getChange());
 		add(spinner, "2, 3, fill, top");
-		spinner.addChangeListener(new ChangeListener() {				
+		spinner.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				itemEffect.setChange((int)spinner.getValue());
@@ -76,7 +76,7 @@ public class UsableItemChangeAttributeMaxPanel extends JPanel {
 		final JSpinner spinner2 = new JSpinner();
 		spinner2.setValue(itemEffect.getMax());
 		add(spinner2, "2, 4, fill, top");
-		spinner2.addChangeListener(new ChangeListener() {				
+		spinner2.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				itemEffect.setMax((int)spinner2.getValue());

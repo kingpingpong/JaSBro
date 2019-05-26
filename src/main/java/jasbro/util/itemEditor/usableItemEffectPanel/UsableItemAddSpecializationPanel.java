@@ -18,32 +18,32 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.RowSpec;
 
 public class UsableItemAddSpecializationPanel extends JPanel {
-    private UsableItemAddSpecialization itemEffect;
-
-    public UsableItemAddSpecializationPanel(UsableItemEffect usableItemEffect) {
-        setLayout(new FormLayout(new ColumnSpec[] {
-                ColumnSpec.decode("left:default"),
-                ColumnSpec.decode("default:grow"),},
-            new RowSpec[] {
-                FormFactory.DEFAULT_ROWSPEC,
-                FormFactory.DEFAULT_ROWSPEC,
-                FormFactory.DEFAULT_ROWSPEC,
-                FormFactory.DEFAULT_ROWSPEC,
-                FormFactory.DEFAULT_ROWSPEC,}));
-        add(new JLabel(usableItemEffect.getName()), "1, 1, left, center");
-        this.itemEffect = (UsableItemAddSpecialization)usableItemEffect;
-        add(new JLabel(TextUtil.t("condition")), "1, 2, left, center");
-        final JComboBox<SpecializationType> SpecializationTypeCombobox = new JComboBox<SpecializationType>();
-        add(SpecializationTypeCombobox, "2, 2, fill, top");
-        for (SpecializationType specializationType : SpecializationType.values()) {
-            SpecializationTypeCombobox.addItem(specializationType);
-        }
-        SpecializationTypeCombobox.setSelectedItem(itemEffect.getSpecializationType());
-        SpecializationTypeCombobox.addActionListener(new ActionListener() {          
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                itemEffect.setSpecializationType((SpecializationType)SpecializationTypeCombobox.getSelectedItem());
-            }
-        });
-    }
+	private UsableItemAddSpecialization itemEffect;
+	
+	public UsableItemAddSpecializationPanel(UsableItemEffect usableItemEffect) {
+		setLayout(new FormLayout(new ColumnSpec[] {
+				ColumnSpec.decode("left:default"),
+				ColumnSpec.decode("default:grow"),},
+				new RowSpec[] {
+				FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.DEFAULT_ROWSPEC,}));
+		add(new JLabel(usableItemEffect.getName()), "1, 1, left, center");
+		this.itemEffect = (UsableItemAddSpecialization)usableItemEffect;
+		add(new JLabel(TextUtil.t("condition")), "1, 2, left, center");
+		final JComboBox<SpecializationType> SpecializationTypeCombobox = new JComboBox<SpecializationType>();
+		add(SpecializationTypeCombobox, "2, 2, fill, top");
+		for (SpecializationType specializationType : SpecializationType.values()) {
+			SpecializationTypeCombobox.addItem(specializationType);
+		}
+		SpecializationTypeCombobox.setSelectedItem(itemEffect.getSpecializationType());
+		SpecializationTypeCombobox.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				itemEffect.setSpecializationType((SpecializationType)SpecializationTypeCombobox.getSelectedItem());
+			}
+		});
+	}
 }

@@ -18,12 +18,12 @@ import com.jgoodies.forms.layout.RowSpec;
 
 public class EquipmentChangeAttackPanel extends JPanel {
 	private EquipmentChangeAttack itemEffect;
-
+	
 	public EquipmentChangeAttackPanel(EquipmentEffect equipmentEffect) {
 		setLayout(new FormLayout(new ColumnSpec[] {
 				ColumnSpec.decode("left:default"),
 				ColumnSpec.decode("default:grow"),},
-			new RowSpec[] {
+				new RowSpec[] {
 				FormFactory.DEFAULT_ROWSPEC,
 				FormFactory.DEFAULT_ROWSPEC,
 				FormFactory.DEFAULT_ROWSPEC,
@@ -31,13 +31,13 @@ public class EquipmentChangeAttackPanel extends JPanel {
 				FormFactory.DEFAULT_ROWSPEC,}));
 		add(new JLabel(equipmentEffect.getName()), "1, 1, left, center");
 		this.itemEffect = (EquipmentChangeAttack)equipmentEffect;
-
+		
 		add(new JLabel(TextUtil.t("ui.amount")), "1, 3, left, center");
 		final JSpinner spinner = new JSpinner();
 		spinner.setModel(new SpinnerNumberModel(new Float(0), new Float(-10), new Float(10), new Float(0.1f)));
 		spinner.setValue(itemEffect.getAmount());
 		add(spinner, "2, 3, fill, top");
-		spinner.addChangeListener(new ChangeListener() {				
+		spinner.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				EquipmentChangeAttack effect = (EquipmentChangeAttack) itemEffect;

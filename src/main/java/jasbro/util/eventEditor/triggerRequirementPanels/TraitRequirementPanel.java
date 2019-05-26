@@ -17,7 +17,7 @@ import com.jgoodies.forms.layout.RowSpec;
 
 public class TraitRequirementPanel extends JPanel {
 	private TraitRequirement triggerRequirement;
-
+	
 	public TraitRequirementPanel(TriggerRequirement triggerRequirementTmp) {
 		setLayout(new FormLayout(new ColumnSpec[] {
 				ColumnSpec.decode("left:default")},
@@ -30,10 +30,10 @@ public class TraitRequirementPanel extends JPanel {
 			traitCombobox.addItem(trait);
 		}
 		traitCombobox.setSelectedItem(triggerRequirement.getTrait());
-		traitCombobox.addActionListener(new ActionListener() {			
+		traitCombobox.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-			    triggerRequirement.setTrait((Trait)traitCombobox.getSelectedItem());
+				triggerRequirement.setTrait((Trait)traitCombobox.getSelectedItem());
 			}
 		});
 	}

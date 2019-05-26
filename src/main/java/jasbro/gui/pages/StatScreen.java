@@ -18,14 +18,14 @@ import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
 
 public class StatScreen extends JPanel implements MessageInterface {
-
+	
 	private StatCollector statCollector;
 	private JTabbedPane tabbedPane;
 	private Time time;
 	private boolean important = true;
 	
-    //Constructor for Gui designer
-    @SuppressWarnings("unused")
+	//Constructor for Gui designer
+	@SuppressWarnings("unused")
 	private StatScreen() {
 		init();
 	}
@@ -81,7 +81,7 @@ public class StatScreen extends JPanel implements MessageInterface {
 			}
 		});
 		tabbedPane.addTab(Time.NIGHT.getText(), null, statPanel, null);
-
+		
 		if (statCollector.getPreviousDayData() != null) {
 			statPanel = new StatPanel(statCollector.getPreviousDayData());
 			statPanel.addMouseListener(new MouseAdapter() {
@@ -103,12 +103,12 @@ public class StatScreen extends JPanel implements MessageInterface {
 			tabbedPane.setSelectedIndex(1);
 		}
 		
-        
-        validate();
-        repaint();
+		
+		validate();
+		repaint();
 	}
 	
-
+	
 	@Override
 	public boolean isPriorityMessage() {
 		return important;
@@ -117,14 +117,14 @@ public class StatScreen extends JPanel implements MessageInterface {
 	public CharacterLocation getCharacterLocation() {
 		return null;
 	}
-
+	
 	public void setCharacterLocation(CharacterLocation characterLocation) {
 	}
 	
 	@Override
 	public void setMessageGroupObject(Object charcterGroupObject) {
 	}
-
+	
 	@Override
 	public Object getMessageGroupObject() {
 		return null;

@@ -41,11 +41,11 @@ public enum UsableItemEffectType {
 		this.itemEffectClass = itemEffectClass;
 		this.itemEffectPanelClass = itemEffectPanelClass;
 	}
-
+	
 	public Class<? extends UsableItemEffect> getItemEffectClass() {
 		return itemEffectClass;
 	}
-
+	
 	public Class<? extends JPanel> getItemEffectPanelClass() {
 		return itemEffectPanelClass;
 	}

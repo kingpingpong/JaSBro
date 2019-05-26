@@ -13,15 +13,15 @@ public class EquipmentAddImageTag extends EquipmentEffect {
 			imageTags.add(imageTag);
 		}
 	}
-
+	
 	public ImageTag getImageTag() {
 		return imageTag;
 	}
-
+	
 	public void setImageTag(ImageTag imageTag) {
 		this.imageTag = imageTag;
 	}
-
+	
 	@Override
 	public EquipmentEffectType getType() {
 		return EquipmentEffectType.ADDIMAGETAG;
@@ -29,7 +29,7 @@ public class EquipmentAddImageTag extends EquipmentEffect {
 	
 	@Override
 	public double getValue() {
-	    return 0;
+		return 0;
 	}
 	
 	@Override

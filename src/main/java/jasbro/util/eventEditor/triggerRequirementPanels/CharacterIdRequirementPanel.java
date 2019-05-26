@@ -15,29 +15,29 @@ import com.jgoodies.forms.layout.RowSpec;
 
 public class CharacterIdRequirementPanel extends JPanel {
 	private CharacterIdRequirement triggerRequirement;
-
+	
 	public CharacterIdRequirementPanel(TriggerRequirement triggerRequirementTmp) {
 		this.triggerRequirement = (CharacterIdRequirement)triggerRequirementTmp;
 		setLayout(new FormLayout(new ColumnSpec[] {
-		        ColumnSpec.decode("max(150dlu;default):grow"),},
-		    new RowSpec[] {
-		        FormFactory.DEFAULT_ROWSPEC,}));
-		        
+				ColumnSpec.decode("max(150dlu;default):grow"),},
+				new RowSpec[] {
+				FormFactory.DEFAULT_ROWSPEC,}));
+		
 		final JTextField textField = new JTextField();
-        add(textField, "1, 1, fill, fill");
-        textField.setText(triggerRequirement.getCharacterId());
-        textField.getDocument().addDocumentListener(new DocumentListener() {
-            public void insertUpdate(DocumentEvent e) {
-                triggerRequirement.setCharacterId(textField.getText());
-            }
-
-            public void removeUpdate(DocumentEvent e) {
-                triggerRequirement.setCharacterId(textField.getText());
-            }
-
-            public void changedUpdate(DocumentEvent e) {
-                triggerRequirement.setCharacterId(textField.getText());
-            }
-        });
+		add(textField, "1, 1, fill, fill");
+		textField.setText(triggerRequirement.getCharacterId());
+		textField.getDocument().addDocumentListener(new DocumentListener() {
+			public void insertUpdate(DocumentEvent e) {
+				triggerRequirement.setCharacterId(textField.getText());
+			}
+			
+			public void removeUpdate(DocumentEvent e) {
+				triggerRequirement.setCharacterId(textField.getText());
+			}
+			
+			public void changedUpdate(DocumentEvent e) {
+				triggerRequirement.setCharacterId(textField.getText());
+			}
+		});
 	}
 }

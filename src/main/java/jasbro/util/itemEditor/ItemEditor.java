@@ -1,7 +1,5 @@
 package jasbro.util.itemEditor;
 
-import jasbro.game.items.Item;
-
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -9,20 +7,23 @@ import javax.swing.JPanel;
 import javax.swing.ToolTipManager;
 import javax.swing.border.EmptyBorder;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.jgoodies.forms.factories.FormFactory;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.RowSpec;
 
-public class ItemEditor extends JFrame {
-    private final static Logger log = Logger.getLogger(ItemEditor.class);
+import jasbro.game.items.Item;
 
+public class ItemEditor extends JFrame {
+	private final static Logger log = LogManager.getLogger(ItemEditor.class);
+	
 	private JPanel contentPane;
 	private ItemEditorPanel itemEditorPanel;
 	private ItemListPanel itemList;
-
+	
 	/**
 	 * Launch the application.
 	 */
@@ -38,7 +39,7 @@ public class ItemEditor extends JFrame {
 			}
 		});
 	}
-
+	
 	/**
 	 * Create the frame.
 	 */
@@ -48,10 +49,10 @@ public class ItemEditor extends JFrame {
 				log.error("Uncaught Exception", e);
 			}
 		});
-    	ToolTipManager.sharedInstance().setDismissDelay(10000);
-    	ToolTipManager.sharedInstance().setInitialDelay(100);
-    	
-    	setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);		
+		ToolTipManager.sharedInstance().setDismissDelay(10000);
+		ToolTipManager.sharedInstance().setInitialDelay(100);
+		
+		setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -68,7 +69,7 @@ public class ItemEditor extends JFrame {
 		itemList = new ItemListPanel(this);
 		contentPane.add(itemList, "1, 1, fill, fill");
 	}
-
+	
 	public void setItem(Item item) {
 		if (itemEditorPanel != null) {
 			contentPane.remove(itemEditorPanel);
@@ -83,5 +84,5 @@ public class ItemEditor extends JFrame {
 		contentPane.validate();
 		contentPane.repaint();
 	}
-
+	
 }

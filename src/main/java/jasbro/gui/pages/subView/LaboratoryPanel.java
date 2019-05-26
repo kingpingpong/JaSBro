@@ -63,26 +63,26 @@ public class LaboratoryPanel extends JPanel {
 			characterSelect.addItem(character);
 		}
 		contentPanel.setLayout(new FormLayout(new ColumnSpec[] {
-		        ColumnSpec.decode("right:default:grow"),
-		        FormFactory.RELATED_GAP_COLSPEC,
-		        ColumnSpec.decode("left:default:grow"),},
-		    new RowSpec[] {
-		        RowSpec.decode("top:pref:grow"),
-		        FormFactory.PREF_ROWSPEC,
-		        RowSpec.decode("top:40dlu"),
-		        FormFactory.PREF_ROWSPEC,
-		        RowSpec.decode("top:20dlu"),
-		        FormFactory.PREF_ROWSPEC,
-		        RowSpec.decode("top:20dlu"),
-		        FormFactory.PREF_ROWSPEC,
-		        RowSpec.decode("default:grow(2)"),}));
+				ColumnSpec.decode("right:default:grow"),
+				FormFactory.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("left:default:grow"),},
+				new RowSpec[] {
+				RowSpec.decode("top:pref:grow"),
+				FormFactory.PREF_ROWSPEC,
+				RowSpec.decode("top:40dlu"),
+				FormFactory.PREF_ROWSPEC,
+				RowSpec.decode("top:20dlu"),
+				FormFactory.PREF_ROWSPEC,
+				RowSpec.decode("top:20dlu"),
+				FormFactory.PREF_ROWSPEC,
+				RowSpec.decode("default:grow(2)"),}));
 		
 		contentPanel.add(characterSelect, "1, 2, 3, 1, fill, fill");
 		
 		cloneAmountSpinner = new JSpinner();
-        cloneAmountSpinner.setModel(new SpinnerNumberModel(1, 1, 10000, 1));
-        cloneAmountSpinner.setEnabled(false);
-        contentPanel.add(cloneAmountSpinner,"1, 4, right, fill");
+		cloneAmountSpinner.setModel(new SpinnerNumberModel(1, 1, 10000, 1));
+		cloneAmountSpinner.setEnabled(false);
+		contentPanel.add(cloneAmountSpinner,"1, 4, right, fill");
 		
 		cloneButton = new JButton(TextUtil.t("laboratory.clone", getSelectedCharacter(), new Object[]{clonePrice}));
 		contentPanel.add(cloneButton, "3, 4, left, fill");		
@@ -93,28 +93,28 @@ public class LaboratoryPanel extends JPanel {
 				if (getSelectedCharacter() != null) {
 					GameData data = Jasbro.getInstance().getData();
 					final int clones = (Integer) cloneAmountSpinner.getValue();
-				    int i=0;
-                    if (data.canAfford(clones * clonePrice)) {
-                        data.spendMoney(clones * clonePrice, "Clone");
-                        Charakter clone;
-                        do {
-                            clone = CharacterSpawner.create(getSelectedCharacter().getBase(), CharacterType.SLAVE);
-                            clone.setName(clone.getName() + TextUtil.t("laboratory.clonenameaddition", getSelectedCharacter()));
-                            data.getCharacters().add(clone);
-                            i++;
-                        } while (i < clones);
-                        if (clones == 1) {
-                            new MessageScreen(TextUtil.t("laboratory.clone.message", getSelectedCharacter()), 
-                                    ImageUtil.getInstance().getImageDataByTag(ImageTag.CLOTHED, clone), clone.getBackground());
-                        }
-                        else {
-                            Object arguments [] = {clones};
-                            new MessageScreen(TextUtil.t("laboratory.clone.message.multiple", getSelectedCharacter(), arguments), 
-                                    ImageUtil.getInstance().getImageDataByTag(ImageTag.CLOTHED, clone), clone.getBackground());
-                        }
-                        Charakter selected = getSelectedCharacter();
-                        init();
-                        characterSelect.setSelectedItem(selected);
+					int i=0;
+					if (data.canAfford(clones * clonePrice)) {
+						data.spendMoney(clones * clonePrice, "Clone");
+						Charakter clone;
+						do {
+							clone = CharacterSpawner.create(getSelectedCharacter().getBase(), CharacterType.SLAVE);
+							clone.setName(clone.getName() + TextUtil.t("laboratory.clonenameaddition", getSelectedCharacter()));
+							data.getCharacters().add(clone);
+							i++;
+						} while (i < clones);
+						if (clones == 1) {
+							new MessageScreen(TextUtil.t("laboratory.clone.message", getSelectedCharacter()), 
+									ImageUtil.getInstance().getImageDataByTag(ImageTag.CLOTHED, clone), clone.getBackground());
+						}
+						else {
+							Object arguments [] = {clones};
+							new MessageScreen(TextUtil.t("laboratory.clone.message.multiple", getSelectedCharacter(), arguments), 
+									ImageUtil.getInstance().getImageDataByTag(ImageTag.CLOTHED, clone), clone.getBackground());
+						}
+						Charakter selected = getSelectedCharacter();
+						init();
+						characterSelect.setSelectedItem(selected);
 					}
 				}
 			}
@@ -193,7 +193,7 @@ public class LaboratoryPanel extends JPanel {
 	}
 	
 	public Charakter getSelectedCharacter() {
-	    return (Charakter) characterSelect.getSelectedItem();
+		return (Charakter) characterSelect.getSelectedItem();
 	}
-
+	
 }

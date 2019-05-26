@@ -7,12 +7,12 @@ import jasbro.game.items.Item;
 
 public class UsableItemRemoveCondition extends UsableItemEffect {
 	private ConditionType conditionType;
-
+	
 	@Override
 	public String getName() {
 		return "Remove Condition";
 	}
-
+	
 	@Override
 	public void apply(Charakter character, Item item) {
 		if (conditionType != null) {
@@ -25,16 +25,16 @@ public class UsableItemRemoveCondition extends UsableItemEffect {
 			}
 		}
 	}
-
+	
 	@Override
 	public UsableItemEffectType getType() {
 		return UsableItemEffectType.REMOVECONDITION;
 	}
-
+	
 	public ConditionType getConditionType() {
 		return conditionType;
 	}
-
+	
 	public void setConditionType(ConditionType conditionType) {
 		this.conditionType = conditionType;
 	}

@@ -14,12 +14,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class Streets extends OtherLocation {	
+public class Streets extends OtherLocation {
 	public Streets() {
-    	Map<Time, PlannedActivity> roomUsageMap = getUsageMap();
-        for (Time time : Time.values()) {
-            roomUsageMap.put(time, new PlannedActivity(this, ActivityType.WHORESTREETS));
-        }
+		Map<Time, PlannedActivity> roomUsageMap = getUsageMap();
+		for (Time time : Time.values()) {
+			roomUsageMap.put(time, new PlannedActivity(this, ActivityType.WHORESTREETS));
+		}
 	}
 	
 	@Override
@@ -34,7 +34,7 @@ public class Streets extends OtherLocation {
 			return new ImageData("images/backgrounds/streets_night.jpg");
 		}
 	}
-
+	
 	@Override
 	public List<ActivityDetails> getPossibleActivities(Time time, TypeAmounts typeAmounts) {
 		List<ActivityDetails> possibleActivities = new ArrayList<ActivityDetails>();
@@ -43,29 +43,30 @@ public class Streets extends OtherLocation {
 		}
 		possibleActivities.add(new ActivityDetails(ActivityType.ADVERTISE));
 		possibleActivities.add(new ActivityDetails(ActivityType.WALK));
+		possibleActivities.add(new ActivityDetails(ActivityType.ROB));
 		
 		if (possibleActivities.size() == 0) {
 			possibleActivities.add(new ActivityDetails(ActivityType.IDLE));
 		}
 		return possibleActivities;
 	}
-
-    @Override
-    public String getName() {
-        return getType().getText();
-    }
-
-    @Override
-    public String getDescription() {
-        return getType().getDescription();
-    }
+	
+	@Override
+	public String getName() {
+		return getType().getText();
+	}
+	
+	@Override
+	public String getDescription() {
+		return getType().getDescription();
+	}
 	
 	@Override
 	public LocationTypeInterface getLocationType() {
-	    return getType();
+		return getType();
 	}
 	
-    public LocationType getType() {
-        return LocationType.STREETS;
-    }
+	public LocationType getType() {
+		return LocationType.STREETS;
+	}
 }

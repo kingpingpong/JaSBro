@@ -16,10 +16,10 @@ public class SpecializationRequirement implements CharacterRequirement {
 	public SpecializationRequirement(final SpecializationType specialization) {
 		this.specialization = specialization;
 	}
-
+	
 	@Override
 	public boolean isValid(ActivityType activity, Charakter character) {
 		return character.getSpecializations().contains(specialization);
 	}
-
+	
 }

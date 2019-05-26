@@ -38,25 +38,28 @@ public class Suck extends Whore {
 	@Override
 	public void init() {
 		super.init();
+		setExecutionTime(15);
+		setCooldownTime(5);
+		setAmountActions(20);
 	}
 	
-    @Override
-    public MessageData getBaseMessage() {
-        MessageData message = super.getBaseMessage();
-        message.addToMessage(TextUtil.t("gloryhole.basic", getCharacter(), getMainCustomer()));
-
-        List<ImageTag> tags = getCharacter().getBaseTags();
-        tags.add(0, ImageTag.BLOWJOB);
-        tags.add(1, ImageTag.GLORYHOLE);
-        if (getMainCustomer().getType() == CustomerType.GROUP) {
-            tags.add(2, ImageTag.BUKKAKE);
-        }
-        tags.addAll(ImageTag.getAssociatedImageTags(getCharacter(), getMainCustomer()));
-
-        ImageData imageData = ImageUtil.getInstance().getImageDataByTags(tags, getCharacter().getImages());
-        message.setImage(imageData);
-        return message;
-    }
+	@Override
+	public MessageData getBaseMessage() {
+		MessageData message = super.getBaseMessage();
+		message.addToMessage(TextUtil.t("gloryhole.basic", getCharacter(), getMainCustomer()));
+		
+		List<ImageTag> tags = getCharacter().getBaseTags();
+		tags.add(0, ImageTag.BLOWJOB);
+		tags.add(1, ImageTag.GLORYHOLE);
+		if (getMainCustomer().getType() == CustomerType.GROUP) {
+			tags.add(2, ImageTag.BUKKAKE);
+		}
+		tags.addAll(ImageTag.getAssociatedImageTags(getCharacter(), getMainCustomer()));
+		
+		ImageData imageData = ImageUtil.getInstance().getImageDataByTags(tags, getCharacter().getImages());
+		message.setImage(imageData);
+		return message;
+	}
 	
 	@Override
 	public List<Sextype> getPossibleSextypes(Customer customer) {
@@ -65,14 +68,14 @@ public class Suck extends Whore {
 		return sextypes;
 	}
 	
-    @Override
-    public void perform() {
-        if (getMainCustomer().getPreferredSextype() == Sextype.ORAL) {
-            getMainCustomer().addToSatisfaction(getCharacter().getFinalValue(Sextype.ORAL) / 4, this);
-        }
-        getMainCustomer().changePayModifier(-0.33f);
-        super.perform();
-    }
+	@Override
+	public void perform() {
+		if (getMainCustomer().getPreferredSextype() == Sextype.ORAL) {
+			getMainCustomer().addToSatisfaction(getCharacter().getFinalValue(Sextype.ORAL) / 4, this);
+		}
+		getMainCustomer().changePayModifier(-0.33f);
+		super.perform();
+	}
 	
 	@Override
 	public List<ModificationData> getStatModifications() {
@@ -87,6 +90,14 @@ public class Suck extends Whore {
 	@Override
 	public Float getAmountActions() {
 		return 0.7f;
+	}
+	@Override
+	public float getExecutionModifier() {
+		return -0.3f;
+	}
+	@Override
+	public float getCooldownModifier() {
+		return -0.5f;
 	}
 	
 	

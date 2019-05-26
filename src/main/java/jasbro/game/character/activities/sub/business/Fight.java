@@ -1,5 +1,8 @@
 package jasbro.game.character.activities.sub.business;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jasbro.Util;
 import jasbro.game.character.Charakter;
 import jasbro.game.character.Gender;
@@ -24,13 +27,15 @@ import jasbro.gui.pictures.ImageTag;
 import jasbro.gui.pictures.ImageUtil;
 import jasbro.texts.TextUtil;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Fight extends RunningActivity implements BusinessMainActivity, BusinessSecondaryActivity {
 	private Unit fighter1;
 	private Unit fighter2;
 	private MessageData message;
+	private enum FightAction {
+		DUEL, GROUP, ROYALRUMBLE, 
+		SLAVEFIGHT,	TEAMMATCH
+		;
+	}
 	
 	@Override
 	public void init() {
@@ -75,12 +80,27 @@ public class Fight extends RunningActivity implements BusinessMainActivity, Busi
 		List<ModificationData> modificationData  = new ArrayList<ModificationData>();
 		if (fighter2 != null) {
 			modificationData.add(new ModificationData(TargetType.ALL, 0.2f, BaseAttributeTypes.STRENGTH));
-			modificationData.add(new ModificationData(TargetType.ALL, 1.0f, SpecializationAttribute.VETERAN));
+			modificationData.add(new ModificationData(TargetType.ALL, 0.8f, SpecializationAttribute.VETERAN));
 			modificationData.add(new ModificationData(TargetType.ALL, -40, EssentialAttributes.ENERGY));
+			if(getCharacters().get(0).getTraits().contains(Trait.FIRSTAID))
+				modificationData.add(new ModificationData(TargetType.ALL, 10, EssentialAttributes.HEALTH));
+			if(getCharacters().get(0).getFinalValue(SpecializationAttribute.AGILITY)>10)
+				modificationData.add(new ModificationData(TargetType.SINGLE, getCharacters().get(0),0.8f, SpecializationAttribute.AGILITY));
+			if(getCharacters().get(0).getFinalValue(SpecializationAttribute.MAGIC)>10)
+				modificationData.add(new ModificationData(TargetType.SINGLE, getCharacters().get(0),0.8f, SpecializationAttribute.MAGIC));
+			if(getCharacters().size()==2){
+				if(getCharacters().get(1).getFinalValue(SpecializationAttribute.AGILITY)>10)
+					modificationData.add(new ModificationData(TargetType.SINGLE, getCharacters().get(1),0.8f, SpecializationAttribute.AGILITY));
+				if(getCharacters().get(1).getFinalValue(SpecializationAttribute.MAGIC)>10)
+					modificationData.add(new ModificationData(TargetType.SINGLE, getCharacters().get(1),0.8f, SpecializationAttribute.MAGIC));
+			}
 		}
 		else {
 			return (new Idle()).getStatModifications();
 		}
+		if(!(getCharacter().getTraits().contains(Trait.LEGACYADVENTURER))){
+			modificationData.add(new ModificationData(TargetType.TRAINER, -0.5f, BaseAttributeTypes.COMMAND));
+		}	
 		return modificationData;
 	}
 	
@@ -127,7 +147,7 @@ public class Fight extends RunningActivity implements BusinessMainActivity, Busi
 				winnings += customer.pay(entertainmentRating);
 			}
 			modifyIncome(winnings);
-	
+			
 			Unit winner = null;
 			if (i <= 100) {
 				if (fighter1.getHitpoints() <= 20 || fighter1.getHitpoints() <= startHitPoints1 - 45) {
@@ -163,49 +183,7 @@ public class Fight extends RunningActivity implements BusinessMainActivity, Busi
 					message += "\n\n" + TextUtil.t("fight.longMatch", arguments);
 				}				
 			}
-			if(getCharacter().getTraits().contains(Trait.SHOWTIME))
-			{
-				int rand=Util.getInt(1, 10);
-				switch (rand){
-				case 1:
-					if(getCharacter().getFinalValue(BaseAttributeTypes.STRENGTH)>50){message += "\n\n" + TextUtil.t("fight.showtime.strong", getCharacter());}
-					break;
-				case 2:
-					if(getCharacter().getTraits().contains(Trait.DISTRACTION) && getCharacter().getGender()==Gender.FEMALE){message += "\n\n" + TextUtil.t("fight.showtime.distraction", getCharacter());}
-					break;
-				case 3:
-					if(getCharacter().getGender()==Gender.FEMALE){message += "\n\n" + TextUtil.t("fight.showtime.loseclothes", getCharacter());}
-					break;
-				case 4:
-					if(getCharacter().getFinalValue(BaseAttributeTypes.STAMINA)>50){message += "\n\n" + TextUtil.t("fight.showtime.finalform", getCharacter());}
-					break;
-				case 5:
-					if(getCharacter().getFinalValue(BaseAttributeTypes.INTELLIGENCE)>50 && getCharacter().getTraits().contains(Trait.CASTTIME)){message += "\n\n" + TextUtil.t("fight.showtime.summon", getCharacter());}
-					break;
-				case 6:
-					if(getCharacter().getFinalValue(SpecializationAttribute.SEDUCTION)>180 && getCharacter().getGender()==Gender.FEMALE){message += "\n\n" + TextUtil.t("fight.showtime.seduction", getCharacter());}
-					break;
-				case 7:
-					if(getCharacter().getTraits().contains(Trait.TOUGH)){message += "\n\n" + TextUtil.t("fight.showtime.tough", getCharacter());}
-					break;
-				case 8:
-					if(getCharacter().getFinalValue(BaseAttributeTypes.INTELLIGENCE)>50 && getCharacter().getTraits().contains(Trait.ELEMENTALSTUDY)){message += "\n\n" + TextUtil.t("fight.showtime.blazehug", getCharacter());}
-					break;
-				case 9:
-					if(getCharacter().getFinalValue(BaseAttributeTypes.CHARISMA)>50){message += "\n\n" + TextUtil.t("fight.showtime.cool", getCharacter());}
-					break;
-				case 10:
-					if(getCharacter().getTraits().contains(Trait.LOSTARTS)){message += "\n\n" + TextUtil.t("fight.showtime.lostarts", getCharacter());}
-					break;
-				default:
-					break;
 
-
-				}
-				
-				
-				
-			}
 			
 			if (getCharacters().size() > 1) {
 				ImageData image1;
@@ -217,10 +195,18 @@ public class Fight extends RunningActivity implements BusinessMainActivity, Busi
 				else  if (winner == getCharacters().get(0)) {
 					image1 = ImageUtil.getInstance().getImageDataByTag(ImageTag.VICTORIOUS, getCharacters().get(0));
 					image2 = ImageUtil.getInstance().getImageDataByTag(ImageTag.HURT, getCharacters().get(1));
+					
+					if (getCharacters().get(0).getTraits().contains(Trait.REPTILIANMOTIVATION)) {
+						addAttributeModification(this,2.0f, getCharacters().get(0), EssentialAttributes.MOTIVATION);
+					}		
 				}
 				else {
 					image1 = ImageUtil.getInstance().getImageDataByTag(ImageTag.HURT, getCharacters().get(0));
 					image2 = ImageUtil.getInstance().getImageDataByTag(ImageTag.VICTORIOUS, getCharacters().get(1));
+					
+					if (getCharacters().get(1).getTraits().contains(Trait.REPTILIANMOTIVATION)) {
+						addAttributeModification(this,2.0f, getCharacters().get(1), EssentialAttributes.MOTIVATION);
+					}	
 				}
 				getMessages().add(new MessageData(message, image1, image2, getCharacter().getBackground()));
 			}
@@ -269,8 +255,8 @@ public class Fight extends RunningActivity implements BusinessMainActivity, Busi
 							getMessages().add(new MessageData(message, image1, image2,  getCharacter().getBackground()));
 						}
 					else{
-                        image = ImageUtil.getInstance().getImageDataByTag(ImageTag.HURT, getCharacter());
-                        getMessages().add(new MessageData(message, image, getCharacter().getBackground()));
+						image = ImageUtil.getInstance().getImageDataByTag(ImageTag.HURT, getCharacter());
+						getMessages().add(new MessageData(message, image, getCharacter().getBackground()));
 					}
 				}
 				
@@ -301,8 +287,8 @@ public class Fight extends RunningActivity implements BusinessMainActivity, Busi
 			}
 		}
 	}
-
-
+	
+	
 	@Override
 	public int getMaxAttendees() {
 		return 40;

@@ -13,9 +13,9 @@ import java.util.List;
  * @author somextra
  */
 public class MinimumOccupantRequirement implements ActivityRequirement {
-
+	
 	private final int minimum;
-
+	
 	/**
 	 * Create a new requirement with the given minimum.
 	 * 
@@ -25,10 +25,10 @@ public class MinimumOccupantRequirement implements ActivityRequirement {
 	public MinimumOccupantRequirement(final int minimum) {
 		this.minimum = minimum;
 	}
-
+	
 	@Override
 	public boolean isValid(ActivityType activity, List<Charakter> characters, TypeAmounts typeAmounts) {
 		return characters.size() >= minimum;
 	}
-
+	
 }

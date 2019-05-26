@@ -22,60 +22,60 @@ import jasbro.util.eventEditor.triggerRequirementPanels.UnlockRequirementPanel;
 import javax.swing.JPanel;
 
 public enum TriggerRequirementType {
-    ANDREQUIREMENT(AndRequirement.class, null),
-    ORREQUIREMENT(OrRequirement.class, null),
-    NOTREQUIREMENT(NotRequirement.class, null),
-    
-    ACTIVITYREQUIREMENT(ActivityRequirement.class, ActivityTypeRequirementPanel.class),
-    LOCATIONTYPEREQUIREMENT(LocationTypeRequirement.class, LocationTypeRequirementPanel.class),
-    CHANCEREQUIREMENT(ChanceRequirement.class, ChanceRequirementPanel.class),
-    
-    NOCHILDPRESENTREQUIREMENT(NoChildPresentRequirement.class, null),
-    SAMECHARACTERREQUIREMENT(SameCharacterRequirement.class, null),
-    RECURRINGDAYREQUIREMENT(RecurringDayRequirement.class, RecurringDayRequirementPanel.class),
-    DAYREQUIREMENT(DayRequirement.class, DayRequirementPanel.class),
-    MONEYREQUIREMENT(MoneyRequirement.class, MoneyRequirementPanel.class),
-    
-    ALLCHARACTERSREQUIREMENT(AllCharactersRequirement.class, null),
-    MINIMUMCHARACTERSMATCHREQUIREMENT(MinimumCharactersMatchRequirement.class, MinimumCharactersMatchRequirementPanel.class),
-    ANYOFOWNEDCHARACTERSREQUIREMENT(AnyOfOwnedCharactersRequirement.class, null),
-    MAINCHARACTERREQUIREMENT(MainCharacterRequirement.class, null),
-    
-    ATTRIBUTEREQUIREMENT(AttributeRequirement.class, AttributeRequirementPanel.class),
-    CHARACTERTYPEREQUIREMENT(CharacterTypeRequirement.class, CharacterTypeRequirementPanel.class),
-    TRAITREQUIREMENT(TraitRequirement.class, TraitRequirementPanel.class),
-    SPECIALIZATIONREQUIREMENT(SpecializationRequirement.class, SpecializationRequirementPanel.class),
-    FAMEREQUIREMENT(FameRequirement.class, FameRequirementPanel.class),
-    CHARACTERIDREQUIREMENT(CharacterIdRequirement.class, CharacterIdRequirementPanel.class),
-    
-    EXACTCHARACTERAMOUNTREQUIREMENT(ExactCharacterAmountRequirement.class, null),
-    MAXIMUMCHARACTERAMOUNTREQUIREMENT(MaximumCharacterAmountRequirement.class, MaximumCharacterAmountRequirementPanel.class),
-    MINIMUMCHARACTERAMOUNTREQUIREMENT(MinimumCharacterAmountRequirement.class, MinimumCharacterAmountRequirementPanel.class),
-
-    
-    UNLOCKREQUIREMENT(UnlockRequirement.class, UnlockRequirementPanel.class),
-    CHILDCAREREQUIREMENT(ChildCareRequirement.class, null),
+	ANDREQUIREMENT(AndRequirement.class, null),
+	ORREQUIREMENT(OrRequirement.class, null),
+	NOTREQUIREMENT(NotRequirement.class, null),
 	
-    CODEREQUIREMENT(CodeRequirement.class, CodeRequirementPanel.class)
+	ACTIVITYREQUIREMENT(ActivityRequirement.class, ActivityTypeRequirementPanel.class),
+	LOCATIONTYPEREQUIREMENT(LocationTypeRequirement.class, LocationTypeRequirementPanel.class),
+	CHANCEREQUIREMENT(ChanceRequirement.class, ChanceRequirementPanel.class),
+	
+	NOCHILDPRESENTREQUIREMENT(NoChildPresentRequirement.class, null),
+	SAMECHARACTERREQUIREMENT(SameCharacterRequirement.class, null),
+	RECURRINGDAYREQUIREMENT(RecurringDayRequirement.class, RecurringDayRequirementPanel.class),
+	DAYREQUIREMENT(DayRequirement.class, DayRequirementPanel.class),
+	MONEYREQUIREMENT(MoneyRequirement.class, MoneyRequirementPanel.class),
+	
+	ALLCHARACTERSREQUIREMENT(AllCharactersRequirement.class, null),
+	MINIMUMCHARACTERSMATCHREQUIREMENT(MinimumCharactersMatchRequirement.class, MinimumCharactersMatchRequirementPanel.class),
+	ANYOFOWNEDCHARACTERSREQUIREMENT(AnyOfOwnedCharactersRequirement.class, null),
+	MAINCHARACTERREQUIREMENT(MainCharacterRequirement.class, null),
+	
+	ATTRIBUTEREQUIREMENT(AttributeRequirement.class, AttributeRequirementPanel.class),
+	CHARACTERTYPEREQUIREMENT(CharacterTypeRequirement.class, CharacterTypeRequirementPanel.class),
+	TRAITREQUIREMENT(TraitRequirement.class, TraitRequirementPanel.class),
+	SPECIALIZATIONREQUIREMENT(SpecializationRequirement.class, SpecializationRequirementPanel.class),
+	FAMEREQUIREMENT(FameRequirement.class, FameRequirementPanel.class),
+	CHARACTERIDREQUIREMENT(CharacterIdRequirement.class, CharacterIdRequirementPanel.class),
+	
+	EXACTCHARACTERAMOUNTREQUIREMENT(ExactCharacterAmountRequirement.class, null),
+	MAXIMUMCHARACTERAMOUNTREQUIREMENT(MaximumCharacterAmountRequirement.class, MaximumCharacterAmountRequirementPanel.class),
+	MINIMUMCHARACTERAMOUNTREQUIREMENT(MinimumCharacterAmountRequirement.class, MinimumCharacterAmountRequirementPanel.class),
+	
+	
+	UNLOCKREQUIREMENT(UnlockRequirement.class, UnlockRequirementPanel.class),
+	CHILDCAREREQUIREMENT(ChildCareRequirement.class, null),
+	
+	CODEREQUIREMENT(CodeRequirement.class, CodeRequirementPanel.class)
 	;
 	
-    private Class<? extends TriggerRequirement> requirementClass;
-    private Class<? extends JPanel> requirementPanelClass;
-    
-    private TriggerRequirementType(Class<? extends TriggerRequirement> requirementClass, Class<? extends JPanel> requirementPanelClass) {
-        this.requirementClass = requirementClass;
-        this.requirementPanelClass = requirementPanelClass;
-    }
-    
-    public String getText() {
-        return TextUtil.t(this.toString());
-    }    
-    
-    public Class<? extends TriggerRequirement> getRequirementClass() {
-        return requirementClass;
-    }
-    public Class<? extends JPanel> getEventPanelClass() {
-        return requirementPanelClass;
-    }
-    
+	private Class<? extends TriggerRequirement> requirementClass;
+	private Class<? extends JPanel> requirementPanelClass;
+	
+	private TriggerRequirementType(Class<? extends TriggerRequirement> requirementClass, Class<? extends JPanel> requirementPanelClass) {
+		this.requirementClass = requirementClass;
+		this.requirementPanelClass = requirementPanelClass;
+	}
+	
+	public String getText() {
+		return TextUtil.t(this.toString());
+	}
+	
+	public Class<? extends TriggerRequirement> getRequirementClass() {
+		return requirementClass;
+	}
+	public Class<? extends JPanel> getEventPanelClass() {
+		return requirementPanelClass;
+	}
+	
 }

@@ -11,16 +11,16 @@ import jasbro.game.character.activities.ActivityType;
  *
  */
 public class CharacterTypeRequirement implements CharacterRequirement {
-
+	
 	private final CharacterType type;
-
+	
 	public CharacterTypeRequirement(final CharacterType type) {
 		this.type = type;
 	}
-
+	
 	@Override
 	public boolean isValid(ActivityType activity, Charakter character) {
 		return character.getType().equals(type);
 	}
-
+	
 }

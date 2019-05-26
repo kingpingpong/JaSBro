@@ -6,11 +6,11 @@ import jasbro.game.items.Item;
 
 public class UsableItemAddGold extends UsableItemEffect {
 	public int amount;
-
+	
 	public int getAmount() {
 		return amount;
 	}
-
+	
 	public void setAmount(int amount) {
 		this.amount = amount;
 	}
@@ -24,12 +24,12 @@ public class UsableItemAddGold extends UsableItemEffect {
 			Jasbro.getInstance().getData().spendMoney(-amount, item.getName());
 		}
 	}
-
+	
 	@Override
 	public String getName() {
 		return "Add gold effect";
 	}
-
+	
 	@Override
 	public UsableItemEffectType getType() {
 		return UsableItemEffectType.ADDGOLD;

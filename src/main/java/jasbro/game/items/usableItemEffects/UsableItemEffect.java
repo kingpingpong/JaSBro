@@ -16,5 +16,5 @@ public abstract class UsableItemEffect implements Serializable {
 		return new ArrayList<UsableItemEffect>();
 	}
 	
-
+	
 }

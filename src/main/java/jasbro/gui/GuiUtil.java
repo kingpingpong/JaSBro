@@ -30,26 +30,26 @@ public class GuiUtil {
 	
 	public static JTextArea getDefaultTextarea() {
 		JTextArea messageField = new JTextArea();
-        messageField.setLineWrap(true);
-        messageField.setWrapStyleWord(true);
-        messageField.setOpaque(false);
-        messageField.setEditable(false);
-        messageField.setFont(DEFAULTSMALLBOLDFONT);
-        messageField.setMinimumSize(new Dimension(1, 1));
-        return messageField;
+		messageField.setLineWrap(true);
+		messageField.setWrapStyleWord(true);
+		messageField.setOpaque(false);
+		messageField.setEditable(false);
+		messageField.setFont(DEFAULTSMALLBOLDFONT);
+		messageField.setMinimumSize(new Dimension(1, 1));
+		return messageField;
 	}
 	
 	public static void addMessageToEvent(MessageData messageData, MyEvent event) {
-	    if (event.getSource() instanceof RunningActivity) {
-	        RunningActivity runningActivity =  (RunningActivity) event.getSource();
-	        runningActivity.getMessages().add(messageData);
-	    }
-	    else if (event instanceof AttributeChangedEvent && ((AttributeChangedEvent)event).getActivity() != null) {
-	        RunningActivity runningActivity =  ((AttributeChangedEvent)event).getActivity();
-            runningActivity.getMessages().add(messageData);
-	    }
-	    else {
-	        messageData.createMessageScreen();
-	    }
+		if (event.getSource() instanceof RunningActivity) {
+			RunningActivity runningActivity =  (RunningActivity) event.getSource();
+			runningActivity.getMessages().add(messageData);
+		}
+		else if (event instanceof AttributeChangedEvent && ((AttributeChangedEvent)event).getActivity() != null) {
+			RunningActivity runningActivity =  ((AttributeChangedEvent)event).getActivity();
+			runningActivity.getMessages().add(messageData);
+		}
+		else {
+			messageData.createMessageScreen();
+		}
 	}
 }

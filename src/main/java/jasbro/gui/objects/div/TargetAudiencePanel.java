@@ -25,8 +25,8 @@ public class TargetAudiencePanel extends TranslucentPanel {
 	private boolean valueUpdating;
 	
 	public TargetAudiencePanel(House house) {
-    	setPreferredSize(null);
-
+		setPreferredSize(null);
+		
 		this.house = house;
 		setLayout(new FormLayout(new ColumnSpec[] {
 				FormFactory.RELATED_GAP_COLSPEC,
@@ -60,7 +60,7 @@ public class TargetAudiencePanel extends TranslucentPanel {
 		maleAudienceSlider.setPaintLabels(true);
 		maleAudienceSlider.setPaintTrack(true);
 		maleAudienceSlider.setSnapToTicks(true);
-		maleAudienceSlider.addChangeListener(new ChangeListener() {			
+		maleAudienceSlider.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				if (!valueUpdating) {
@@ -89,7 +89,7 @@ public class TargetAudiencePanel extends TranslucentPanel {
 		femaleAudienceSlider.setPaintLabels(true);
 		femaleAudienceSlider.setPaintTrack(true);
 		femaleAudienceSlider.setSnapToTicks(true);
-		femaleAudienceSlider.addChangeListener(new ChangeListener() {			
+		femaleAudienceSlider.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				if (!valueUpdating) {
@@ -118,7 +118,7 @@ public class TargetAudiencePanel extends TranslucentPanel {
 		futaAudienceSlider.setPaintLabels(true);
 		futaAudienceSlider.setPaintTrack(true);
 		futaAudienceSlider.setSnapToTicks(true);
-		futaAudienceSlider.addChangeListener(new ChangeListener() {			
+		futaAudienceSlider.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				if (!valueUpdating) {
@@ -144,5 +144,5 @@ public class TargetAudiencePanel extends TranslucentPanel {
 		valueUpdating = false;
 		repaint();
 	}
-
+	
 }

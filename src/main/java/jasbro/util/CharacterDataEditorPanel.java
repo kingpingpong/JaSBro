@@ -1,14 +1,5 @@
 package jasbro.util;
 
-import jasbro.game.character.CharacterBase;
-import jasbro.game.character.CharacterType;
-import jasbro.game.character.Gender;
-import jasbro.game.character.attributes.BaseAttributeTypes;
-import jasbro.game.character.specialization.SpecializationType;
-import jasbro.game.character.traits.Trait;
-import jasbro.gui.GuiUtil;
-import jasbro.texts.TextUtil;
-
 import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -37,24 +28,28 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-import org.apache.log4j.Logger;
+import jasbro.game.character.CharacterBase;
+import jasbro.game.character.CharacterType;
+import jasbro.game.character.Gender;
+import jasbro.game.character.attributes.BaseAttributeTypes;
+import jasbro.game.character.specialization.SpecializationType;
+import jasbro.game.character.traits.Trait;
+import jasbro.gui.GuiUtil;
+import jasbro.texts.TextUtil;
 
 /**
  * 
  * @author Azrael
  */
 public class CharacterDataEditorPanel extends javax.swing.JPanel implements PropertyChangeListener {
-	@SuppressWarnings("unused")
-	private final static Logger log = Logger.getLogger(CharacterDataEditorPanel.class);
-
 	private CharacterBase character;
-
+	
 	private int pointsToSpend = 0;
 	private boolean noCheckFlag = false;
-
+	
 	private Map<BaseAttributeTypes, JSpinner> attributeSpinnerMap = new HashMap<BaseAttributeTypes, JSpinner>();
 	private Map<Trait, JCheckBox> traitCheckboxMap = new HashMap<Trait, JCheckBox>();
-
+	
 	private javax.swing.JLabel availablePointsLabel;
 	private javax.swing.JLabel jLabel1;
 	private javax.swing.JLabel jLabel2;
@@ -69,7 +64,7 @@ public class CharacterDataEditorPanel extends javax.swing.JPanel implements Prop
 	private JPanel traitPanel;
 	private JTextArea traitDescriptionField;
 	private JTextArea descriptionField;
-
+	
 	/**
 	 * Creates new form AttributeEditor
 	 */
@@ -78,7 +73,7 @@ public class CharacterDataEditorPanel extends javax.swing.JPanel implements Prop
 		addAttributeComponents();
 		addTraitComponents();
 	}
-
+	
 	public void nameChanged() {
 		if (!noCheckFlag) {
 			try {
@@ -100,7 +95,7 @@ public class CharacterDataEditorPanel extends javax.swing.JPanel implements Prop
 			repaint();
 		}
 	}
-
+	
 	public void setCharacter(CharacterBase character) {
 		this.character = character;
 		noCheckFlag = true;
@@ -127,7 +122,7 @@ public class CharacterDataEditorPanel extends javax.swing.JPanel implements Prop
 		descriptionField.setText(character.getDescription());
 		repaint();
 	}
-
+	
 	/**
 	 * This method is called from within the constructor to initialize the form.
 	 * WARNING: Do NOT modify this code. The content of this method is always
@@ -138,17 +133,17 @@ public class CharacterDataEditorPanel extends javax.swing.JPanel implements Prop
 	private synchronized void initComponents() {
 		noCheckFlag = true;
 		setLayout(new java.awt.GridLayout(1, 1));
-
+		
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		add(tabbedPane);
 		
 		JScrollPane scrollPane = new JScrollPane(); 
-        tabbedPane.addTab("Attributes", null, scrollPane, null);
+		tabbedPane.addTab("Attributes", null, scrollPane, null);
 		characterDataPanel = new JPanel();
 		scrollPane.setViewportView(characterDataPanel);
-
+		
 		characterDataPanel.setLayout(new java.awt.GridLayout(0, 2));
-
+		
 		jLabel2 = new javax.swing.JLabel();
 		characterDataPanel.add(jLabel2);
 		jLabel2.setText("Name");
@@ -158,13 +153,13 @@ public class CharacterDataEditorPanel extends javax.swing.JPanel implements Prop
 		
 		lblNewLabel = new JLabel("Gender");
 		characterDataPanel.add(lblNewLabel);
-
+		
 		genderSelection = new JComboBox<Gender>();
 		characterDataPanel.add(genderSelection);
-
+		
 		lblType = new JLabel("Type");
 		characterDataPanel.add(lblType);
-
+		
 		typeSelection = new JComboBox<CharacterType>();
 		characterDataPanel.add(typeSelection);
 		typeSelection.addActionListener(new ActionListener() {
@@ -176,7 +171,7 @@ public class CharacterDataEditorPanel extends javax.swing.JPanel implements Prop
 				}
 			}
 		});
-
+		
 		typeSelection.setRenderer(new DefaultListCellRenderer() {
 			@SuppressWarnings("rawtypes")
 			public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean hasFocus) {
@@ -193,47 +188,48 @@ public class CharacterDataEditorPanel extends javax.swing.JPanel implements Prop
 					label.setText(type.getText());
 				}
 				return label;
-            }
-        });
-
-        typeSelection.addItem(null);
-        for (CharacterType type : CharacterType.values()) {
-            typeSelection.addItem(type);
-        }
-
-        lblType = new JLabel("Initial specialization");
-        characterDataPanel.add(lblType);
+			}
+		});
+		
+		typeSelection.addItem(null);
+		for (CharacterType type : CharacterType.values()) {
+			typeSelection.addItem(type);
+		}
+		
+		lblType = new JLabel("Initial specialization");
+		characterDataPanel.add(lblType);
 		
 		initialSpecializationSelection = new JComboBox<SpecializationType>();
-        characterDataPanel.add(initialSpecializationSelection);
-        initialSpecializationSelection.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (!noCheckFlag) {
-                    character.setInitialSpecialization((SpecializationType) initialSpecializationSelection.getSelectedItem());
-                    setCharacterChanged();
-                }
-            }
-        });
-        
-        initialSpecializationSelection.addItem(null);
-        for (SpecializationType type : SpecializationType.values()) {
-            if (type != SpecializationType.SLAVE && type != SpecializationType.TRAINER && type != SpecializationType.SEX) {
-                initialSpecializationSelection.addItem(type);
-            }
-        }
+		characterDataPanel.add(initialSpecializationSelection);
+		initialSpecializationSelection.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (!noCheckFlag) {
+					character.setInitialSpecialization((SpecializationType) initialSpecializationSelection.getSelectedItem());
+					setCharacterChanged();
+				}
+			}
+		});
+		
+		initialSpecializationSelection.addItem(null);
+		for (SpecializationType type : SpecializationType.values()) {
+			if (type != SpecializationType.SLAVE && type != SpecializationType.TRAINER && type != SpecializationType.SEX) {
+				initialSpecializationSelection.addItem(type);
+			}
+		}
 		
 		jLabel1 = new javax.swing.JLabel();
 		characterDataPanel.add(jLabel1);
-
+		
 		jLabel1.setText("Available Points");
 		availablePointsLabel = new javax.swing.JLabel();
 		characterDataPanel.add(availablePointsLabel);
-
+		
 		availablePointsLabel.setText("0");
 		
 		genderSelection.addItem(Gender.FEMALE);
 		genderSelection.addItem(Gender.MALE);
+		genderSelection.addItem(Gender.FUTA);
 		genderSelection.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -248,39 +244,39 @@ public class CharacterDataEditorPanel extends javax.swing.JPanel implements Prop
 		traitPanel = new JPanel();
 		traitPanel.setLayout(new GridLayout(0, 2));
 		tabbedPane.addTab("Traits", null, traitPanel, null);
-
+		
 		//init description
 		scrollPane = new JScrollPane(); 
 		tabbedPane.addTab("Description Author", null, scrollPane, null);
 		
 		descriptionField = new JTextArea();
-        descriptionField.setLineWrap(true);
-        descriptionField.setWrapStyleWord(true);
-        descriptionField.getDocument().addDocumentListener(new DocumentListener() {
-
+		descriptionField.setLineWrap(true);
+		descriptionField.setWrapStyleWord(true);
+		descriptionField.getDocument().addDocumentListener(new DocumentListener() {
+			
 			public void insertUpdate(DocumentEvent e) {
 				descriptionChanged();
 			}
-
+			
 			public void removeUpdate(DocumentEvent e) {
 				descriptionChanged();
 			}
-
+			
 			public void changedUpdate(DocumentEvent e) {
 				descriptionChanged();
 			}
 		});
 		scrollPane.setViewportView(descriptionField);
-        
-        noCheckFlag = false;
+		
+		noCheckFlag = false;
 	}
-
+	
 	public void propertyChange(PropertyChangeEvent evt) {
 		if (!noCheckFlag) {
 			Integer oldInt = (Integer) evt.getOldValue();
 			Integer newInt = (Integer) evt.getNewValue();
 			JSpinner spinner = (JSpinner) ((JComponent) evt.getSource()).getParent().getParent();
-
+			
 			if (newInt < oldInt) {
 				pointsToSpend++;
 			} else {
@@ -290,7 +286,7 @@ public class CharacterDataEditorPanel extends javax.swing.JPanel implements Prop
 					noCheckFlag = false;
 				} else {
 					pointsToSpend--;
-
+					
 					if (pointsToSpend == 0) {
 						for (BaseAttributeTypes attribute : BaseAttributeTypes.values()) {
 							spinner = attributeSpinnerMap.get(attribute);
@@ -309,22 +305,22 @@ public class CharacterDataEditorPanel extends javax.swing.JPanel implements Prop
 	
 	private void addAttributeComponents() {
 		nameField.getDocument().addDocumentListener(new DocumentListener() {
-
+			
 			public void insertUpdate(DocumentEvent e) {
 				nameChanged();
 			}
-
+			
 			public void removeUpdate(DocumentEvent e) {
 				nameChanged();
 			}
-
+			
 			public void changedUpdate(DocumentEvent e) {
 				nameChanged();
 			}
 		});
-
+		
 		for (BaseAttributeTypes attribute : BaseAttributeTypes.values()) {
-			if (attribute != BaseAttributeTypes.COMMAND) { // add command later
+			if (attribute != BaseAttributeTypes.COMMAND) {	// add command later
 															// replacing
 															// obedience for
 															// trainers
@@ -335,10 +331,10 @@ public class CharacterDataEditorPanel extends javax.swing.JPanel implements Prop
 					characterDataPanel.add(new JLabel("Obedience / Command"));
 				}
 				JSpinner spinner = new JSpinner(spinnerModel);
-
+				
 				JSpinner.DefaultEditor editor = (JSpinner.DefaultEditor) spinner.getEditor();
 				editor.getTextField().addPropertyChangeListener("value", this);
-
+				
 				attributeSpinnerMap.put(attribute, spinner);
 				characterDataPanel.add(spinner);
 			}
@@ -349,10 +345,10 @@ public class CharacterDataEditorPanel extends javax.swing.JPanel implements Prop
 		JPanel checkboxPanel = new JPanel();
 		checkboxPanel.setLayout(new GridLayout(0, 1));
 		JScrollPane scrollpane = new JScrollPane();
-        scrollpane.setViewportView(checkboxPanel);
-        traitPanel.add(scrollpane);
-        
-        ActionListener al = new ActionListener() {			
+		scrollpane.setViewportView(checkboxPanel);
+		traitPanel.add(scrollpane);
+		
+		ActionListener al = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (!noCheckFlag) {
@@ -377,27 +373,27 @@ public class CharacterDataEditorPanel extends javax.swing.JPanel implements Prop
 				traitDescriptionField.setText(trait.getText() + "\n" + trait.getDescription());
 			}
 		};
-        
-        for (Trait trait : Trait.getBasicTraits()) {
-        	JCheckBox checkBox = new JCheckBox(trait.getText());
-        	checkBox.setToolTipText(trait.getDescription());
-        	checkBox.setActionCommand(trait.toString());
-        	checkBox.addActionListener(al);
-        	checkBox.addMouseListener(ml);
-        	traitCheckboxMap.put(trait, checkBox);
-        	checkboxPanel.add(checkBox);
-        }
-        
-        traitDescriptionField = GuiUtil.getDefaultTextarea();
-        traitPanel.add(traitDescriptionField);
-        
-        
+		
+		for (Trait trait : Trait.getBasicTraits()) {
+			JCheckBox checkBox = new JCheckBox(trait.getText());
+			checkBox.setToolTipText(trait.getDescription());
+			checkBox.setActionCommand(trait.toString());
+			checkBox.addActionListener(al);
+			checkBox.addMouseListener(ml);
+			traitCheckboxMap.put(trait, checkBox);
+			checkboxPanel.add(checkBox);
+		}
+		
+		traitDescriptionField = GuiUtil.getDefaultTextarea();
+		traitPanel.add(traitDescriptionField);
+		
+		
 	}
-
+	
 	private void setCharacterChanged() {
 		character.setChanged(true);
 	}
-
+	
 	public JPanel getCharacterDataPanel() {
 		return characterDataPanel;
 	}

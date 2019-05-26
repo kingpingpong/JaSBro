@@ -13,22 +13,22 @@ public class SpecializationRequirement extends TriggerRequirement implements Cha
 	public boolean isValid(Charakter character, TriggerParent triggerParent) {
 		return character.getSpecializations().contains(specialization);
 	}
-
-    @Override
-    public boolean isValid(TriggerParent triggerParent) throws EvalError {
-        return isValid(triggerParent.getCharacter(), triggerParent);
-    }
-
-    public SpecializationType getSpecialization() {
-        return specialization;
-    }
-
-    public void setSpecialization(SpecializationType specialization) {
-        this.specialization = specialization;
-    }
-    
-    @Override
-    public TriggerRequirementType getType() {
-        return TriggerRequirementType.SPECIALIZATIONREQUIREMENT;
-    }
+	
+	@Override
+	public boolean isValid(TriggerParent triggerParent) throws EvalError {
+		return isValid(triggerParent.getCharacter(), triggerParent);
+	}
+	
+	public SpecializationType getSpecialization() {
+		return specialization;
+	}
+	
+	public void setSpecialization(SpecializationType specialization) {
+		this.specialization = specialization;
+	}
+	
+	@Override
+	public TriggerRequirementType getType() {
+		return TriggerRequirementType.SPECIALIZATIONREQUIREMENT;
+	}
 }

@@ -19,12 +19,12 @@ import com.jgoodies.forms.layout.RowSpec;
 
 public class UsableItemRemoveTraitPanel extends JPanel {
 	private UsableItemRemoveTrait itemEffect;
-
+	
 	public UsableItemRemoveTraitPanel(UsableItemEffect usableItemEffect) {
 		setLayout(new FormLayout(new ColumnSpec[] {
 				ColumnSpec.decode("left:default"),
 				ColumnSpec.decode("default:grow"),},
-			new RowSpec[] {
+				new RowSpec[] {
 				FormFactory.DEFAULT_ROWSPEC,
 				FormFactory.DEFAULT_ROWSPEC,
 				FormFactory.DEFAULT_ROWSPEC,
@@ -39,7 +39,7 @@ public class UsableItemRemoveTraitPanel extends JPanel {
 			traitCombobox.addItem(trait);
 		}
 		traitCombobox.setSelectedItem(itemEffect.getTrait());
-		traitCombobox.addActionListener(new ActionListener() {			
+		traitCombobox.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				itemEffect.setTrait((Trait)traitCombobox.getSelectedItem());

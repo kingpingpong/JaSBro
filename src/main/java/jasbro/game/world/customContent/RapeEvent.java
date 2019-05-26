@@ -11,6 +11,7 @@ import jasbro.game.character.battle.Battle;
 import jasbro.game.character.battle.Unit;
 import jasbro.game.character.specialization.SpecializationAttribute;
 import jasbro.game.character.specialization.SpecializationType;
+import jasbro.game.character.traits.Trait;
 import jasbro.game.events.MessageData;
 import jasbro.game.events.business.Customer;
 import jasbro.game.items.Inventory.ItemData;
@@ -24,17 +25,17 @@ import java.util.List;
 
 public class RapeEvent extends RunningActivity {
 	private int amountActions = 1;
-
+	
 	@Override
 	public void perform() {
 		Charakter character = getCharacter();
 		Customer customer = getMainCustomer();
-
-		if ((!character.getSpecializations().contains(SpecializationType.FIGHTER)) || character.getHealth() < 40) {
+		
+		if ((!character.getSpecializations().contains(SpecializationType.FIGHTER) || character.getTraits().contains(Trait.NUTBUSTER)) || character.getHealth() < 40) {
 			getAttributeModifications().add(new AttributeModification(-15, EssentialAttributes.HEALTH, character));
 			getAttributeModifications().add(new AttributeModification(-20, EssentialAttributes.ENERGY, character));
 			amountActions = 2;
-
+			
 			String message = TextUtil.t("whore.rape", character, customer);
 			List<ImageTag> tags = character.getBaseTags();
 			tags.add(0, ImageTag.FORCED);
@@ -51,12 +52,12 @@ public class RapeEvent extends RunningActivity {
 			int startHitPoints2 = fighter2.getHitpoints();
 			Battle battle = new Battle(fighter1, fighter2);
 			do {
-			    battle.doRound();
+				battle.doRound();
 				i++;
 			} while (i < 1000 && fighter1.getHitpoints() > startHitPoints1 - 50 && fighter2.getHitpoints() > 10);
-	        getMessages().get(0).addToMessage("\n\n" + battle.getCombatText());
-            float diff1 = fighter1.getHitpoints() - startHitPoints1;
-            float diff2 = fighter2.getHitpoints() - startHitPoints2;
+			getMessages().get(0).addToMessage("\n\n" + battle.getCombatText());
+			float diff1 = fighter1.getHitpoints() - startHitPoints1;
+			float diff2 = fighter2.getHitpoints() - startHitPoints2;
 			
 			List<AttributeModification> modifications = new ArrayList<AttributeModification>();
 			AttributeModification attributeModification = new AttributeModification(0, EssentialAttributes.HEALTH, character);
@@ -66,9 +67,13 @@ public class RapeEvent extends RunningActivity {
 			modifications.add(new AttributeModification(0.1f, BaseAttributeTypes.STRENGTH, character));
 			modifications.add(new AttributeModification(0.05f, BaseAttributeTypes.STAMINA, character));
 			modifications.add(new AttributeModification(0.4f, SpecializationAttribute.VETERAN, character));
+			if(character.getFinalValue(SpecializationAttribute.MAGIC)>10)
+				modifications.add(new AttributeModification(0.4f, SpecializationAttribute.MAGIC, character));
+			if(character.getFinalValue(SpecializationAttribute.AGILITY)>10)
+				modifications.add(new AttributeModification(0.4f, SpecializationAttribute.AGILITY, character));
 			MessageData messageData = new MessageData();
 			ImageTag imageTag;
-
+			
 			if (fighter1.getHitpoints() == 0) {
 				return;
 			} else if (fighter2.getHitpoints() > 0 && diff1 < diff2) {
@@ -86,29 +91,29 @@ public class RapeEvent extends RunningActivity {
 				imageTag = ImageTag.VICTORIOUS;
 				
 				if (character.getItemLootChanceModifier() > Util.getInt(0, 100)) {
-				    List<ItemData> loot = customer.spawnItems();
-				    if (loot.size() > 0) {
-				        Jasbro.getInstance().getData().getInventory().addItems(loot);
-		                Object arguments[] = { TextUtil.listItems(loot), customer.getMoney() };
-		                messageData.addToMessage(TextUtil.t("whore.rape.victory.loot", character, customer, arguments));
-				    }
-				    else {
-		                Object arguments[] = { customer.getMoney() };
-                        messageData.addToMessage(TextUtil.t("whore.rape.victory", character, customer, arguments));
-				    }
+					List<ItemData> loot = customer.spawnItems();
+					if (loot.size() > 0) {
+						Jasbro.getInstance().getData().getInventory().addItems(loot);
+						Object arguments[] = { TextUtil.listItems(loot), customer.getMoney() };
+						messageData.addToMessage(TextUtil.t("whore.rape.victory.loot", character, customer, arguments));
+					}
+					else {
+						Object arguments[] = { customer.getMoney() };
+						messageData.addToMessage(TextUtil.t("whore.rape.victory", character, customer, arguments));
+					}
 				}
-                else {
-                    Object arguments[] = { customer.getMoney() };
-                    messageData.addToMessage(TextUtil.t("whore.rape.victory", character, customer, arguments));
-                }
+				else {
+					Object arguments[] = { customer.getMoney() };
+					messageData.addToMessage(TextUtil.t("whore.rape.victory", character, customer, arguments));
+				}
 			} else {
 				modifications.add(new AttributeModification(0.2f, SpecializationAttribute.VETERAN, character));
 				messageData.addToMessage(TextUtil.t("whore.rape.foughtOff", character, customer));
 				imageTag = ImageTag.VICTORIOUS;
 			}
-
+			
 			getAttributeModifications().addAll(modifications);
-
+			
 			List<ImageTag> tags = character.getBaseTags();
 			tags.add(0, imageTag);
 			tags.addAll(ImageTag.getAssociatedImageTags(character, customer));
@@ -118,19 +123,19 @@ public class RapeEvent extends RunningActivity {
 			getMessages().add(messageData);
 		}
 	}
-
+	
 	@Override
 	public MessageData getBaseMessage() {
 		Charakter character = getCharacter();
 		Customer customer = getMainCustomer();
-
+		
 		List<ImageTag> tags = character.getBaseTags();
 		tags.add(0, ImageTag.FIGHT);
 		tags.addAll(ImageTag.getAssociatedImageTags(character, customer));
 		ImageData image = ImageUtil.getInstance().getImageDataByTags(tags, character.getImages());
 		return new MessageData(TextUtil.t("whore.rape.attemptedrape", character, customer), image, character.getBackground());
 	}
-
+	
 	public int getAmountActions() {
 		return amountActions;
 	}

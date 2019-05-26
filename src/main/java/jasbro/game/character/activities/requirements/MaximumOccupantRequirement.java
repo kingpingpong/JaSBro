@@ -14,16 +14,16 @@ import java.util.List;
  *
  */
 public class MaximumOccupantRequirement implements ActivityRequirement {
-
+	
 	private int maximum;
 	
 	public MaximumOccupantRequirement(final int maximum) {
 		this.maximum = maximum;
 	}
-
+	
 	@Override
 	public boolean isValid(ActivityType activity, List<Charakter> characters, TypeAmounts typeAmounts) {
 		return characters.size() <= maximum;
 	}
-
+	
 }

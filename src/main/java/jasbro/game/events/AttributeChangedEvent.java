@@ -12,11 +12,11 @@ public class AttributeChangedEvent extends MyEvent {
 		this.amount = amount;
 		this.activity = activity;
 	}
-
+	
 	public float getAmount() {
 		return amount;
 	}
-
+	
 	public RunningActivity getActivity() {
 		return activity;
 	}

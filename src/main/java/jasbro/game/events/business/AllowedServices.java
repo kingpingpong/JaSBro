@@ -32,27 +32,27 @@ public class AllowedServices {
 	public void setAllowed(Sextype sextype, boolean allowed) {
 		allowedServicesMap.put(sextype, allowed);
 	}
-
+	
 	public boolean isServiceMales() {
 		return serviceMales;
 	}
-
+	
 	public void setServiceMales(boolean serviceMales) {
 		this.serviceMales = serviceMales;
 	}
-
+	
 	public boolean isServiceFemales() {
 		return serviceFemales;
 	}
-
+	
 	public void setServiceFemales(boolean serviceFemales) {
 		this.serviceFemales = serviceFemales;
 	}
-
+	
 	public boolean isServiceFutas() {
 		return serviceFutas;
 	}
-
+	
 	public void setServiceFutas(boolean serviceFutas) {
 		this.serviceFutas = serviceFutas;
 	}

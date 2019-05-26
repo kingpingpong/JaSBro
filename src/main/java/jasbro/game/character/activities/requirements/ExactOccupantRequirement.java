@@ -13,16 +13,16 @@ import java.util.List;
  *
  */
 public class ExactOccupantRequirement implements ActivityRequirement {
-
+	
 	private final int count;
-
+	
 	public ExactOccupantRequirement(final int count) {
 		this.count = count;
 	}
-
+	
 	@Override
 	public boolean isValid(ActivityType activity, List<Charakter> characters, TypeAmounts typeAmounts) {
 		return characters.size() == count;
 	}
-
+	
 }

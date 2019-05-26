@@ -2,16 +2,11 @@ package jasbro.gui.character;
 
 import jasbro.Jasbro;
 import jasbro.game.character.Charakter;
-import jasbro.game.character.Condition;
 import jasbro.game.character.attributes.Attribute;
 import jasbro.game.character.attributes.BaseAttributeTypes;
-import jasbro.game.character.conditions.Buff;
-import jasbro.game.character.conditions.Buff.Satiated;
-import jasbro.game.character.conditions.SunEffect;
 import jasbro.game.character.specialization.SpecializationAttribute;
 import jasbro.game.character.specialization.SpecializationType;
 import jasbro.game.character.traits.Trait;
-import jasbro.game.events.MessageData;
 import jasbro.game.interfaces.AttributeType;
 import jasbro.game.world.market.CharacterSchool;
 import jasbro.game.world.market.CharacterSchool.SpecializationTraining;
@@ -113,27 +108,15 @@ public class SpecializationPanel extends TranslucentPanel {
             Object arguments[] = { character.getStealChance(), character.getStealAmountModifier(), character.getStealItemChance() };
             setToolTipText(TextUtil.htmlPreformatted(TextUtil.t("thiefDataTooltip", arguments)));
         }
-        else if (specialisationType == SpecializationType.WHORE) {
-        	float f= character.getPossibleAmountCustomers();
-        	int i = (int) f;
-            Object arguments[] = {i  };
-            setToolTipText(TextUtil.htmlPreformatted(TextUtil.t("whoreDataTooltip", arguments)));
-        }
-        else if (specialisationType == SpecializationType.CATGIRL) {
-        	float f= character.getFinalValue(SpecializationAttribute.CATGIRL)/5;
-        	int i = (int) f;
-        	
-            Object arguments[] = {i};
-            setToolTipText(TextUtil.htmlPreformatted(TextUtil.t("catgirlDataTooltip", arguments)));
-        }
+
         
         else if (specialisationType == SpecializationType.BARTENDER) {
-        	float f= 5 + character.getFinalValue(SpecializationAttribute.BARTENDING) / 5;
+        	float f= 10 + character.getFinalValue(SpecializationAttribute.BARTENDING) / 3;
         	if(character.getTraits().contains(Trait.MULTITASKING)){
-        		f+=character.getFinalValue(BaseAttributeTypes.INTELLIGENCE)/2;
+        		f+=character.getFinalValue(BaseAttributeTypes.INTELLIGENCE)/4;
         	}
         	int i = (int) f;
-        	if(i>60){i=60;}
+ 
             Object arguments[] = {i  };
             setToolTipText(TextUtil.htmlPreformatted(TextUtil.t("bartenderDataTooltip", arguments)));
         }

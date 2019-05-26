@@ -18,18 +18,18 @@ import javax.swing.KeyStroke;
 public class LoadMenu extends JMenu {
 	public LoadMenu () {
 		super (TextUtil.t("ui.load"));
-
+		
 		// Quickload button
 		JMenuItem loadQuickButton = new JMenuItem (new SlotLoadAction (TextUtil.t("ui.quickload"), -1));
 		loadQuickButton.setMnemonic (KeyEvent.VK_Q);
 		add (loadQuickButton);
-
+		
 		// Autosave load button
 		/*JMenuItem loadAutoButton = new JMenuItem (new SlotLoadAction (TextUtil.t("ui.autosave"), -2));
 		loadAutoButton.setMnemonic (KeyEvent.VK_A);
 		loadAutoButton.setAccelerator (KeyStroke.getKeyStroke (KeyEvent.VK_A, ActionEvent.ALT_MASK));
 		add (loadAutoButton);*/
-
+		
 		// Slot buttons
 		File[] saveGames = getSaveGames();
 		if (saveGames != null) {
@@ -47,7 +47,7 @@ public class LoadMenu extends JMenu {
 				// Create the button if it worked and is not autosave (-2) or quicksave (-1) slot
 				if (i > 0) {
 					JMenuItem loadSlotButton; 
-
+					
 					loadSlotButton = new JMenuItem (new SlotLoadAction (i));
 					add (loadSlotButton);
 					if (i < 10) {

@@ -19,7 +19,7 @@ import com.jgoodies.forms.layout.RowSpec;
 
 public class UsableItemAddConditionPanel extends JPanel {
 	private UsableItemAddCondition itemEffect;
-
+	
 	public UsableItemAddConditionPanel(UsableItemEffect usableItemEffect) {
 		setLayout(new FormLayout(new ColumnSpec[] {
 				ColumnSpec.decode("left:default"),
@@ -39,7 +39,7 @@ public class UsableItemAddConditionPanel extends JPanel {
 			conditionTypeCombobox.addItem(conditionType);
 		}
 		conditionTypeCombobox.setSelectedItem(itemEffect.getConditionType());
-		conditionTypeCombobox.addActionListener(new ActionListener() {			
+		conditionTypeCombobox.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				itemEffect.setConditionType((ConditionType)conditionTypeCombobox.getSelectedItem());

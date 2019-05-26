@@ -11,7 +11,7 @@ import javax.swing.AbstractAction;
 public class SlotSaveAction extends AbstractAction {
 	
 	private int slot;
-
+	
 	public SlotSaveAction (int slot) {
 		super (TextUtil.t("ui.slot") + " " + slot); // TODO change ui.load & ui.save to ui.slot
 		this.slot = slot;
@@ -21,7 +21,7 @@ public class SlotSaveAction extends AbstractAction {
 		super (text);
 		this.slot = slot;
 	}
-
+	
 	public void actionPerformed (ActionEvent e) {
 		if (getSlot() == -1) {
 			Jasbro.getInstance().save(new File("quicksave.xml"));
@@ -31,7 +31,7 @@ public class SlotSaveAction extends AbstractAction {
 		}
 		Jasbro.getInstance().getGui().getMainMenuBar().rebuildLoadMenu();
 	}
-
+	
 	public int getSlot() {
 		return slot;
 	}

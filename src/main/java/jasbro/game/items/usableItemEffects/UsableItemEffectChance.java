@@ -25,29 +25,29 @@ public class UsableItemEffectChance extends UsableItemEffect implements UsableIt
 			itemEffect.apply(character, item);
 		}
 	}	
-
+	
 	@Override
 	public void addEffect(UsableItemEffect itemEffect) {
 		subEffects.add(itemEffect);
 	}
-
+	
 	@Override
 	public String getName() {
 		return "Effect chance";
 	}
-
+	
 	public List<UsableItemEffect> getSubEffects() {
 		return subEffects;
 	}
-
+	
 	public int getChance() {
 		return chance;
 	}
-
+	
 	public void setChance(int chance) {
 		this.chance = chance;
 	}
-
+	
 	@Override
 	public UsableItemEffectType getType() {
 		return UsableItemEffectType.EFFECTCHANCE;

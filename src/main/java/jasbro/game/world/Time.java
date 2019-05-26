@@ -8,11 +8,11 @@ import jasbro.texts.TextUtil;
  */
 public enum Time {
 	MORNING, AFTERNOON, NIGHT;
-
+	
 	public String getText() {
 		return TextUtil.t(this.toString());
 	}
-
+	
 	public Time getNextTimeOfDay() {
 		switch (this) {
 		case MORNING:
@@ -24,7 +24,7 @@ public enum Time {
 		}
 		return null;
 	}
-
+	
 	public Time getPreviousTimeOfDay() {
 		switch (this) {
 		case MORNING:
@@ -36,9 +36,9 @@ public enum Time {
 		}
 		return null;
 	}
-
+	
 	public boolean isNewDay() {
 		return this == MORNING;
 	}
-
+	
 }

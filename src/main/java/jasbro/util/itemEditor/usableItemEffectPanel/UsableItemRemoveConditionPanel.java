@@ -19,12 +19,12 @@ import com.jgoodies.forms.layout.RowSpec;
 
 public class UsableItemRemoveConditionPanel extends JPanel {
 	private UsableItemRemoveCondition itemEffect;
-
+	
 	public UsableItemRemoveConditionPanel(UsableItemEffect usableItemEffect) {
 		setLayout(new FormLayout(new ColumnSpec[] {
 				ColumnSpec.decode("left:default"),
 				ColumnSpec.decode("default:grow"),},
-			new RowSpec[] {
+				new RowSpec[] {
 				FormFactory.DEFAULT_ROWSPEC,
 				FormFactory.DEFAULT_ROWSPEC,
 				FormFactory.DEFAULT_ROWSPEC,
@@ -39,7 +39,7 @@ public class UsableItemRemoveConditionPanel extends JPanel {
 			conditionTypeCombobox.addItem(conditionType);
 		}
 		conditionTypeCombobox.setSelectedItem(itemEffect.getConditionType());
-		conditionTypeCombobox.addActionListener(new ActionListener() {			
+		conditionTypeCombobox.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				itemEffect.setConditionType((ConditionType)conditionTypeCombobox.getSelectedItem());

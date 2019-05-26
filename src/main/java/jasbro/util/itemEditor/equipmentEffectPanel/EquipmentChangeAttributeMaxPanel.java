@@ -23,12 +23,12 @@ import com.jgoodies.forms.layout.RowSpec;
 
 public class EquipmentChangeAttributeMaxPanel extends JPanel {
 	private EquipmentChangeAttributeMax itemEffect;
-
+	
 	public EquipmentChangeAttributeMaxPanel(EquipmentEffect equipmentEffect) {
 		setLayout(new FormLayout(new ColumnSpec[] {
 				ColumnSpec.decode("left:default"),
 				ColumnSpec.decode("default:grow"),},
-			new RowSpec[] {
+				new RowSpec[] {
 				FormFactory.DEFAULT_ROWSPEC,
 				FormFactory.DEFAULT_ROWSPEC,
 				FormFactory.DEFAULT_ROWSPEC,
@@ -43,7 +43,7 @@ public class EquipmentChangeAttributeMaxPanel extends JPanel {
 			attributeTypeCombobox.addItem(attributeType);
 		}
 		attributeTypeCombobox.setSelectedItem(itemEffect.getAttributeType());
-		attributeTypeCombobox.addActionListener(new ActionListener() {			
+		attributeTypeCombobox.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				itemEffect.setAttributeType((AttributeType)attributeTypeCombobox.getSelectedItem());
@@ -53,7 +53,7 @@ public class EquipmentChangeAttributeMaxPanel extends JPanel {
 		final JSpinner spinner = new JSpinner();
 		spinner.setValue(itemEffect.getAmount());
 		add(spinner, "2, 3, fill, top");
-		spinner.addChangeListener(new ChangeListener() {				
+		spinner.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				itemEffect.setAmount((int)spinner.getValue());

@@ -32,20 +32,20 @@ public class AllowedServicesPanel extends TranslucentPanel {
 		
 		this.character = character;
 		layout = new FormLayout(new ColumnSpec[] {
-		        ColumnSpec.decode("2dlu"),
-		        ColumnSpec.decode("default:grow"),
-		        ColumnSpec.decode("2dlu"),
-		        ColumnSpec.decode("default:grow"),
-		        ColumnSpec.decode("2dlu"),},
-		    new RowSpec[] {
-		        FormFactory.NARROW_LINE_GAP_ROWSPEC,
-		        FormFactory.DEFAULT_ROWSPEC,
-		        FormFactory.DEFAULT_ROWSPEC,
-		        FormFactory.DEFAULT_ROWSPEC,
-		        FormFactory.DEFAULT_ROWSPEC,
-		        FormFactory.DEFAULT_ROWSPEC,
-		        FormFactory.DEFAULT_ROWSPEC,
-		        FormFactory.NARROW_LINE_GAP_ROWSPEC,});
+				ColumnSpec.decode("2dlu"),
+				ColumnSpec.decode("default:grow"),
+				ColumnSpec.decode("2dlu"),
+				ColumnSpec.decode("default:grow"),
+				ColumnSpec.decode("2dlu"),},
+				new RowSpec[] {
+				FormFactory.NARROW_LINE_GAP_ROWSPEC,
+				FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.NARROW_LINE_GAP_ROWSPEC,});
 		setLayout(layout);
 		
 		init();
@@ -64,7 +64,7 @@ public class AllowedServicesPanel extends TranslucentPanel {
 		serviceMenCheckbox.setOpaque(false);
 		serviceMenCheckbox.setFont(GuiUtil.DEFAULTSMALLBOLDFONT);
 		serviceMenCheckbox.setBorder(defaultCheckboxBorder);
-		serviceMenCheckbox.addActionListener(new ActionListener() {			
+		serviceMenCheckbox.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				AllowedServicesPanel.this.character.getAllowedServices().setServiceMales(serviceMenCheckbox.isSelected());
@@ -77,7 +77,7 @@ public class AllowedServicesPanel extends TranslucentPanel {
 		serviceWomenCheckbox.setOpaque(false);
 		serviceWomenCheckbox.setFont(GuiUtil.DEFAULTSMALLBOLDFONT);
 		serviceWomenCheckbox.setBorder(defaultCheckboxBorder);
-		serviceWomenCheckbox.addActionListener(new ActionListener() {			
+		serviceWomenCheckbox.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				AllowedServicesPanel.this.character.getAllowedServices().setServiceFemales(serviceWomenCheckbox.isSelected());
@@ -90,7 +90,7 @@ public class AllowedServicesPanel extends TranslucentPanel {
 		serviceFutasCheckbox.setOpaque(false);
 		serviceFutasCheckbox.setFont(GuiUtil.DEFAULTSMALLBOLDFONT);
 		serviceFutasCheckbox.setBorder(defaultCheckboxBorder);
-		serviceFutasCheckbox.addActionListener(new ActionListener() {			
+		serviceFutasCheckbox.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				AllowedServicesPanel.this.character.getAllowedServices().setServiceFutas(serviceFutasCheckbox.isSelected());
@@ -133,7 +133,7 @@ public class AllowedServicesPanel extends TranslucentPanel {
 			checkbox.setOpaque(false);
 			checkbox.setFont(GuiUtil.DEFAULTSMALLBOLDFONT);
 			checkbox.setBorder(defaultCheckboxBorder);
-			checkbox.addActionListener(new ActionListener() {			
+			checkbox.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					AllowedServicesPanel.this.character.getAllowedServices().setAllowed(sextype, checkbox.isSelected());

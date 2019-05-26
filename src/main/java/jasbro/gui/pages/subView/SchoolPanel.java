@@ -50,7 +50,7 @@ public class SchoolPanel extends JPanel {
 				ColumnSpec.decode("default:grow(23)"),
 				ColumnSpec.decode("default:grow(20)"),
 				ColumnSpec.decode("default:grow"),},
-			new RowSpec[] {
+				new RowSpec[] {
 				RowSpec.decode("default:grow"),
 				RowSpec.decode("default:grow(20)"),
 				RowSpec.decode("default:grow"),}));
@@ -67,20 +67,20 @@ public class SchoolPanel extends JPanel {
 				ColumnSpec.decode("5dlu"),
 				ColumnSpec.decode("default:grow"),
 				ColumnSpec.decode("5dlu"),},
-			new RowSpec[] {
+				new RowSpec[] {
 				RowSpec.decode("5dlu"),
 				FormFactory.DEFAULT_ROWSPEC,
 				RowSpec.decode("5dlu"),
 				FormFactory.PREF_ROWSPEC,
 				RowSpec.decode("5dlu"),
-                FormFactory.PREF_ROWSPEC,
-                RowSpec.decode("5dlu"),
+				FormFactory.PREF_ROWSPEC,
+				RowSpec.decode("5dlu"),
 				RowSpec.decode("default:grow"),
 				RowSpec.decode("5dlu"),}));
 		
 		characterSelect = new JComboBox<Charakter>();
-        characterSelect.addKeyListener(new MyKeyListener());
-        characterSelect.updateUI(); //Hack to get custom keylistener to be first in line
+		characterSelect.addKeyListener(new MyKeyListener());
+		characterSelect.updateUI(); //Hack to get custom keylistener to be first in line
 		
 		characterSelect.addItem(null);
 		for (Charakter character : Jasbro.getInstance().getData().getCharacters()) {
@@ -94,14 +94,14 @@ public class SchoolPanel extends JPanel {
 					selectedCharacter = charakter;
 					updateTraining();
 					javax.swing.SwingUtilities.invokeLater(new Runnable() {
-					   public void run() { 
-					       scrollPane.getVerticalScrollBar().setValue(0);
-					   }
+						public void run() { 
+							scrollPane.getVerticalScrollBar().setValue(0);
+						}
 					});
 				}
 			}
 		});
-
+		
 		JLabel lblNewLabel = new JLabel(TextUtil.t("school"));
 		lblNewLabel.setFont(GuiUtil.DEFAULTBOLDFONT);
 		schoolPanel.add(lblNewLabel, "2, 2");
@@ -117,13 +117,13 @@ public class SchoolPanel extends JPanel {
 		chckbxShowUnavailable.setOpaque(false);
 		schoolPanel.add(chckbxShowUnavailable, "2, 6");
 		chckbxShowUnavailable.setSelected(ConfigHandler.isShowUnavailableSchool());
-		chckbxShowUnavailable.addActionListener(new ActionListener() {            
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                ConfigHandler.setShowUnavailableSchool(chckbxShowUnavailable.isSelected());
-                updateTraining();
-            }
-        });
+		chckbxShowUnavailable.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				ConfigHandler.setShowUnavailableSchool(chckbxShowUnavailable.isSelected());
+				updateTraining();
+			}
+		});
 		
 		schoolPanel.add(scrollPane, "2, 8, fill, fill");
 		
@@ -134,7 +134,7 @@ public class SchoolPanel extends JPanel {
 		FormLayout layout = new FormLayout(new ColumnSpec[] {
 				ColumnSpec.decode("center:min:grow"),
 				ColumnSpec.decode("center:min:grow"),},
-			new RowSpec[] {
+				new RowSpec[] {
 				RowSpec.decode("default:grow"),});
 		layout.setColumnGroups(new int[][]{ {1, 2}});
 		trainingPanel.setLayout(layout);
@@ -146,12 +146,12 @@ public class SchoolPanel extends JPanel {
 			possibleTraining = new ArrayList<CharacterSchool.Training>();
 		}
 		else {
-		    if (ConfigHandler.isShowUnavailableSchool()) {
-	            possibleTraining = school.getTrainingOpportunities(selectedCharacter);
-		    }
-		    else {
-		        possibleTraining = school.getTrainingOpportunitiesHideUnavailable(selectedCharacter);
-		    }
+			if (ConfigHandler.isShowUnavailableSchool()) {
+				possibleTraining = school.getTrainingOpportunities(selectedCharacter);
+			}
+			else {
+				possibleTraining = school.getTrainingOpportunitiesHideUnavailable(selectedCharacter);
+			}
 		}
 		trainingPanel.removeAll();
 		FormLayout layout = (FormLayout)trainingPanel.getLayout();
@@ -165,7 +165,7 @@ public class SchoolPanel extends JPanel {
 		revalidate();
 		repaint();
 	}
-
+	
 	
 	private class TrainingInfoPanel extends TranslucentPanel {
 		private Training training;
@@ -178,14 +178,14 @@ public class SchoolPanel extends JPanel {
 			setBorder(GuiUtil.DEFAULTEMPTYBORDER);
 			setLayout(new FormLayout(new ColumnSpec[] {
 					ColumnSpec.decode("default:grow"),},
-				new RowSpec[] {
+					new RowSpec[] {
 					RowSpec.decode("default:grow"),
 					RowSpec.decode("default:grow"),
 					RowSpec.decode("default:none"),}));
-			
+				
 			JTextArea nameField = GuiUtil.getDefaultTextarea();;
-			nameField.setText(training.getName());					
-
+			nameField.setText(training.getName());
+			
 			nameField.setFont(new Font("Tahoma", Font.BOLD, 18));
 			add(nameField,"1,1");
 			
@@ -211,25 +211,25 @@ public class SchoolPanel extends JPanel {
 	}
 	
 	private class MyKeyListener extends KeyAdapter {
-        public void keyPressed( KeyEvent e ) {
-            int curIndex = characterSelect.getSelectedIndex();
-            if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-                if (curIndex == -1) {
-                    curIndex = 0;
-                }
-                if (curIndex + 1 < characterSelect.getItemCount()) {
-                    characterSelect.hidePopup();
-                    characterSelect.setSelectedIndex(curIndex + 1);
-                }
-                e.consume();
-            } 
-            else if (e.getKeyCode() == KeyEvent.VK_UP) {
-                if (curIndex - 1 >= 0) {
-                    characterSelect.hidePopup();
-                    characterSelect.setSelectedIndex(curIndex - 1);
-                }
-                e.consume();
-            }
-        }    
+		public void keyPressed( KeyEvent e ) {
+			int curIndex = characterSelect.getSelectedIndex();
+			if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+				if (curIndex == -1) {
+					curIndex = 0;
+				}
+				if (curIndex + 1 < characterSelect.getItemCount()) {
+					characterSelect.hidePopup();
+					characterSelect.setSelectedIndex(curIndex + 1);
+				}
+				e.consume();
+			} 
+			else if (e.getKeyCode() == KeyEvent.VK_UP) {
+				if (curIndex - 1 >= 0) {
+					characterSelect.hidePopup();
+					characterSelect.setSelectedIndex(curIndex - 1);
+				}
+				e.consume();
+			}
+		}
 	}
 }

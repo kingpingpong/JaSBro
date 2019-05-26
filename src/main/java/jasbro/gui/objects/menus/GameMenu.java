@@ -20,8 +20,8 @@ public class GameMenu extends JMenu {
 		setMnemonic(KeyEvent.VK_ALT);
 		
 		//Main menu button
-        JMenuItem mainMenuButton = new JMenuItem(new MainMenuAction());
-        add(mainMenuButton);
+		JMenuItem mainMenuButton = new JMenuItem(new MainMenuAction());
+		add(mainMenuButton);
 		
 		// New game button
 		JMenuItem newGameButton = new JMenuItem (new NewGameAction()); 
@@ -36,7 +36,7 @@ public class GameMenu extends JMenu {
 		
 		// Load menu
 		add (new LoadMenu ());
-
+		
 		addSeparator();
 		
 		// Exit button
@@ -44,16 +44,16 @@ public class GameMenu extends JMenu {
 		add (exitButton);
 	}
 	
-    private class MainMenuAction extends AbstractAction {
-
-        public MainMenuAction() {
-            super(TextUtil.t("ui.mainmenu"));
-        }
-
-        public void actionPerformed(ActionEvent e) {
-            Jasbro.getInstance().getGui().showMainMenu();
-        }
-    }
+	private class MainMenuAction extends AbstractAction {
+		
+		public MainMenuAction() {
+			super(TextUtil.t("ui.mainmenu"));
+		}
+		
+		public void actionPerformed(ActionEvent e) {
+			Jasbro.getInstance().getGui().showMainMenu();
+		}
+	}
 	
 	private class NewGameAction extends AbstractAction {
 		
@@ -70,7 +70,7 @@ public class GameMenu extends JMenu {
 		public ExitAction () {
 			super (TextUtil.t("ui.quit"));
 		}
-
+		
 		public void actionPerformed (ActionEvent e) {
 			JFrame frame = Jasbro.getInstance().getGui();
 			frame.dispatchEvent (new WindowEvent (frame, WindowEvent.WINDOW_CLOSING));

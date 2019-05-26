@@ -16,27 +16,27 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.RowSpec;
 
 public class EventEffectSetQuestStatusPanel extends JPanel {
-    
-    private WorldEventSetQuestStatus worldEventEffect;
-
-    public EventEffectSetQuestStatusPanel(WorldEventEffect worldEventEffectTmp, WorldEvent worldEventTmp) {
-        setLayout(new FormLayout(new ColumnSpec[] {
-                ColumnSpec.decode("default:grow"),},
-            new RowSpec[] {
-                RowSpec.decode("default:grow"),}));
-        this.worldEventEffect = (WorldEventSetQuestStatus)worldEventEffectTmp;        
-        
-        final JComboBox<QuestStatus> questStatusComboBox = new JComboBox<QuestStatus>();
-        add(questStatusComboBox, "1, 1, fill, top");
-        for (QuestStatus questStatus : QuestStatus.values()) {
-            questStatusComboBox.addItem(questStatus);
-        }
-        questStatusComboBox.setSelectedItem(worldEventEffect.getQuestStatus());
-        questStatusComboBox.addActionListener(new ActionListener() {          
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                worldEventEffect.setQuestStatus((QuestStatus)questStatusComboBox.getSelectedItem());
-            }
-        });
-    }
+	
+	private WorldEventSetQuestStatus worldEventEffect;
+	
+	public EventEffectSetQuestStatusPanel(WorldEventEffect worldEventEffectTmp, WorldEvent worldEventTmp) {
+		setLayout(new FormLayout(new ColumnSpec[] {
+				ColumnSpec.decode("default:grow"),},
+				new RowSpec[] {
+				RowSpec.decode("default:grow"),}));
+		this.worldEventEffect = (WorldEventSetQuestStatus)worldEventEffectTmp;
+		
+		final JComboBox<QuestStatus> questStatusComboBox = new JComboBox<QuestStatus>();
+		add(questStatusComboBox, "1, 1, fill, top");
+		for (QuestStatus questStatus : QuestStatus.values()) {
+			questStatusComboBox.addItem(questStatus);
+		}
+		questStatusComboBox.setSelectedItem(worldEventEffect.getQuestStatus());
+		questStatusComboBox.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				worldEventEffect.setQuestStatus((QuestStatus)questStatusComboBox.getSelectedItem());
+			}
+		});
+	}
 }

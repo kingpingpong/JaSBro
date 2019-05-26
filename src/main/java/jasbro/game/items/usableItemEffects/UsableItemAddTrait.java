@@ -13,20 +13,20 @@ public class UsableItemAddTrait extends UsableItemEffect {
 			character.addTrait(trait);
 		}
 	}
-
+	
 	@Override
 	public String getName() {
 		return "Add Trait";
 	}
-
+	
 	public Trait getTrait() {
 		return trait;
 	}
-
+	
 	public void setTrait(Trait trait) {
 		this.trait = trait;
 	}
-
+	
 	@Override
 	public UsableItemEffectType getType() {
 		return UsableItemEffectType.ADDTRAIT;

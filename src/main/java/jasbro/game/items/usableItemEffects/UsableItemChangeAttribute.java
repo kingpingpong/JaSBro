@@ -16,14 +16,14 @@ public class UsableItemChangeAttribute extends UsableItemEffect {
 	}
 	@Override
 	public void apply(Charakter character, Item item) {
-	    if (attribute != null) {
-	        if (maxChange < minChange) {
-	            int tmp = minChange;
-	            minChange = maxChange;
-	            maxChange = tmp;
-	        }
-	        character.getAttribute(attribute).addToValue(Util.getInt(minChange, maxChange+1), true);
-	    }
+		if (attribute != null) {
+			if (maxChange < minChange) {
+				int tmp = minChange;
+				minChange = maxChange;
+				maxChange = tmp;
+			}
+			character.getAttribute(attribute).addToValue(Util.getInt(minChange, maxChange+1), true);
+		}
 	}
 	
 	public AttributeType getAttribute() {

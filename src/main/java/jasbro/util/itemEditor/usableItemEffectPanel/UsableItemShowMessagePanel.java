@@ -28,7 +28,7 @@ public class UsableItemShowMessagePanel extends JPanel {
 		setLayout(new FormLayout(new ColumnSpec[] {
 				ColumnSpec.decode("left:default"),
 				ColumnSpec.decode("default:grow"),},
-			new RowSpec[] {
+				new RowSpec[] {
 				FormFactory.DEFAULT_ROWSPEC,
 				FormFactory.DEFAULT_ROWSPEC,
 				FormFactory.DEFAULT_ROWSPEC,
@@ -43,7 +43,7 @@ public class UsableItemShowMessagePanel extends JPanel {
 			imageTagComboBox.addItem(imageTag);
 		}
 		imageTagComboBox.setSelectedItem(itemEffect.getImageTag());
-		imageTagComboBox.addActionListener(new ActionListener() {			
+		imageTagComboBox.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				itemEffect.setImageTag((ImageTag)imageTagComboBox.getSelectedItem());
@@ -58,15 +58,15 @@ public class UsableItemShowMessagePanel extends JPanel {
 		textArea.setText(itemEffect.getMessage());
 		textArea.setEditable(true);
 		textArea.getDocument().addDocumentListener(new DocumentListener() {
-
+			
 			public void insertUpdate(DocumentEvent e) {
 				itemEffect.setMessage(textArea.getText());
 			}
-
+			
 			public void removeUpdate(DocumentEvent e) {
 				itemEffect.setMessage(textArea.getText());
 			}
-
+			
 			public void changedUpdate(DocumentEvent e) {
 				itemEffect.setMessage(textArea.getText());
 			}

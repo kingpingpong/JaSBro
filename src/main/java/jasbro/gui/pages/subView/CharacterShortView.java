@@ -39,213 +39,216 @@ import com.jgoodies.forms.layout.RowSpec;
  * @author Azrael
  */
 public class CharacterShortView extends javax.swing.JPanel implements MyEventListener {
-    private Charakter character;
-    private List<IconAttributePanel> attributePanels;
-    private JPanel attributePane;
-    private MyImage characterIcon;
-    private JPanel barPanel;
-    private VerticalAttributeBar energyBar;
-    private VerticalAttributeBar healthBar;
-    private CharacterConditionsPanel characterConditionsPanel;
-
-    /**
-     * Creates new form CharacterShortView
-     */
-    public CharacterShortView() {
-        setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
-        initComponents();           
-    }
-    
-    public CharacterShortView(Charakter character) {
-        this();
-        setCharacter(character);
-    }
-    
-    public CharacterShortView(Charakter character, boolean conditionsPanel) {
-        this(character);
-        if (!conditionsPanel) {
-        	this.characterConditionsPanel.setVisible(false);
-        }
-    }
-    
-    private void initComponents() {
-        characterIcon = new jasbro.gui.objects.div.MyImage();
-        attributePane = new javax.swing.JPanel();
-        
-        attributePanels = new ArrayList<IconAttributePanel>();
-
-        setBackground(new java.awt.Color(232, 203, 142));
-        setMinimumSize(new java.awt.Dimension(12, 24));
-        setPreferredSize(new java.awt.Dimension(120, 240));
-        setLayout(new FormLayout(new ColumnSpec[] {
-                ColumnSpec.decode("1dlu:grow"),
-                ColumnSpec.decode("1dlu:grow"),},
-            new RowSpec[] {
-                RowSpec.decode("1dlu:grow"),
-                RowSpec.decode("1dlu:grow(3)"),}));
-
-        characterIcon.setMaximumSize(new java.awt.Dimension(99999, 999999));
-        characterIcon.setMinimumSize(new java.awt.Dimension(20, 20));
-        characterIcon.setPreferredSize(new java.awt.Dimension(20, 20));
-        add(characterIcon, "1, 1, fill, fill");
-        
-        characterConditionsPanel = new CharacterConditionsPanel();
-        add(characterConditionsPanel, "2, 1, fill, fill");
-        
-        barPanel = new JPanel();        
-        barPanel.setOpaque(false);
-        add(barPanel, "1, 2, fill, fill");
-        barPanel.setLayout(new GridLayout(0, 2, 0, 0));
-        
-        energyBar = new VerticalAttributeBar();
-        barPanel.add(energyBar);
-        
-        healthBar = new VerticalAttributeBar();
-        barPanel.add(healthBar);
-
-       
-
-        attributePane.setMinimumSize(new java.awt.Dimension(20, 60));
-        attributePane.setOpaque(false);
-        attributePane.setPreferredSize(new java.awt.Dimension(20, 60));
-        FormLayout layout = new FormLayout(new ColumnSpec[] {
-        		ColumnSpec.decode("default:grow"),},
-        	new RowSpec[] {
-        		RowSpec.decode("default:grow(20)"),
-        		RowSpec.decode("default:grow"),
-        		RowSpec.decode("default:grow(20)"),
-        		RowSpec.decode("default:grow"),
-        		RowSpec.decode("default:grow(20)"),
-        		RowSpec.decode("default:grow"),
-        		RowSpec.decode("default:grow(20)"),
-        		RowSpec.decode("default:grow"),
-        		RowSpec.decode("default:grow(20)")
-        		});
-        attributePane.setLayout(layout);
-        layout.setRowGroups(new int[][]{ {1, 3, 5, 7, 9}});
-
-        for (int i = 0; i < 5; i++) {
-        	IconAttributePanel attributePanel = new IconAttributePanel();
-        	attributePanels.add(attributePanel);
-        	attributePane.add(attributePanel, "1, " + ((i*2)+1) + ", fill, fill");
-        }
-        
-        add(attributePane, "2, 2, fill, fill");
-        
-        DelegateMouseListener listener = new DelegateMouseListener();
-        characterIcon.addMouseMotionListener(listener);
-        characterIcon.addMouseListener(listener);  
-        attributePane.addMouseMotionListener(listener);
-        attributePane.addMouseListener(listener);  
-        barPanel.addMouseMotionListener(listener);
-        barPanel.addMouseListener(listener);  
-
-        
-        
-        DelegateMouseListener iconDelegateMouseListener = new DelegateMouseListener() {
-        	@Override
-        	public void mouseClicked(MouseEvent e) {
-        		if (!(Jasbro.getInstance().getGui().getLayerPane().getComponent(0) instanceof CharacterScreen)) {
-        			Jasbro.getInstance().getGui().showCharacterView(character);
-        		}
-        	}
-        };
-        characterIcon.addMouseListener(iconDelegateMouseListener);
-        characterIcon.addMouseMotionListener(iconDelegateMouseListener);
-        
-        setFont(GuiUtil.DEFAULTSMALLBOLDFONT);
-        
-        addComponentListener(new ComponentAdapter() {
-        	@Override
-        	public void componentResized(ComponentEvent e) {
-        		CharacterShortView.this.updateFontSize();
-        	}
-		});
-
-    }
-    
-	public Charakter getCharacter() {
-        return character;
-    }
-
-    public final void setCharacter(Charakter character) {
-        characterIcon.setToolTipText(character.getName());
-        characterIcon.setImage(character.getIcon());
-        
-        healthBar.setAttribute(character.getAttribute(EssentialAttributes.HEALTH));
-        energyBar.setAttribute(character.getAttribute(EssentialAttributes.ENERGY));
-        
-        characterConditionsPanel.setCharacter(character);
-        character.addListener(this);
-        
-        this.character = character;
-        
-        updateAttributeDisplay();
-        characterConditionsPanel.update();
-        validate();
-        repaint();
-    }
-    
-    public void updateAttributeDisplay() {
-        if (character != null) {
-            List<AttributeType> attributeList;
-            if (character.getSpecializations().size() > 0) {
-                attributeList = character.getSpecializations().iterator().next().getAssociatedAttributes();
-            }
-            else {
-                attributeList = new ArrayList<AttributeType>();
-                attributeList.add(BaseAttributeTypes.CHARISMA);
-                attributeList.add(BaseAttributeTypes.INTELLIGENCE);
-                attributeList.add(BaseAttributeTypes.STAMINA);
-                attributeList.add(BaseAttributeTypes.STRENGTH);
-            }
-            for (int i = 0; i < attributeList.size() && i < attributePanels.size(); i++) {
-                IconAttributePanel attributePanel = attributePanels.get(i);
-                attributePanel.setAttribute(character.getAttribute(attributeList.get(i)));
-            }
-            updateFontSize();
-
-        }
-    }
-    
-    public void updateFontSize() {
-        Font font = getFont();
-        int maxFontSize = 16;
-        for (IconAttributePanel attributePanel : attributePanels) {
-            int curMaxFontSize = attributePanel.getMaxFittingFontSize(font);
-            if (curMaxFontSize < maxFontSize) {
-                maxFontSize = curMaxFontSize;
-            }
-        }
-        
-        if (maxFontSize > 14) {
-            maxFontSize = 14;
-        }
-        font = font.deriveFont((float)maxFontSize);
-        
-        for (IconAttributePanel attributePanel : attributePanels) {
-            attributePanel.setFont(font);
-        }
-        repaint();
+	private Charakter character;
+	private List<IconAttributePanel> attributePanels;
+	private JPanel attributePane;
+	private MyImage characterIcon;
+	private JPanel barPanel;
+	private VerticalAttributeBar energyBar;
+	private VerticalAttributeBar healthBar;
+	private VerticalAttributeBar motivationBar;
+	private CharacterConditionsPanel characterConditionsPanel;
+	
+	/**
+	 * Creates new form CharacterShortView
+	 */
+	public CharacterShortView() {
+		setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
+		initComponents();
 	}
-
-    
-    @Override
-    public Dimension getPreferredSize() {
-        RPGView view = Jasbro.getInstance().getGui();
-        if (view != null) {
-            int heightGui = view.getHeight();        
-            return new Dimension(heightGui/7, heightGui/3);
-        }
-        else {
-            return super.getPreferredSize();
-        }
-    }
-
-    @Override
-    public void handleEvent(MyEvent e) {
-        if (e.getType() == EventType.STATUSCHANGE) {
-            setCharacter(character);
-        }
-    }
+	
+	public CharacterShortView(Charakter character) {
+		this();
+		setCharacter(character);
+	}
+	
+	public CharacterShortView(Charakter character, boolean conditionsPanel) {
+		this(character);
+		if (!conditionsPanel) {
+			this.characterConditionsPanel.setVisible(false);
+		}
+	}
+	
+	private void initComponents() {
+		characterIcon = new jasbro.gui.objects.div.MyImage();
+		attributePane = new javax.swing.JPanel();
+		
+		attributePanels = new ArrayList<IconAttributePanel>();
+		
+		setBackground(new java.awt.Color(232, 203, 142));
+		setMinimumSize(new java.awt.Dimension(12, 24));
+		setPreferredSize(new java.awt.Dimension(120, 240));
+		setLayout(new FormLayout(new ColumnSpec[] {
+				ColumnSpec.decode("1dlu:grow"),
+				ColumnSpec.decode("1dlu:grow"),},
+				new RowSpec[] {
+				RowSpec.decode("1dlu:grow"),
+				RowSpec.decode("1dlu:grow(3)"),}));
+		
+		characterIcon.setMaximumSize(new java.awt.Dimension(99999, 999999));
+		characterIcon.setMinimumSize(new java.awt.Dimension(20, 20));
+		characterIcon.setPreferredSize(new java.awt.Dimension(20, 20));
+		add(characterIcon, "1, 1, fill, fill");
+		
+		characterConditionsPanel = new CharacterConditionsPanel();
+		add(characterConditionsPanel, "2, 1, fill, fill");
+		
+		barPanel = new JPanel();
+		barPanel.setOpaque(false);
+		add(barPanel, "1, 2, fill, fill");
+		barPanel.setLayout(new GridLayout(0, 3, 0, 0));
+		
+		energyBar = new VerticalAttributeBar();
+		barPanel.add(energyBar);
+		
+		healthBar = new VerticalAttributeBar();
+		barPanel.add(healthBar);
+		
+		motivationBar = new VerticalAttributeBar();
+		barPanel.add(motivationBar);
+		
+		attributePane.setMinimumSize(new java.awt.Dimension(20, 60));
+		attributePane.setOpaque(false);
+		attributePane.setPreferredSize(new java.awt.Dimension(20, 60));
+		FormLayout layout = new FormLayout(new ColumnSpec[] {
+				ColumnSpec.decode("default:grow"),},
+				new RowSpec[] {
+				RowSpec.decode("default:grow(20)"),
+				RowSpec.decode("default:grow"),
+				RowSpec.decode("default:grow(20)"),
+				RowSpec.decode("default:grow"),
+				RowSpec.decode("default:grow(20)"),
+				RowSpec.decode("default:grow"),
+				RowSpec.decode("default:grow(20)"),
+				RowSpec.decode("default:grow"),
+				RowSpec.decode("default:grow(20)")
+		});
+		attributePane.setLayout(layout);
+		layout.setRowGroups(new int[][]{ {1, 3, 5, 7, 9}});
+		
+		for (int i = 0; i < 5; i++) {
+			IconAttributePanel attributePanel = new IconAttributePanel();
+			attributePanels.add(attributePanel);
+			attributePane.add(attributePanel, "1, " + ((i*2)+1) + ", fill, fill");
+		}
+		
+		add(attributePane, "2, 2, fill, fill");
+		
+		DelegateMouseListener listener = new DelegateMouseListener();
+		characterIcon.addMouseMotionListener(listener);
+		characterIcon.addMouseListener(listener);  
+		attributePane.addMouseMotionListener(listener);
+		attributePane.addMouseListener(listener);  
+		barPanel.addMouseMotionListener(listener);
+		barPanel.addMouseListener(listener);  
+		
+		
+		
+		DelegateMouseListener iconDelegateMouseListener = new DelegateMouseListener() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (!(Jasbro.getInstance().getGui().getLayerPane().getComponent(0) instanceof CharacterScreen)) {
+					Jasbro.getInstance().getGui().showCharacterView(character);
+				}
+			}
+		};
+		characterIcon.addMouseListener(iconDelegateMouseListener);
+		characterIcon.addMouseMotionListener(iconDelegateMouseListener);
+		
+		setFont(GuiUtil.DEFAULTSMALLBOLDFONT);
+		
+		addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentResized(ComponentEvent e) {
+				CharacterShortView.this.updateFontSize();
+			}
+		});
+		
+	}
+	
+	public Charakter getCharacter() {
+		return character;
+	}
+	
+	public final void setCharacter(Charakter character) {
+		characterIcon.setToolTipText(character.getName());
+		characterIcon.setImage(character.getIcon());
+		
+		healthBar.setAttribute(character.getAttribute(EssentialAttributes.HEALTH));
+		energyBar.setAttribute(character.getAttribute(EssentialAttributes.ENERGY));
+		motivationBar.setAttribute(character.getAttribute(EssentialAttributes.MOTIVATION));
+		
+		characterConditionsPanel.setCharacter(character);
+		character.addListener(this);
+		
+		this.character = character;
+		
+		updateAttributeDisplay();
+		characterConditionsPanel.update();
+		validate();
+		repaint();
+	}
+	
+	public void updateAttributeDisplay() {
+		if (character != null) {
+			List<AttributeType> attributeList;
+			if (character.getSpecializations().size() > 0) {
+				attributeList = character.getSpecializations().iterator().next().getAssociatedAttributes();
+			}
+			else {
+				attributeList = new ArrayList<AttributeType>();
+				attributeList.add(BaseAttributeTypes.CHARISMA);
+				attributeList.add(BaseAttributeTypes.INTELLIGENCE);
+				attributeList.add(BaseAttributeTypes.STAMINA);
+				attributeList.add(BaseAttributeTypes.STRENGTH);
+			}
+			for (int i = 0; i < attributeList.size() && i < attributePanels.size(); i++) {
+				IconAttributePanel attributePanel = attributePanels.get(i);
+				attributePanel.setAttribute(character.getAttribute(attributeList.get(i)));
+			}
+			updateFontSize();
+			
+		}
+	}
+	
+	public void updateFontSize() {
+		Font font = getFont();
+		int maxFontSize = 16;
+		for (IconAttributePanel attributePanel : attributePanels) {
+			int curMaxFontSize = attributePanel.getMaxFittingFontSize(font);
+			if (curMaxFontSize < maxFontSize) {
+				maxFontSize = curMaxFontSize;
+			}
+		}
+		
+		if (maxFontSize > 14) {
+			maxFontSize = 14;
+		}
+		font = font.deriveFont((float)maxFontSize);
+		
+		for (IconAttributePanel attributePanel : attributePanels) {
+			attributePanel.setFont(font);
+		}
+		repaint();
+	}
+	
+	
+	@Override
+	public Dimension getPreferredSize() {
+		RPGView view = Jasbro.getInstance().getGui();
+		if (view != null) {
+			int heightGui = view.getHeight();
+			return new Dimension(heightGui/7, heightGui/3);
+		}
+		else {
+			return super.getPreferredSize();
+		}
+	}
+	
+	@Override
+	public void handleEvent(MyEvent e) {
+		if (e.getType() == EventType.STATUSCHANGE) {
+			setCharacter(character);
+		}
+	}
 }

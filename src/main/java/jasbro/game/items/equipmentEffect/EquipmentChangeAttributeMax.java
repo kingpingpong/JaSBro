@@ -25,19 +25,19 @@ public class EquipmentChangeAttributeMax extends EquipmentEffect {
 			attribute.setMaxValue(attribute.getMaxValue() - amount);
 		}
 	}
-
+	
 	public int getAmount() {
 		return amount;
 	}
-
+	
 	public void setAmount(int amount) {
 		this.amount = amount;
 	}
-
+	
 	public AttributeType getAttributeType() {
 		return attributeType;
 	}
-
+	
 	public void setAttributeType(AttributeType attributeType) {
 		this.attributeType = attributeType;
 	}
@@ -47,36 +47,37 @@ public class EquipmentChangeAttributeMax extends EquipmentEffect {
 		return EquipmentEffectType.CHANGEATTRIBUTEMAX;
 	}
 	
-    @Override
-    public String getDescription() {
-        if (attributeType == null) {
-            return "";
-        }
-        else if (amount < 0) {
-            return TextUtil.t("equipment.attributeMaxMinus", new Object[]{attributeType.getText(), 
-                    amount});
-        }
-        else {
-            return TextUtil.t("equipment.attributeMaxPlus", new Object[]{attributeType.getText(), 
-                    amount});
-        }
-    }
-    
-    @Override
-    public double getValue() {
-        if (attributeType == null) {
-            return 0;
-        }
-        else if (attributeType instanceof BaseAttributeTypes) {
-            return 300;
-        }
-        else {
-            return 50;
-        }
-    }
-    
-    @Override
-    public int getAmountEffects() {
-        return amount;
-    }
+	@Override
+	public String getDescription() {
+		if (attributeType == null) {
+			return "";
+		}
+		else if (amount < 0) {
+			return TextUtil.t("equipment.attributeMaxMinus", new Object[]{attributeType.getText(), 
+					amount});
+		}
+		else {
+			return TextUtil.t("equipment.attributeMaxPlus", new Object[]{attributeType.getText(), 
+					amount});
+		}
+	}
+	
+	@Override
+	public double getValue() {
+		if (attributeType == null) {
+			return 0;
+		}
+		else if (attributeType instanceof BaseAttributeTypes) {
+			return 300;
+		}
+		else {
+			return 50;
+		}
+	}
+	
+	@Override
+	public int getAmountEffects() {
+		return amount;
+	}
 }
+	

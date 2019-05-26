@@ -5,6 +5,8 @@ import jasbro.game.items.Equipment;
 import jasbro.game.items.Item;
 import jasbro.game.items.ItemFileLoader;
 import jasbro.game.items.ItemType;
+import jasbro.game.items.LootItem;
+import jasbro.game.items.SummoningItem;
 import jasbro.game.items.UnlockItem;
 import jasbro.game.items.UsableItem;
 import jasbro.game.world.customContent.ImageSelection;
@@ -44,7 +46,7 @@ public class ItemEditorPanel extends JPanel {
 	private JTextField textField;
 	private MyImage imagePreview;
 	private ImageSelectionPanel imageSelection;
-
+	
 	public ItemEditorPanel(Item curItem, final ItemEditor itemEditor) {
 		this.item = curItem;
 		setLayout(new FormLayout(new ColumnSpec[] {
@@ -61,7 +63,7 @@ public class ItemEditorPanel extends JPanel {
 				ColumnSpec.decode("default:grow"),
 				FormFactory.UNRELATED_GAP_COLSPEC,
 				ColumnSpec.decode("default:grow"),},
-			new RowSpec[] {
+				new RowSpec[] {
 				RowSpec.decode("default:grow"),});
 		baseDataPanel.setLayout(layout);
 		layout.setColumnGroups(new int[][]{new int[]{1, 3, 5}});
@@ -86,11 +88,11 @@ public class ItemEditorPanel extends JPanel {
 			public void insertUpdate(DocumentEvent e) {
 				item.setName(textField.getText());
 			}
-
+			
 			public void removeUpdate(DocumentEvent e) {
 				item.setName(textField.getText());
 			}
-
+			
 			public void changedUpdate(DocumentEvent e) {
 				item.setName(textField.getText());
 			}
@@ -103,7 +105,7 @@ public class ItemEditorPanel extends JPanel {
 		final JSpinner spinner = new JSpinner();
 		spinner.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
 		spinner.setValue(item.getValue());
-		spinner.addChangeListener(new ChangeListener() {			
+		spinner.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				item.setValue((Integer)spinner.getValue());
@@ -112,7 +114,7 @@ public class ItemEditorPanel extends JPanel {
 		panel.add(spinner, "2, 2");
 		
 		JButton btnSave = new JButton("Save");
-		btnSave.addActionListener(new ActionListener() {			
+		btnSave.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				ItemFileLoader.getInstance().save(item);
@@ -127,7 +129,7 @@ public class ItemEditorPanel extends JPanel {
 			comboBox.addItem(itemType);
 		}
 		comboBox.setSelectedItem(item.getType());
-		comboBox.addActionListener(new ActionListener() {			
+		comboBox.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Item newItem;
@@ -135,7 +137,13 @@ public class ItemEditorPanel extends JPanel {
 					newItem = new Equipment(item);
 				}
 				else if (comboBox.getSelectedItem() == ItemType.UNLOCK) {
-				    newItem = new UnlockItem(item);
+					newItem = new UnlockItem(item);
+				}
+				else if (comboBox.getSelectedItem() == ItemType.SUMMONING) {
+					newItem = new SummoningItem(item);
+				}
+				else if (comboBox.getSelectedItem() == ItemType.LOOT) {
+					newItem = new LootItem(item);
 				}
 				else {
 					newItem = new UsableItem(item);
@@ -150,17 +158,17 @@ public class ItemEditorPanel extends JPanel {
 		
 		JButton btnDelete = new JButton("Delete");
 		panel.add(btnDelete, "2, 4, center, default");
-		btnDelete.addActionListener(new ActionListener() {			
+		btnDelete.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-                int confirm = JOptionPane.showConfirmDialog(ItemEditorPanel.this,
-                        "Delete Item?",
-                        "Delete",
-                        JOptionPane.YES_NO_OPTION);
-                if (confirm == 0) {
-                    ItemFileLoader.getInstance().delete(item);
-                    itemEditor.setItem(null);
-                }
+				int confirm = JOptionPane.showConfirmDialog(ItemEditorPanel.this,
+						"Delete Item?",
+						"Delete",
+						JOptionPane.YES_NO_OPTION);
+				if (confirm == 0) {
+					ItemFileLoader.getInstance().delete(item);
+					itemEditor.setItem(null);
+				}
 			}
 		});
 		
@@ -168,138 +176,146 @@ public class ItemEditorPanel extends JPanel {
 		baseDataPanel.add(descriptionTabbedPane, "3, 1, fill, fill");		
 		
 		{
-    		JPanel panel_1 = new JPanel();
-    		descriptionTabbedPane.addTab("Ingame description", null, panel_1, null);
-    		panel_1.setLayout(new FormLayout(new ColumnSpec[] {
-    				FormFactory.DEFAULT_COLSPEC,
-    				ColumnSpec.decode("default:grow"),},
-    			new RowSpec[] {
-    				RowSpec.decode("default:grow"),}));
-    		
-    		JLabel lblDescription = new JLabel(TextUtil.htmlPreformatted("Description\n(ingame)"));
-    		panel_1.add(lblDescription, "1, 1");
-    		
-    		final JTextArea textArea = new JTextArea();
-    		JScrollPane scrollPane = new JScrollPane(textArea);
-    		
-    		textArea.setLineWrap(true);
-    		textArea.setWrapStyleWord(true);
-    		textArea.setText(item.getDescription());
-    		textArea.setEditable(true);
-    		textArea.getDocument().addDocumentListener(new DocumentListener() {
-    
-    			public void insertUpdate(DocumentEvent e) {
-    				item.setDescription(textArea.getText());
-    			}
-    
-    			public void removeUpdate(DocumentEvent e) {
-    				item.setDescription(textArea.getText());
-    			}
-    
-    			public void changedUpdate(DocumentEvent e) {
-    				item.setDescription(textArea.getText());
-    			}
-    		});
-    		panel_1.add(scrollPane, "2, 1, fill, fill");
+			JPanel panel_1 = new JPanel();
+			descriptionTabbedPane.addTab("Ingame description", null, panel_1, null);
+			panel_1.setLayout(new FormLayout(new ColumnSpec[] {
+					FormFactory.DEFAULT_COLSPEC,
+					ColumnSpec.decode("default:grow"),},
+					new RowSpec[] {
+					RowSpec.decode("default:grow"),}));
+			
+			JLabel lblDescription = new JLabel(TextUtil.htmlPreformatted("Description\n(ingame)"));
+			panel_1.add(lblDescription, "1, 1");
+			
+			final JTextArea textArea = new JTextArea();
+			JScrollPane scrollPane = new JScrollPane(textArea);
+			
+			textArea.setLineWrap(true);
+			textArea.setWrapStyleWord(true);
+			textArea.setText(item.getDescription());
+			textArea.setEditable(true);
+			textArea.getDocument().addDocumentListener(new DocumentListener() {
+				
+				public void insertUpdate(DocumentEvent e) {
+					item.setDescription(textArea.getText());
+				}
+				
+				public void removeUpdate(DocumentEvent e) {
+					item.setDescription(textArea.getText());
+				}
+				
+				public void changedUpdate(DocumentEvent e) {
+					item.setDescription(textArea.getText());
+				}
+			});
+			panel_1.add(scrollPane, "2, 1, fill, fill");
 		}
 		
 		{
-    		JPanel panel_1 = new JPanel();
-    		descriptionTabbedPane.addTab("Author description", null, panel_1, null);
-            panel_1.setLayout(new FormLayout(new ColumnSpec[] {
-                    FormFactory.DEFAULT_COLSPEC,
-                    ColumnSpec.decode("default:grow"),},
-                new RowSpec[] {
-                    RowSpec.decode("default:grow"),}));
-            
-            JLabel lblDescription = new JLabel(TextUtil.htmlPreformatted("Author\ndescription"));
-            panel_1.add(lblDescription, "1, 1");
-            
-            final JTextArea textArea = new JTextArea();
-            JScrollPane scrollPane = new JScrollPane(textArea);
-            
-            textArea.setLineWrap(true);
-            textArea.setWrapStyleWord(true);
-            textArea.setText(item.getAuthorDescription());
-            textArea.setEditable(true);
-            textArea.getDocument().addDocumentListener(new DocumentListener() {
-    
-                public void insertUpdate(DocumentEvent e) {
-                    item.setAuthorDescription(textArea.getText());
-                }
-    
-                public void removeUpdate(DocumentEvent e) {
-                    item.setAuthorDescription(textArea.getText());
-                }
-    
-                public void changedUpdate(DocumentEvent e) {
-                    item.setAuthorDescription(textArea.getText());
-                }
-            });
-            panel_1.add(scrollPane, "2, 1, fill, fill");
+			JPanel panel_1 = new JPanel();
+			descriptionTabbedPane.addTab("Author description", null, panel_1, null);
+			panel_1.setLayout(new FormLayout(new ColumnSpec[] {
+					FormFactory.DEFAULT_COLSPEC,
+					ColumnSpec.decode("default:grow"),},
+					new RowSpec[] {
+					RowSpec.decode("default:grow"),}));
+			
+			JLabel lblDescription = new JLabel(TextUtil.htmlPreformatted("Author\ndescription"));
+			panel_1.add(lblDescription, "1, 1");
+			
+			final JTextArea textArea = new JTextArea();
+			JScrollPane scrollPane = new JScrollPane(textArea);
+			
+			textArea.setLineWrap(true);
+			textArea.setWrapStyleWord(true);
+			textArea.setText(item.getAuthorDescription());
+			textArea.setEditable(true);
+			textArea.getDocument().addDocumentListener(new DocumentListener() {
+				
+				public void insertUpdate(DocumentEvent e) {
+					item.setAuthorDescription(textArea.getText());
+				}
+				
+				public void removeUpdate(DocumentEvent e) {
+					item.setAuthorDescription(textArea.getText());
+				}
+				
+				public void changedUpdate(DocumentEvent e) {
+					item.setAuthorDescription(textArea.getText());
+				}
+			});
+			panel_1.add(scrollPane, "2, 1, fill, fill");
 		}
 		
 		{ // image selection
-		    JPanel imageSelectionPanel = new JPanel();
-		    baseDataPanel.add(imageSelectionPanel, "5, 1, fill, fill");     
-		    imageSelectionPanel.setLayout(new FormLayout(new ColumnSpec[] {
-		            ColumnSpec.decode("left:default:grow"),},
-		        new RowSpec[] {
-		            FormFactory.DEFAULT_ROWSPEC,
-		            RowSpec.decode("default:grow"),
-		            RowSpec.decode("default:grow"),}));
-		    
-		    final JCheckBox chckbxDefaultImage = new JCheckBox("Default Image");
-		    imageSelectionPanel.add(chckbxDefaultImage, "1, 1");
-		    if (item.getImageSelection() == null) {
-		        chckbxDefaultImage.setSelected(true);
-		    }
-		    chckbxDefaultImage.addActionListener(new ActionListener() {                
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    if (chckbxDefaultImage.isSelected()) {
-                        imagePreview.setVisible(true);
-                        imageSelection.setVisible(false);
-                        item.setImageSelection(null);
-                    }
-                    else {
-                        imagePreview.setVisible(false);
-                        item.setImageSelection(new ImageSelection());
-                        item.getImageSelection().setImageLocation(ImageLocation.GLOBAL);
-                        imageSelection.init(item.getImageSelection());
-                        imageSelection.setVisible(true);
-                    }
-                    validate();
-                    repaint();
-                }
-            });
-		    
-            imagePreview = new MyImage(item.getIcon());
-            imageSelectionPanel.add(imagePreview, "1, 2, fill, fill");
-            if (item.getImageSelection() != null) {
-                imagePreview.setVisible(false);
-            }
-            
-            imageSelection = new ImageSelectionPanel(item);
-            imageSelectionPanel.add(imageSelection, "1, 3, fill, fill");
-            if (item.getImageSelection() == null) {
-                imageSelection.setVisible(false);
-            }
-		    
+			JPanel imageSelectionPanel = new JPanel();
+			baseDataPanel.add(imageSelectionPanel, "5, 1, fill, fill");
+			imageSelectionPanel.setLayout(new FormLayout(new ColumnSpec[] {
+					ColumnSpec.decode("left:default:grow"),},
+					new RowSpec[] {
+					FormFactory.DEFAULT_ROWSPEC,
+					RowSpec.decode("default:grow"),
+					RowSpec.decode("default:grow"),}));
+			
+			final JCheckBox chckbxDefaultImage = new JCheckBox("Default Image");
+			imageSelectionPanel.add(chckbxDefaultImage, "1, 1");
+			if (item.getImageSelection() == null) {
+				chckbxDefaultImage.setSelected(true);
+			}
+			chckbxDefaultImage.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					if (chckbxDefaultImage.isSelected()) {
+						imagePreview.setVisible(true);
+						imageSelection.setVisible(false);
+						item.setImageSelection(null);
+					}
+					else {
+						imagePreview.setVisible(false);
+						item.setImageSelection(new ImageSelection());
+						item.getImageSelection().setImageLocation(ImageLocation.GLOBAL);
+						imageSelection.init(item.getImageSelection());
+						imageSelection.setVisible(true);
+					}
+					validate();
+					repaint();
+				}
+			});
+			
+			imagePreview = new MyImage(item.getIcon());
+			imageSelectionPanel.add(imagePreview, "1, 2, fill, fill");
+			if (item.getImageSelection() != null) {
+				imagePreview.setVisible(false);
+			}
+			
+			imageSelection = new ImageSelectionPanel(item);
+			imageSelectionPanel.add(imageSelection, "1, 3, fill, fill");
+			if (item.getImageSelection() == null) {
+				imageSelection.setVisible(false);
+			}
+			
 		}
-        
-        if (item instanceof Equipment) {
-            EquipmentEditorPanel usableItemEditorPanel = new EquipmentEditorPanel((Equipment)item);
-            add(usableItemEditorPanel, "1, 2, fill, fill");
-        }
-        else if (item instanceof UnlockItem) {
-            UnlockItemEditorPanel usableItemEditorPanel = new UnlockItemEditorPanel((UnlockItem)item);
-            add(usableItemEditorPanel, "1, 2, fill, fill");
-        }
-        else {
-            UsableItemEditorPanel usableItemEditorPanel = new UsableItemEditorPanel((UsableItem)item);
-            add(usableItemEditorPanel, "1, 2, fill, fill");
-        }
+		
+		if (item instanceof Equipment) {
+			EquipmentEditorPanel usableItemEditorPanel = new EquipmentEditorPanel((Equipment)item);
+			add(usableItemEditorPanel, "1, 2, fill, fill");
+		}
+		else if (item instanceof UnlockItem) {
+			UnlockItemEditorPanel usableItemEditorPanel = new UnlockItemEditorPanel((UnlockItem)item);
+			add(usableItemEditorPanel, "1, 2, fill, fill");
+		}
+		else if (item instanceof SummoningItem) {
+			SummoningItemEditorPanel summoningItemEditorPanel = new SummoningItemEditorPanel((SummoningItem)item);
+			add(summoningItemEditorPanel, "1, 2, fill, fill");
+		}
+		else if (item instanceof LootItem) {
+			LootItemEditorPanel lootItemEditorPanel = new LootItemEditorPanel((LootItem)item);
+			add(lootItemEditorPanel, "1, 2, fill, fill");
+		}
+		else {
+			UsableItemEditorPanel usableItemEditorPanel = new UsableItemEditorPanel((UsableItem)item);
+			add(usableItemEditorPanel, "1, 2, fill, fill");
+		}
 	}
-
+	
 }

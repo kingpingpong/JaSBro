@@ -4,7 +4,7 @@ import jasbro.game.events.EventType;
 import jasbro.game.events.MyEvent;
 
 public abstract class AbstractRoomEventHandler implements RoomEventHandler {
-
+	
 	private EventType handledType;
 	
 	public void setHandledType(final EventType handledType) {

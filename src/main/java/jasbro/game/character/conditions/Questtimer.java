@@ -36,21 +36,21 @@ public class Questtimer extends Condition {
 	public void init() {
 		//Override to allow for multiple quest timers
 	}
-
+	
 	@Override
 	public String getName() {
 		return TextUtil.t("conditions.questtimer");
 	}
-
+	
 	@Override
 	public String getDescription() {
 		Object arguments[] = {remainingTime, quest.getTitle()};
 		return TextUtil.t("conditions.questtimer.description", arguments) + "\n" + quest.getDescription();
 	}
-
+	
 	@Override
 	public ImageData getIcon() {
 		return new ImageData("images/icons/clock.png");
 	}
-
+	
 }

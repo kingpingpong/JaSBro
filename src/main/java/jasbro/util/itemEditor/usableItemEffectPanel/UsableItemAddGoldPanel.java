@@ -17,7 +17,7 @@ import com.jgoodies.forms.layout.RowSpec;
 
 public class UsableItemAddGoldPanel extends JPanel {
 	private UsableItemAddGold itemEffect;
-
+	
 	public UsableItemAddGoldPanel(UsableItemEffect usableItemEffect) {
 		setLayout(new FormLayout(new ColumnSpec[] {
 				ColumnSpec.decode("left:default"),
@@ -30,12 +30,12 @@ public class UsableItemAddGoldPanel extends JPanel {
 				FormFactory.DEFAULT_ROWSPEC,}));
 		add(new JLabel(usableItemEffect.getName()), "1, 1, left, center");
 		this.itemEffect = (UsableItemAddGold)usableItemEffect;
-
+		
 		final JSpinner spinner = new JSpinner();
 		spinner.setModel(new SpinnerNumberModel(0, null, null, 1));
 		spinner.setValue(itemEffect.getAmount());
 		add(spinner, "2, 1, fill, top");
-		spinner.addChangeListener(new ChangeListener() {				
+		spinner.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				itemEffect.setAmount((int)spinner.getValue());

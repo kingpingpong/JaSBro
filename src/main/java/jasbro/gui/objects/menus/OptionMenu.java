@@ -60,15 +60,15 @@ public class OptionMenu extends JMenu {
 		private PreferencePanel preferencePanel;
 		
 		public PreferenceAction () {
-			super (TextUtil.t("ui.preferences"));			
+			super (TextUtil.t("ui.preferences"));
 			preferencePanel = new PreferencePanel();
 		}
 		
 		public void actionPerformed (ActionEvent e) {
 			if (JOptionPane.showConfirmDialog (Jasbro.getInstance().getGui(), preferencePanel, "Preferences", JOptionPane.OK_CANCEL_OPTION) == 
-			        JOptionPane.OK_OPTION) {
+					JOptionPane.OK_OPTION) {
 				try {
-				    preferencePanel.applyChanges();
+					preferencePanel.applyChanges();
 				} catch (IOException ex) {
 					JOptionPane.showMessageDialog (Jasbro.getInstance().getGui(), TextUtil.t("ui.error.optionsSaveFailed"), "Warning", JOptionPane.WARNING_MESSAGE);
 				}
@@ -76,5 +76,5 @@ public class OptionMenu extends JMenu {
 		}
 	}
 	
-
+	
 }

@@ -4,8 +4,11 @@ import jasbro.Jasbro;
 import jasbro.Util;
 import jasbro.game.GameData;
 import jasbro.game.character.Charakter;
+import jasbro.game.character.activities.sub.business.Bartend.BarAction;
 import jasbro.game.character.conditions.Questtimer;
 import jasbro.game.character.specialization.SpecializationType;
+import jasbro.game.character.traits.Trait;
+import jasbro.game.character.specialization.SpecializationAttribute;
 import jasbro.game.events.EventType;
 import jasbro.game.events.MyEvent;
 import jasbro.game.events.business.Customer;
@@ -19,31 +22,33 @@ import jasbro.gui.pictures.ImageUtil;
 import jasbro.texts.TextUtil;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class StandardSlaveQuest extends Quest {
 
-    private Charakter slave;
-    private int timeRemaining;
-    private CharacterGoal goal;
-    private Reward reward;
-    private String clientType;
-    
+	private Charakter slave;
+	private int timeRemaining;
+	private CharacterGoal goal;
+	private Reward reward;
+	private String clientType;
+
 	public StandardSlaveQuest(Charakter slave, int time, CharacterGoal goal, Reward reward) {
 		reward.setQuest(this);
-        this.slave = slave;
-        this.timeRemaining = time;
-        this.goal = goal;
-        this.reward = reward;
+		this.slave = slave;
+		this.timeRemaining = time;
+		this.goal = goal;
+		this.reward = reward;
 	}
-	
-    @Override
-    public List<QuestStage> getInitStages() {
-        List<QuestStage> questStages = new ArrayList<QuestStage>();
-        questStages.add(new GirlQuestStage());
-        return questStages;
-    }
-	
+
+	@Override
+	public List<QuestStage> getInitStages() {
+		List<QuestStage> questStages = new ArrayList<QuestStage>();
+		questStages.add(new GirlQuestStage());
+		return questStages;
+	}
+
 	private class GirlQuestStage extends QuestStage {
 
 
@@ -54,12 +59,12 @@ public class StandardSlaveQuest extends Quest {
 			Jasbro.getInstance().getData().getCharacters().add(getSlave());
 			getSlave().addCondition(new Questtimer(getTimeRemaining(), StandardSlaveQuest.this));
 		}
-		
+
 		@Override
 		public String getTitle(Quest quest) {
 			return TextUtil.t("quests.standardgirlquest.title", getSlave());
 		}
-		
+
 		@Override
 		public String getDescription(Quest quest) {
 			String text = TextUtil.t("quests.standardgirlquest.description", getClientType()) + "\n";
@@ -68,7 +73,7 @@ public class StandardSlaveQuest extends Quest {
 			text += reward.getRewardDescription();
 			return text;
 		}
-		
+
 		public Charakter getSlave() {
 			return slave;
 		}
@@ -76,7 +81,7 @@ public class StandardSlaveQuest extends Quest {
 		public int getTimeRemaining() {
 			return timeRemaining;
 		}
-		
+
 		@Override
 		public void handleEvent(MyEvent e, Quest quest) {
 			GameData gameData = Jasbro.getInstance().getData();
@@ -102,6 +107,9 @@ public class StandardSlaveQuest extends Quest {
 			Jasbro.getInstance().removeCharacter(slave);
 			if (getGoal().goalReached(getSlave())) {
 				reward.applyReward(null);
+				gameData.getProtagonist().getAttribute(SpecializationAttribute.EXPERIENCE).addToValue(5-(gameData.getProtagonist().getAttribute(SpecializationAttribute.EXPERIENCE).getInternValue()/20));
+				if(gameData.getProtagonist().getAttribute(SpecializationAttribute.EXPERIENCE).getMaxValue()<100)
+				gameData.getProtagonist().getAttribute(SpecializationAttribute.EXPERIENCE).setMaxValue(gameData.getProtagonist().getAttribute(SpecializationAttribute.EXPERIENCE).getMaxValue()+5);
 				String message = TextUtil.t("quests.standardgirlquest.success", getSlave());
 				message += " " + reward.getSuccessMessage();
 				if (!gameData.getCharacters().contains(slave)) {
@@ -135,164 +143,119 @@ public class StandardSlaveQuest extends Quest {
 		public CharacterGoal getGoal() {
 			return goal;
 		}
-		
+
 		@Override
 		public boolean canFinishEarly(Quest quest) {
 			return getGoal().goalReached(getSlave());
 		}
 	}
-	
+
 	public static StandardSlaveQuest generate(int difficultyModifier) {
 		Charakter character = Jasbro.getInstance().generateBasicSlave();
 		CharacterGoal goal = new CharacterGoal();
 		SpecializationType specializationTypes[] = SpecializationType.values();
+		int reward=0;
+		int time=0;
+		int statGoal=0;
+		int baseDifficulty=0;
+		List<SpecializationType> chosenRequests = new ArrayList<SpecializationType>();
 
-		int modifier = difficultyModifier / 3 + Util.getInt(-5, 5);
-	    while (modifier > 100 && Util.getInt(0, 100) < 80) {
-            modifier = modifier / Util.getInt(2, 4) + Util.getInt(-5, 5);
-	    }
-		int curmodifier = modifier;
-		do {
-			SpecializationType specializationType;
-			do {
-				specializationType = specializationTypes[Util.getRnd().nextInt(specializationTypes.length)];
-				
-				if (specializationType == SpecializationType.SLAVE || 
-				        specializationType == SpecializationType.TRAINER ||
-				        specializationType == SpecializationType.UNDERAGE ||
-				        !specializationType.isTeachable() ||
-						goal.getSpecializations().contains(specializationType)) {
-					continue;
-				}
-				
-				if (Jasbro.getInstance().getData().getDay() < 10) {
-				    if (specializationType != SpecializationType.MAID
-				    		&& specializationType != SpecializationType.WHORE
-				    		&& specializationType != SpecializationType.SEX) {
-				        continue;
-				    }
-				}
-				else if (Jasbro.getInstance().getData().getDay() < 30) {
-				    if (specializationType != SpecializationType.MAID
-				    		&& specializationType != SpecializationType.WHORE
-				    		&& specializationType != SpecializationType.SEX
-				    		&& specializationType != SpecializationType.DANCER
-				    		&& specializationType != SpecializationType.BARTENDER) {
-				        continue;
-				    }
-				}
-				else if (Jasbro.getInstance().getData().getDay() < 90) {
-				    if (specializationType != SpecializationType.MAID
-				    		&& specializationType != SpecializationType.WHORE
-				    		&& specializationType != SpecializationType.SEX
-				    		&& specializationType != SpecializationType.DANCER
-				    		&& specializationType != SpecializationType.BARTENDER
-				    		&& specializationType != SpecializationType.FIGHTER
-				    		&& specializationType != SpecializationType.THIEF) {
-				        continue;
-				    }
-				}
-				
-				
-				break;
-			}
-			while (true);
-			
-			goal.getSpecializations().add(specializationType);
-			if (goal.getSpecializations().size() > 1) {
-				curmodifier -= 10;
-				if (curmodifier < 0) {
-					curmodifier = 0;
-				}
-			}
-			
-			while (character.getSpecializations().contains(specializationType) && curmodifier <= 5) {
-			    curmodifier += 5;
-			}
-			
-			if (curmodifier > 5) {
-				int amountAttributes = specializationType.getAssociatedAttributes().size();
-				int i = 0;
-				do {
-					int goalAttribute = Util.getInt(1, curmodifier);
-					curmodifier -= goalAttribute;					
-					if (curmodifier < 10) {
-						goalAttribute += curmodifier;
-						curmodifier = 0;
-					}					
-					AttributeType attribute = specializationType.getAssociatedAttributes().get(Util.getInt(0, amountAttributes));
-					if (goal.getAttributeValueMap().containsKey(attribute)) {
-						goalAttribute += goal.getAttributeValueMap().get(attribute);
+		//List possible requests
+		List<SpecializationType> possibleRequests = new ArrayList<SpecializationType>();
+
+		if(Jasbro.getInstance().getData().getProtagonist().getTraits().contains(Trait.TOUGHERMISSIONS4)){
+			baseDifficulty=Util.getInt(4, 6);
+			possibleRequests.add(SpecializationType.SEX);
+			possibleRequests.add(SpecializationType.MAID);
+			possibleRequests.add(SpecializationType.KINKYSEX);
+			possibleRequests.add(SpecializationType.WHORE);
+			possibleRequests.add(SpecializationType.DANCER);
+			possibleRequests.add(SpecializationType.BARTENDER);
+			possibleRequests.add(SpecializationType.NURSE);
+			possibleRequests.add(SpecializationType.FIGHTER);
+			possibleRequests.add(SpecializationType.ALCHEMIST);
+			possibleRequests.add(SpecializationType.THIEF);
+		}
+		else if(Jasbro.getInstance().getData().getProtagonist().getTraits().contains(Trait.TOUGHERMISSIONS3)){
+			baseDifficulty=Util.getInt(3, 5);
+
+			possibleRequests.add(SpecializationType.SEX);
+			possibleRequests.add(SpecializationType.MAID);
+			possibleRequests.add(SpecializationType.KINKYSEX);
+			possibleRequests.add(SpecializationType.WHORE);
+			possibleRequests.add(SpecializationType.DANCER);
+			possibleRequests.add(SpecializationType.BARTENDER);
+			possibleRequests.add(SpecializationType.NURSE);
+			possibleRequests.add(SpecializationType.FIGHTER);
+			possibleRequests.add(SpecializationType.ALCHEMIST);
+			possibleRequests.add(SpecializationType.THIEF);
+		}
+		else if(Jasbro.getInstance().getData().getProtagonist().getTraits().contains(Trait.TOUGHERMISSIONS2)){
+			baseDifficulty=Util.getInt(1, 4);
+			possibleRequests.add(SpecializationType.ALCHEMIST);
+			possibleRequests.add(SpecializationType.SEX);
+			possibleRequests.add(SpecializationType.MAID);
+			possibleRequests.add(SpecializationType.KINKYSEX);
+			possibleRequests.add(SpecializationType.WHORE);
+			possibleRequests.add(SpecializationType.DANCER);
+			possibleRequests.add(SpecializationType.BARTENDER);
+			possibleRequests.add(SpecializationType.NURSE);
+			possibleRequests.add(SpecializationType.FIGHTER);
+		}
+		else if(Jasbro.getInstance().getData().getProtagonist().getTraits().contains(Trait.TOUGHERMISSIONS1)){
+			baseDifficulty=Util.getInt(0, 3);
+			possibleRequests.add(SpecializationType.DANCER);
+			possibleRequests.add(SpecializationType.BARTENDER);
+			possibleRequests.add(SpecializationType.SEX);
+			possibleRequests.add(SpecializationType.MAID);
+			possibleRequests.add(SpecializationType.KINKYSEX);
+			possibleRequests.add(SpecializationType.WHORE);
+		}
+		else{
+			baseDifficulty=Util.getInt(0, 2);
+			possibleRequests.add(SpecializationType.SEX);
+			possibleRequests.add(SpecializationType.MAID);
+			possibleRequests.add(SpecializationType.BARTENDER);
+			possibleRequests.add(SpecializationType.WHORE);
+		}
+		time=7+baseDifficulty*15+Util.getInt(-1, 7);
+		reward=100;
+		//Chose a certain amount of requests based on difficulty.
+		int rand=0;
+		for(int i=0; i<baseDifficulty/2+1; i++){
+			rand=Util.getInt(0, possibleRequests.size());
+			if(!goal.getSpecializations().contains(possibleRequests.get(rand)))
+				goal.getSpecializations().add(possibleRequests.get(rand));
+			else
+				i--;
+
+		}
+		//Chose a skill in those specs and assign a value
+		AttributeType attributeType=null;
+		int attributeValue=0;
+		for(SpecializationType spec : goal.getSpecializations()){
+			rand=Util.getInt(0, spec.getAssociatedAttributes().size());
+			attributeType=spec.getAssociatedAttributes().get(rand);
+			attributeValue=(baseDifficulty+1)*(baseDifficulty+1)*Util.getInt(2, 3)+Util.getInt(5, 9);
+			attributeValue+=attributeValue*Util.getInt(-10, 10)/100;
+			goal.getAttributeValueMap().put(attributeType, attributeValue);
+			reward+=attributeValue*attributeValue*(baseDifficulty+2);
+			time+=Math.min(attributeValue/10, 7);
+			if(!character.getSpecializations().contains(spec)){
+				reward+=500;
+				time+=3;
+				if(character.getSpecializations().size()!=0)
+					{
+					reward+=1000;
+					time+=5;
 					}
-					if (goalAttribute > 0) {
-						goal.getAttributeValueMap().put(attribute, goalAttribute + 1);
-					}
-					i++;
-				}
-				while (i < amountAttributes * 2 && curmodifier > 0);
 			}
-			else {
-				curmodifier = 0;
-			}
+			
 		}
-		while (curmodifier > 0 && specializationTypes.length - 2 >= goal.getSpecializations().size());		
-		
-		int timeModifier = Util.getInt(-2, 4);
-		float time = timeModifier + 10 * goal.getSpecializations().size();
-		
-		float attributeToTimeProportion;
-		if (difficultyModifier < 100) {
-			attributeToTimeProportion = 1.1f;
-		}
-		else if (difficultyModifier < 500) {
-			attributeToTimeProportion = 1.5f;
-		}
-		else {
-		    attributeToTimeProportion = 2f;
-		}
-		
-		int sumAttributes = 0;
-		for (AttributeType attributeType : goal.getAttributeValueMap().keySet()) {
-			time += goal.getAttributeValueMap().get(attributeType) / attributeToTimeProportion;
-			sumAttributes += goal.getAttributeValueMap().get(attributeType);
-		}
-		int reward = (int) ( sumAttributes * attributeToTimeProportion * attributeToTimeProportion * attributeToTimeProportion 
-				* attributeToTimeProportion * attributeToTimeProportion *
-				(goal.getSpecializations().size() - 0.5f * (goal.getSpecializations().size() - 1) ) *
-				(goal.getAttributeValueMap().keySet().size() - 0.5f * (goal.getAttributeValueMap().keySet().size() - 1) ) * 
-				(time / 25f)
-				+ sumAttributes * 80
-				+ (goal.getAttributeValueMap().keySet().size() - 1) * 1000
-				+ (goal.getSpecializations().size() - 1) * 5000
-				+ 400 - timeModifier * 100 );
-		
-		//add specialization costs
-		int specializationsToTrain = 0;
-		for (SpecializationType specializationType : goal.getSpecializations()) {
-		    if (!character.getSpecializations().contains(specializationType)) {
-		        specializationsToTrain++;
-		    }
-		}
-		int amountSpecializations = character.getSpecializations().size()-1;
-		for (int i = 0; i < specializationsToTrain; i++) {
-		    reward += 100 * amountSpecializations * amountSpecializations * amountSpecializations * amountSpecializations;
-		    amountSpecializations++;
-		}
-		
-		
-		if (goal.getSpecializations().size() == 1 && goal.getSpecializations().get(0) == SpecializationType.WHORE) {
-			reward = reward / 2;
-		}
-		if (goal.getSpecializations().contains(SpecializationType.KINKYSEX)) {
-			reward = reward + reward / 2;
-			time = time + time / 2;
-		}
-		
-		if (reward < 100) {
-			reward = 100;
-		}
-		
+
+
+
 		return new StandardSlaveQuest(character, (int) time, goal, new Reward(reward, null));
 	}
-	
+
 }

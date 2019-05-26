@@ -16,7 +16,7 @@ public class SexSatisfactionEventHandler extends AbstractRoomEventHandler {
 		this.bonusAmount = bonusAmount;
 		setHandledType(handledType);
 	}
-
+	
 	@Override
 	protected void handleEventInternal(MyEvent event) {
 		RunningActivity a = (RunningActivity) event.getSource();
@@ -26,5 +26,5 @@ public class SexSatisfactionEventHandler extends AbstractRoomEventHandler {
 			}
 		}
 	}
-
+	
 }

@@ -1,18 +1,20 @@
 package jasbro.game.housing;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.EnumMap;
+import java.util.EnumSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import jasbro.Util.TypeAmounts;
 import jasbro.game.character.Charakter;
 import jasbro.game.character.activities.ActivityType;
 import jasbro.game.character.activities.requirements.ActivityRequirement;
 import jasbro.game.events.rooms.RoomEventHandler;
 import jasbro.gui.pictures.ImageData;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.EnumMap;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import jasbro.texts.TextUtil;
 
 /**
  * Information for each room type, for a flywheel-like pattern. Each room will
@@ -32,6 +34,7 @@ public class RoomInfo {
 	private final ImageData image;
 
 	private RoomEventHandler eventHandler;
+	private Set<RoomSlotType> slotTypes = EnumSet.noneOf(RoomSlotType.class);
 	private Map<ActivityType, ActivityRequirement> activityRequirements;
 	private List<ActivityType> activities;
 	private Map<ActivityType, ActivityRequirement> childCareActivityRequirements;
@@ -73,6 +76,18 @@ public class RoomInfo {
 	 */
 	public void addChildCareActivity(final ActivityType activity, final ActivityRequirement requirement) {
 		childCareActivityRequirements.put(activity, requirement);
+	}
+	
+	public void addSlotType(final RoomSlotType slotType) {
+		slotTypes.add(slotType);
+	}
+	
+	public Set<RoomSlotType> getSlotTypes() {
+		return slotTypes;
+	}
+	
+	public boolean fitsInSlot(final RoomSlotType slot) {
+		return slotTypes.contains(slot);
 	}
 
 	public void setEventHandler(final RoomEventHandler eventHandler) {
@@ -119,5 +134,13 @@ public class RoomInfo {
 
 	public RoomEventHandler getEventHandler() {
 		return eventHandler;
+	}
+
+	public String getText() {
+		return TextUtil.t(id);
+	}
+
+	public String getDescription() {
+		return TextUtil.tNoCheck(id + ".description");
 	}
 }

@@ -26,12 +26,12 @@ import com.jgoodies.forms.layout.RowSpec;
 
 public class EquipmentAttributeRequirementPanel extends JPanel {
 	private EquipmentAttributeRequirement itemEffect;
-
+	
 	public EquipmentAttributeRequirementPanel(EquipmentEffect equipmentEffect) {
 		setLayout(new FormLayout(new ColumnSpec[] {
 				ColumnSpec.decode("left:default"),
 				ColumnSpec.decode("default:grow"),},
-			new RowSpec[] {
+				new RowSpec[] {
 				FormFactory.DEFAULT_ROWSPEC,
 				FormFactory.DEFAULT_ROWSPEC,
 				FormFactory.DEFAULT_ROWSPEC,
@@ -55,10 +55,10 @@ public class EquipmentAttributeRequirementPanel extends JPanel {
 			attributeTypeCombobox.addItem(attributeType);
 		}
 		attributeTypeCombobox.setSelectedItem(itemEffect.getAttributeType());
-		attributeTypeCombobox.addActionListener(new ActionListener() {			
+		attributeTypeCombobox.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-			    EquipmentAttributeRequirement effect = (EquipmentAttributeRequirement) itemEffect;
+				EquipmentAttributeRequirement effect = (EquipmentAttributeRequirement) itemEffect;
 				effect.setAttributeType((AttributeType)attributeTypeCombobox.getSelectedItem());
 			}
 		});
@@ -66,10 +66,10 @@ public class EquipmentAttributeRequirementPanel extends JPanel {
 		final JSpinner spinner = new JSpinner();
 		spinner.setValue(itemEffect.getAmount());
 		add(spinner, "2, 3, fill, top");
-		spinner.addChangeListener(new ChangeListener() {				
+		spinner.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
-			    EquipmentAttributeRequirement effect = (EquipmentAttributeRequirement) itemEffect;
+				EquipmentAttributeRequirement effect = (EquipmentAttributeRequirement) itemEffect;
 				effect.setAmount((int)spinner.getValue());
 			}
 		});

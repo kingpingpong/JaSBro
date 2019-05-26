@@ -21,12 +21,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class StatCollector implements CentralEventlistener {	
+public class StatCollector implements CentralEventlistener {
 	private transient StatScreen statScreen;
 	private transient Map<Time, ShiftData> shiftDataMap = new HashMap<Time, ShiftData>();
 	private transient ShiftData dailyData;
 	private transient ShiftData previousDayData;
-
+	
 	public StatCollector() {
 		reset();
 	}
@@ -44,8 +44,8 @@ public class StatCollector implements CentralEventlistener {
 		dailyData.recordEvent(e);
 		shiftDataMap.get(shift).recordEvent(e);
 	};
-
-
+	
+	
 	public void showStatScreen() {
 		showStatScreen(null, true);
 	}
@@ -54,7 +54,7 @@ public class StatCollector implements CentralEventlistener {
 		statScreen = new StatScreen(this, time, important);
 		Jasbro.getInstance().getGui().addMessage(statScreen);
 	}
-
+	
 	public void reset() {
 		previousDayData = dailyData;
 		dailyData = new ShiftData();
@@ -68,14 +68,14 @@ public class StatCollector implements CentralEventlistener {
 		}
 	}
 	
-
+	
 	private void initMoneyBeforeShift() {
 		Time shift = Jasbro.getInstance().getData().getTime();
 		dailyData.initMoneyBeforeShift();
 		shiftDataMap.get(shift).initMoneyBeforeShift();
 	}
-
-
+	
+	
 	public void setMoneyAfterShift(long money) {
 		Time shift = Jasbro.getInstance().getData().getTime().getPreviousTimeOfDay();
 		dailyData.setMoneyAfterShift(money);
@@ -85,8 +85,8 @@ public class StatCollector implements CentralEventlistener {
 	public ShiftData getShiftDataMap(Time time) {
 		return shiftDataMap.get(time);
 	}
-
-
+	
+	
 	public ShiftData getDailyData() {
 		return dailyData;
 	}
@@ -94,9 +94,9 @@ public class StatCollector implements CentralEventlistener {
 	public ShiftData getPreviousDayData() {
 		return previousDayData;
 	}
-
-
-
+	
+	
+	
 	public class ShiftData {
 		private Long moneyBeforeShift = null;
 		private Long moneyAfterShift;
@@ -127,7 +127,7 @@ public class StatCollector implements CentralEventlistener {
 			}
 			else if (e.getType() == EventType.MONEYEARNED) {
 				initMoneyBeforeShift();
-				MoneyChangeData moneyChangeData = new MoneyChangeData(e);			
+				MoneyChangeData moneyChangeData = new MoneyChangeData(e);
 				if (!moneyEarnedList.contains(moneyChangeData)) {
 					moneyEarnedList.add(moneyChangeData);
 				}
@@ -160,25 +160,25 @@ public class StatCollector implements CentralEventlistener {
 				moneyBeforeShift = Jasbro.getInstance().getData().getMoney();
 			}
 		}
-
+		
 		public long getMoneyBeforeShift() {
 			if (moneyBeforeShift == null) {
 				return 0;
 			}
 			return moneyBeforeShift;
 		}
-
+		
 		public long getMoneyAfterShift() {
 			if (moneyAfterShift == null) {
 				return Jasbro.getInstance().getData().getMoney();
 			}
 			return moneyAfterShift;
 		}
-
+		
 		public void setMoneyAfterShift(long moneyAfterShift) {
 			this.moneyAfterShift = moneyAfterShift;
 		}
-
+		
 		public List<ActivityData> getActivityDataList() {
 			if (activityDataList == null) {
 				activityDataList = new ArrayList<ActivityData>();
@@ -231,25 +231,25 @@ public class StatCollector implements CentralEventlistener {
 			}
 			return sum;
 		}
-
-	    public List<MoneyChangeData> getMoneyEarnedList() {
-	    	if (moneyEarnedList == null) {
-	    		moneyEarnedList = new ArrayList<MoneyChangeData>();
-	    	}
-	    	Collections.sort(moneyEarnedList);
-	    	Collections.reverse(moneyEarnedList);
+		
+		public List<MoneyChangeData> getMoneyEarnedList() {
+			if (moneyEarnedList == null) {
+				moneyEarnedList = new ArrayList<MoneyChangeData>();
+			}
+			Collections.sort(moneyEarnedList);
+			Collections.reverse(moneyEarnedList);
 			return moneyEarnedList;
 		}
-
+		
 		public List<MoneyChangeData> getMoneySpentList() {
-	    	if (moneySpentList == null) {
-	    		moneySpentList = new ArrayList<MoneyChangeData>();
-	    	}
-	    	Collections.sort(moneySpentList);
-	    	Collections.reverse(moneySpentList);
+			if (moneySpentList == null) {
+				moneySpentList = new ArrayList<MoneyChangeData>();
+			}
+			Collections.sort(moneySpentList);
+			Collections.reverse(moneySpentList);
 			return moneySpentList;
 		}
-
+		
 		public boolean isClosed() {
 			return moneyAfterShift != null;
 		}
@@ -258,19 +258,19 @@ public class StatCollector implements CentralEventlistener {
 			return moneyBeforeShift != null;
 		}
 	}
-
-
+	
+	
 	public class ActivityData {
-    	private ActivityType type;
-    	private List<Charakter> characters;
-    	private int income;
-    	private int amountCustomers;
-    	private int satisfactionModifier;
-    	private int amountModifiers;
-    	private House house;
-    	private int satisfactionMainCustomer;
-    	private int amountMainCustomers;
-    	
+		private ActivityType type;
+		private List<Charakter> characters;
+		private int income;
+		private int amountCustomers;
+		private int satisfactionModifier;
+		private int amountModifiers;
+		private House house;
+		private int satisfactionMainCustomer;
+		private int amountMainCustomers;
+		
 		public ActivityData(RunningActivity activity, ShiftData currentShift) {
 			super();
 			this.type = activity.getType();
@@ -312,38 +312,38 @@ public class StatCollector implements CentralEventlistener {
 		public void setAmountCustomers(int amountCustomers) {
 			this.amountCustomers = amountCustomers;
 		}
-
+		
 		public int getAvgSatisfactionModifier() {
 			return satisfactionModifier / amountModifiers;
 		}
-
+		
 		public House getHouse() {
 			return house;
 		}
-
+		
 		public int getAvgSatisfactionMainCustomer() {
 			if (amountMainCustomers == 0) {
 				return 0;
 			}
 			return satisfactionMainCustomer / amountMainCustomers;
 		}
-
+		
 		public int getAmountMainCustomers() {
 			return amountMainCustomers;
 		}
-
+		
 		public void setAmountMainCustomers(int amountMainCustomers) {
 			this.amountMainCustomers = amountMainCustomers;
 		}
-
+		
 		public void setHouse(House house) {
 			this.house = house;
 		}
-
+		
 		public void setSatisfactionMainCustomer(int satisfactionMainCustomer) {
 			this.satisfactionMainCustomer = satisfactionMainCustomer;
 		}
-
+		
 		@Override
 		public int hashCode() {
 			final int prime = 31;
@@ -354,7 +354,7 @@ public class StatCollector implements CentralEventlistener {
 			result = prime * result + ((type == null) ? 0 : type.hashCode());
 			return result;
 		}
-
+		
 		@Override
 		public boolean equals(Object obj) {
 			if (this == obj)
@@ -375,16 +375,16 @@ public class StatCollector implements CentralEventlistener {
 				return false;
 			return true;
 		}
-
+		
 		private StatCollector getOuterType() {
 			return StatCollector.this;
 		}
-    }
-    
-    public class MoneyChangeData implements Comparable<MoneyChangeData> {
-    	private String source;
-    	private long amount;
-    	
+	}
+	
+	public class MoneyChangeData implements Comparable<MoneyChangeData> {
+		private String source;
+		private long amount;
+		
 		public MoneyChangeData(String source, long amount) {
 			super();
 			this.source = source;
@@ -394,13 +394,13 @@ public class StatCollector implements CentralEventlistener {
 		public void addToValue(long amount) {
 			this.amount += amount;
 		}
-
+		
 		public MoneyChangeData(MyEvent event) {
 			super();
 			MoneyChangedEvent moneyChangedEvent = (MoneyChangedEvent) event;
 			amount = moneyChangedEvent.getAmount();
 			source = moneyChangedEvent.getSource().toString();
-		}	
+		}
 		
 		@Override
 		public int hashCode() {
@@ -410,7 +410,7 @@ public class StatCollector implements CentralEventlistener {
 			result = prime * result + ((source == null) ? 0 : source.hashCode());
 			return result;
 		}
-
+		
 		@Override
 		public boolean equals(Object obj) {
 			if (this == obj)
@@ -429,7 +429,7 @@ public class StatCollector implements CentralEventlistener {
 				return false;
 			return true;
 		}
-
+		
 		public String getSource() {
 			return source;
 		}
@@ -442,11 +442,11 @@ public class StatCollector implements CentralEventlistener {
 		public void setAmount(long amount) {
 			this.amount = amount;
 		}
-
+		
 		private StatCollector getOuterType() {
 			return StatCollector.this;
 		}
-
+		
 		@Override
 		public int compareTo(MoneyChangeData o) {
 			if (o == null) {
@@ -454,5 +454,5 @@ public class StatCollector implements CentralEventlistener {
 			}
 			return ((Long)amount).compareTo(o.getAmount());
 		}
-    }
+	}
 }

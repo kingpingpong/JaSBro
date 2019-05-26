@@ -4,5 +4,5 @@ import jasbro.game.character.Charakter;
 import jasbro.game.events.MyEvent;
 
 public interface MyCharacterEventListener {
-    public void handleEvent(MyEvent e, Charakter character);
+	public void handleEvent(MyEvent e, Charakter character);
 }

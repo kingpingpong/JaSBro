@@ -16,11 +16,11 @@ public class CustomersArriveEvent extends MyEvent {
 	public House getHouse() {
 		return (House) getSource();
 	}
-
+	
 	public List<Customer> getCustomers() {
 		return customers;
 	}
-
+	
 	public void setCustomers(List<Customer> customers) {
 		this.customers = customers;
 	}

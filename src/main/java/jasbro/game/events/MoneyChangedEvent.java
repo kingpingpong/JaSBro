@@ -7,7 +7,7 @@ public class MoneyChangedEvent extends MyEvent {
 		super(type, source);
 		this.amount = amount;
 	}
-
+	
 	public long getAmount() {
 		return amount;
 	}

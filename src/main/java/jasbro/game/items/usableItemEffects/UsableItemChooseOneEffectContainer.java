@@ -7,7 +7,7 @@ import jasbro.game.items.Item;
 import java.util.List;
 
 public class UsableItemChooseOneEffectContainer extends UsableItemEffectContainerImpl {
-
+	
 	@Override
 	public void apply(Charakter character, Item item) {
 		List<UsableItemEffect> effects = getSubEffects();

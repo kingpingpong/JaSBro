@@ -1,6 +1,5 @@
 package jasbro.game.events.business;
 
-import jasbro.Util;
 import jasbro.game.character.Gender;
 import jasbro.game.interfaces.Person;
 import jasbro.texts.TextUtil;

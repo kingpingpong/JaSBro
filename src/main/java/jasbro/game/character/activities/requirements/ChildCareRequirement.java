@@ -7,7 +7,7 @@ import jasbro.game.character.activities.ActivityType;
 import java.util.List;
 
 public class ChildCareRequirement implements ActivityRequirement {
-
+	
 	@Override
 	public boolean isValid(ActivityType activity, List<Charakter> characters, TypeAmounts typeAmounts) {
 		if (typeAmounts.getInfantAmount() > 0) {
@@ -18,5 +18,5 @@ public class ChildCareRequirement implements ActivityRequirement {
 		}
 		return true;
 	}
-
+	
 }

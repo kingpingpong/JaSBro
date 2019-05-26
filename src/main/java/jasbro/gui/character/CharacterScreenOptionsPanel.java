@@ -13,27 +13,27 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.RowSpec;
 
 public class CharacterScreenOptionsPanel extends TranslucentPanel {
-    private Charakter character;
-    private JCheckBox contraceptivesCheckbox;
-    
-    public CharacterScreenOptionsPanel(Charakter characterTmp) {
-        setPreferredSize(null);
-        character = characterTmp;
-        
-        setLayout(new FormLayout(new ColumnSpec[] {
-                ColumnSpec.decode("default:grow")},
-            new RowSpec[] {
-                RowSpec.decode("default:grow"),}));
-
-        contraceptivesCheckbox = new JCheckBox("Use contraceptives");
-        add(contraceptivesCheckbox, "1, 1");
-        contraceptivesCheckbox.setSelected(character.isUsesContraceptives());
-        contraceptivesCheckbox.setOpaque(false);
-        contraceptivesCheckbox.addActionListener(new ActionListener() {            
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                character.setUsesContraceptives(contraceptivesCheckbox.isSelected());
-            }
-        });
-    }
+	private Charakter character;
+	private JCheckBox contraceptivesCheckbox;
+	
+	public CharacterScreenOptionsPanel(Charakter characterTmp) {
+		setPreferredSize(null);
+		character = characterTmp;
+		
+		setLayout(new FormLayout(new ColumnSpec[] {
+				ColumnSpec.decode("default:grow")},
+				new RowSpec[] {
+				RowSpec.decode("default:grow"),}));
+		
+		contraceptivesCheckbox = new JCheckBox("Use contraceptives");
+		add(contraceptivesCheckbox, "1, 1");
+		contraceptivesCheckbox.setSelected(character.isUsesContraceptives());
+		contraceptivesCheckbox.setOpaque(false);
+		contraceptivesCheckbox.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				character.setUsesContraceptives(contraceptivesCheckbox.isSelected());
+			}
+		});
+	}
 }

@@ -40,21 +40,21 @@ public enum EquipmentEffectType {
 		this.itemEffectClass = itemEffectClass;
 		this.itemEffectPanelClass = itemEffectPanelClass;
 	}
-
+	
 	public Class<? extends EquipmentEffect> getItemEffectClass() {
 		return itemEffectClass;
 	}
-
+	
 	public Class<? extends JPanel> getItemEffectPanelClass() {
 		return itemEffectPanelClass;
 	}
 	
-    public String getText() {
-        if (TextUtil.containsKey(this.toString())) {
-            return TextUtil.t(this.toString());
-        }
-        else {
-            return this.toString();
-        }
-    }
+	public String getText() {
+		if (TextUtil.containsKey(this.toString())) {
+			return TextUtil.t(this.toString());
+		}
+		else {
+			return this.toString();
+		}
+	}
 }

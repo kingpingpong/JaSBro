@@ -8,7 +8,7 @@ import jasbro.game.events.EventType;
 import jasbro.game.events.MyEvent;
 
 public class SickroomEventHandler extends AbstractRoomEventHandler {
-
+	
 	public SickroomEventHandler() {
 		setHandledType(EventType.ACTIVITYPERFORMED);
 	}
@@ -22,5 +22,5 @@ public class SickroomEventHandler extends AbstractRoomEventHandler {
 			}
 		}
 	}
-
+	
 }

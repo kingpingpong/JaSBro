@@ -45,20 +45,20 @@ import jasbro.util.eventEditor.effectPanels.EventEffectSimpleMessagePanel;
 import javax.swing.JPanel;
 
 public enum WorldEventEffectType {
-    EFFECTCONTAINER(WorldEventEffectContainer.class, null),
-    CONDITION(WorldEventCondition.class, EventEffectConditionPanel.class),
-    CHOOSEONEEFFECT(WorldEventChooseOneEffectContainer.class, null),
-    EFFECTCHANCE(WorldEventEffectChance.class, null),
-    MESSAGE(WorldEventSimpleMessage.class, EventEffectSimpleMessagePanel.class),
-    ADDTOMESSAGE(WorldEventAddToMessage.class, EventEffectAddToMessagePanel.class),
-    CODE(WorldEventCode.class, EventEffectCodePanel.class),
-    COMMENT(WorldEventComment.class, EventEffectCommentPanel.class),
-    CHANGEATTRIBUTE(WorldEventChangeAttribute.class, EventEffectChangeAttributePanel.class),
-    CHANGEFAME(WorldEventChangeFame.class, EventEffectChangeFamePanel.class),
-    SETQUESTSTAGE(WorldEventSetQuestStage.class, EventEffectSetQuestStagePanel.class),
-    SETQUESTSTATUS(WorldEventSetQuestStatus.class, EventEffectSetQuestStatusPanel.class),
-    SAVEVARIABLE(WorldEventSaveVariable.class, EventEffectSaveVariablePanel.class),
-    LOADVARIABLE(WorldEventLoadVariable.class, EventEffectLoadVariablePanel.class),
+	EFFECTCONTAINER(WorldEventEffectContainer.class, null),
+	CONDITION(WorldEventCondition.class, EventEffectConditionPanel.class),
+	CHOOSEONEEFFECT(WorldEventChooseOneEffectContainer.class, null),
+	EFFECTCHANCE(WorldEventEffectChance.class, null),
+	MESSAGE(WorldEventSimpleMessage.class, EventEffectSimpleMessagePanel.class),
+	ADDTOMESSAGE(WorldEventAddToMessage.class, EventEffectAddToMessagePanel.class),
+	CODE(WorldEventCode.class, EventEffectCodePanel.class),
+	COMMENT(WorldEventComment.class, EventEffectCommentPanel.class),
+	CHANGEATTRIBUTE(WorldEventChangeAttribute.class, EventEffectChangeAttributePanel.class),
+	CHANGEFAME(WorldEventChangeFame.class, EventEffectChangeFamePanel.class),
+	SETQUESTSTAGE(WorldEventSetQuestStage.class, EventEffectSetQuestStagePanel.class),
+	SETQUESTSTATUS(WorldEventSetQuestStatus.class, EventEffectSetQuestStatusPanel.class),
+	SAVEVARIABLE(WorldEventSaveVariable.class, EventEffectSaveVariablePanel.class),
+	LOADVARIABLE(WorldEventLoadVariable.class, EventEffectLoadVariablePanel.class),
 	GAINITEM(WorldEventGainItem.class, EventEffectGainItemPanel.class),
 	CHANGEMONEY(WorldEventChangeMoney.class, EventEffectChangeMoneyPanel.class),
 	ADDCONDITION(WorldEventAddCondition.class, EventEffectAddConditionPanel.class),
@@ -72,27 +72,27 @@ public enum WorldEventEffectType {
 	
 	
 	;
-
-
 	
-    private Class<? extends WorldEventEffect> eventClass;
-    private Class<? extends JPanel> eventPanelClass;
-    
-    private WorldEventEffectType(Class<? extends WorldEventEffect> eventClass, Class<? extends JPanel> eventPanelClass) {
-        this.eventClass = eventClass;
-        this.eventPanelClass = eventPanelClass;
-    }
-    
-    public String getText() {
-        return TextUtil.t(this.toString());
-    }    
-    
-    public Class<? extends WorldEventEffect> getEventClass() {
-        return eventClass;
-    }
-    public Class<? extends JPanel> getEventPanelClass() {
-        return eventPanelClass;
-    }
-    
-    
+	
+	
+	private Class<? extends WorldEventEffect> eventClass;
+	private Class<? extends JPanel> eventPanelClass;
+	
+	private WorldEventEffectType(Class<? extends WorldEventEffect> eventClass, Class<? extends JPanel> eventPanelClass) {
+		this.eventClass = eventClass;
+		this.eventPanelClass = eventPanelClass;
+	}
+	
+	public String getText() {
+		return TextUtil.t(this.toString());
+	}
+	
+	public Class<? extends WorldEventEffect> getEventClass() {
+		return eventClass;
+	}
+	public Class<? extends JPanel> getEventPanelClass() {
+		return eventPanelClass;
+	}
+	
+	
 }

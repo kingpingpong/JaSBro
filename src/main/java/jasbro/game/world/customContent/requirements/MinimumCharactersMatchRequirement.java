@@ -5,9 +5,9 @@ import jasbro.game.world.customContent.TriggerParent;
 import bsh.EvalError;
 
 public class MinimumCharactersMatchRequirement extends TriggerRequirementContainer {
-
+	
 	private int minimum;
-
+	
 	@Override
 	public boolean isValid(TriggerParent triggerParent) throws EvalError {
 		int count = 0;
@@ -19,28 +19,28 @@ public class MinimumCharactersMatchRequirement extends TriggerRequirementContain
 		
 		return count >= minimum;
 	}
-
-
-    public int getMinimum() {
-        return minimum;
-    }
-
-    public void setMinimum(int minimum) {
-        this.minimum = minimum;
-    }
-
-    @Override
-    public boolean canAddRequirement(TriggerRequirement triggerRequirement) {
-        if (triggerRequirement instanceof CharacterRequirement && getSubRequirements().size() < 1) {
-            return true;
-        }
-        else {
-            return false;
-        }       
-    }
-    
-    @Override
-    public TriggerRequirementType getType() {
-        return TriggerRequirementType.MINIMUMCHARACTERSMATCHREQUIREMENT;
-    }
+	
+	
+	public int getMinimum() {
+		return minimum;
+	}
+	
+	public void setMinimum(int minimum) {
+		this.minimum = minimum;
+	}
+	
+	@Override
+	public boolean canAddRequirement(TriggerRequirement triggerRequirement) {
+		if (triggerRequirement instanceof CharacterRequirement && getSubRequirements().size() < 1) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	@Override
+	public TriggerRequirementType getType() {
+		return TriggerRequirementType.MINIMUMCHARACTERSMATCHREQUIREMENT;
+	}
 }

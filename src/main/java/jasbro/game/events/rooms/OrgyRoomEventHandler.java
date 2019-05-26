@@ -11,37 +11,37 @@ import jasbro.game.events.EventType;
 import jasbro.game.events.MyEvent;
 
 public class OrgyRoomEventHandler implements RoomEventHandler {
-
+	
 	@Override
 	public void handleEvent(MyEvent event) {
 		if (event.getType() == EventType.ACTIVITYPERFORMED) {
-    		RunningActivity activity = (RunningActivity) event.getSource();
-    		if (activity.getPlannedActivity().getType() == ActivityType.SLEEP) {
-    			for (AttributeModification attributeModification : activity.getAttributeModifications()) {
-    				if (attributeModification.getAttributeType() == EssentialAttributes.ENERGY) {
-    					attributeModification.setBaseAmount((float) Util.getPercent(attributeModification.getBaseAmount(), 80));
-    				}
-    			}
-    		}
-    		else if (activity.getPlannedActivity().getType() == ActivityType.WHORE) {
-    			Whore whoreActivity=(Whore) activity;
-    			if(whoreActivity.getSexType()==Sextype.GROUP){
-    			activity.setIncome((int) Util.getPercent(activity.getIncome(), 140));
-    			for (AttributeModification attributeModification : activity.getAttributeModifications()) {
-    				if (attributeModification.getAttributeType() == EssentialAttributes.ENERGY) {
-    					attributeModification.setBaseAmount((float) Util.getPercent(attributeModification.getBaseAmount(), 80));
-    				}
-    			}
-    			}
-    		}
-    	}
-    	else if (event.getType() == EventType.ACTIVITY) {
-    		RunningActivity activity = (RunningActivity) event.getSource();
-    		if (activity.getPlannedActivity().getType() == ActivityType.WHORE) {
-    			Whore whore = (Whore) activity;
-    			whore.getMainCustomer().addToSatisfaction(50, this);
-    		}
-    	}
+			RunningActivity activity = (RunningActivity) event.getSource();
+			if (activity.getPlannedActivity().getType() == ActivityType.SLEEP) {
+				for (AttributeModification attributeModification : activity.getAttributeModifications()) {
+					if (attributeModification.getAttributeType() == EssentialAttributes.ENERGY) {
+						attributeModification.setBaseAmount((float) Util.getPercent(attributeModification.getBaseAmount(), 80));
+					}
+				}
+			}
+			else if (activity.getPlannedActivity().getType() == ActivityType.WHORE) {
+				Whore whoreActivity=(Whore) activity;
+				if(whoreActivity.getSexType()==Sextype.GROUP){
+					activity.setIncome((int) Util.getPercent(activity.getIncome(), 140));
+					for (AttributeModification attributeModification : activity.getAttributeModifications()) {
+						if (attributeModification.getAttributeType() == EssentialAttributes.ENERGY) {
+							attributeModification.setBaseAmount((float) Util.getPercent(attributeModification.getBaseAmount(), 80));
+						}
+					}
+				}
+			}
+		}
+		else if (event.getType() == EventType.ACTIVITY) {
+			RunningActivity activity = (RunningActivity) event.getSource();
+			if (activity.getPlannedActivity().getType() == ActivityType.WHORE) {
+				Whore whore = (Whore) activity;
+				whore.getMainCustomer().addToSatisfaction(10, this);
+			}
+		}
 	}
-
+	
 }

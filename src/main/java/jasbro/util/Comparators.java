@@ -22,7 +22,7 @@ public class Comparators {
 			else {
 				return 0;
 			}
-		}		
+		}
 	}
 	
 	public static class CharacterBaseNameComparator implements Comparator<CharacterBase> {

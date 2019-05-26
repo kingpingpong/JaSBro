@@ -29,7 +29,7 @@ public class ItemListPanel extends JPanel {
 	public ItemListPanel(final ItemEditor itemEditor) {
 		setLayout(new FormLayout(new ColumnSpec[] {
 				ColumnSpec.decode("default:grow"),},
-			new RowSpec[] {
+				new RowSpec[] {
 				FormFactory.DEFAULT_ROWSPEC,
 				RowSpec.decode("default:grow"),}));
 		
@@ -38,7 +38,7 @@ public class ItemListPanel extends JPanel {
 		newItemPanel.setLayout(new FormLayout(new ColumnSpec[] {
 				ColumnSpec.decode("default:grow"),
 				FormFactory.DEFAULT_COLSPEC,},
-			new RowSpec[] {
+				new RowSpec[] {
 				FormFactory.DEFAULT_ROWSPEC,}));
 		
 		textField = new JTextField();
@@ -67,7 +67,7 @@ public class ItemListPanel extends JPanel {
 		
 		itemList = new JList<Item>();
 		scrollPane.setViewportView(itemList);
-		itemList.addListSelectionListener(new ListSelectionListener() {			
+		itemList.addListSelectionListener(new ListSelectionListener() {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				itemEditor.setItem(itemList.getSelectedValue());
@@ -78,7 +78,7 @@ public class ItemListPanel extends JPanel {
 	
 	public void updateList() {
 		Item itemArray[] = new Item[Jasbro.getInstance().getItems().entrySet().size()];
-
+		
 		itemArray = Jasbro.getInstance().getItems().values().toArray(itemArray);
 		Arrays.sort(itemArray, new Comparator<Item>() {
 			@Override
@@ -98,5 +98,5 @@ public class ItemListPanel extends JPanel {
 		validate();
 		repaint();
 	}
-
+	
 }

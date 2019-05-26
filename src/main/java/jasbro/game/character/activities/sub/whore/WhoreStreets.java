@@ -16,12 +16,12 @@ import jasbro.game.events.business.SpawnData;
 import jasbro.game.world.customContent.RapeEvent;
 
 public class WhoreStreets extends RunningActivity {
-
+	
 	@Override
 	public MessageData getBaseMessage() {
 		return null;
 	}
-
+	
 	@Override
 	public void perform() {
 		Charakter character = getCharacter();
@@ -31,8 +31,19 @@ public class WhoreStreets extends RunningActivity {
 		spawnData.getGenderSpawnMap().put(Gender.FEMALE, 20);
 		spawnData.getGenderSpawnMap().put(Gender.FUTA, 20);
 		int i = 0;
+		int chc=Util.getInt(0, 100);
 		do {
 			Customer customer = spawnData.spawn(1, character.getFame()).get(0);
+			if(character.getTraits().contains(Trait.THATGIRL) && chc<30)
+				customer = spawnData.createCustomer(CustomerType.SOLDIER);
+			else if(character.getTraits().contains(Trait.THATGIRL) &&chc<20)
+				customer = spawnData.createCustomer(CustomerType.MERCHANT);
+			else if(character.getTraits().contains(Trait.THATGIRL) &&chc<15)
+				customer = spawnData.createCustomer(CustomerType.BUSINESSMAN);
+			else if(character.getTraits().contains(Trait.THATGIRL) &&chc<10)
+				customer = spawnData.createCustomer(CustomerType.MINORNOBLE);
+			else if(character.getTraits().contains(Trait.GANGBANGQUEEN) &&chc<15)
+				customer = spawnData.createCustomer(CustomerType.GROUP);
 			PlannedActivity plannedActivity = new PlannedActivity(ActivityType.WHORE, getPlannedActivity(), character);
 			RunningActivity runningActivity = plannedActivity.getRunningActivity();
 			Whore whore = (Whore) runningActivity;
@@ -40,13 +51,14 @@ public class WhoreStreets extends RunningActivity {
 			if (whore.rateCustomer(customer) > 0) {
 				int bonus=0;
 				if(character.getTraits().contains(Trait.STREETSMARTS)){bonus=character.getIntelligence();}
-				if ((customer.getType() != CustomerType.GROUP && Util.getInt(0, 100) > 30 - character.getStrength() - bonus) 
-						|| (customer.getType() == CustomerType.GROUP && Util.getInt(0, 100) > 80 - character.getStrength()-bonus)) {
+				if ((customer.getType() != CustomerType.GROUP && Util.getInt(0, 100) > 35 - character.getStrength() - bonus) 
+						|| (customer.getType() == CustomerType.GROUP && Util.getInt(0, 100) > 50 - character.getStrength()-bonus)
+						|| Jasbro.getInstance().getData().getProtagonist().getTraits().contains(Trait.BENEFACTORSTREETS)) {
 					runningActivity.addMainCustomer(customer);
 					runningActivity.performActivity();
-					remainingActions -= whore.getAmountActions();
+					remainingActions -= whore.getCooldownTime()+whore.getCooldownTime()+Util.getInt(-15, 15);
 					
-					if(character.getTraits().contains(Trait.QUICKIE) && (whore.getSexType()==Sextype.ORAL || whore.getSexType()==Sextype.FOREPLAY)){remainingActions+=0.5f;}
+					if(character.getTraits().contains(Trait.QUICKIE)){remainingActions+=0.5f;}
 					if(character.getTraits().contains(Trait.THATGIRL)){character.getFame().modifyFame(Jasbro.getInstance().getData().getDay()/5);}
 				}
 				else {	

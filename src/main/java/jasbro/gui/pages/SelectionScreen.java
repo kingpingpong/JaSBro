@@ -26,10 +26,11 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.RowSpec;
 
 public class SelectionScreen<T> extends JPanel implements MessageInterface {
+	
 	public SelectionScreen() {
 	}
 	private SelectionData<T> selectedOption;
-
+	
 	public SelectionData<T> select(List<SelectionData<T>> choices,
 			ImageData image1, ImageData image2, ImageData background, String description) {
 		setBackground(new Color(240, 230, 140));
@@ -37,14 +38,16 @@ public class SelectionScreen<T> extends JPanel implements MessageInterface {
 		setLayout(new FormLayout(new ColumnSpec[] {
 				ColumnSpec.decode("1dlu:grow"),
 				ColumnSpec.decode("1dlu:grow(6)"),
-				ColumnSpec.decode("1dlu:grow"), }, new RowSpec[] {
-				RowSpec.decode("1dlu:grow(3)"), RowSpec.decode("1dlu:grow"), }));
-
+				ColumnSpec.decode("1dlu:grow"), },
+				new RowSpec[] {
+				RowSpec.decode("1dlu:grow(3)"),
+				RowSpec.decode("1dlu:grow"), }));
+		
 		JPanel imageArea = new JPanel();
 		imageArea.setOpaque(false);
 		add(imageArea, "1, 1, 3, 1, fill, fill");
 		imageArea.setLayout(new GridLayout(1, 0, 0, 0));
-
+		
 		if (image2 == null) {
 			MyImage imageLabel = new MyImage(image1);
 			MyImage backgroundLabel = new MyImage(background);
@@ -52,7 +55,7 @@ public class SelectionScreen<T> extends JPanel implements MessageInterface {
 			imageArea.add(backgroundLabel, 0);
 			backgroundLabel.setOpaque(true);
 			backgroundLabel.setResize(true);
-
+			
 			backgroundLabel.setLayout(new GridLayout(1, 0, 0, 0));
 			backgroundLabel.add(imageLabel);
 		} else {
@@ -68,7 +71,7 @@ public class SelectionScreen<T> extends JPanel implements MessageInterface {
 					FormFactory.RELATED_GAP_COLSPEC,},
 				new RowSpec[] {
 					RowSpec.decode("1dlu:grow"),}));
-
+			
 			MyImage myImage = new MyImage();
 			myImage.setImage(image1);
 			imageAreaBackground.add(myImage, "2, 1, fill, fill");
@@ -77,12 +80,12 @@ public class SelectionScreen<T> extends JPanel implements MessageInterface {
 			myImage.setImage(image2);
 			imageAreaBackground.add(myImage, "4, 1, fill, fill");
 		}
-
+		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBackground(new Color(240, 230, 140));
-        scrollPane.getViewport().setOpaque(false);
+		scrollPane.getViewport().setOpaque(false);
 		add(scrollPane, "2, 2, fill, fill");
-
+		
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		buttonPanel.setOpaque(false);
@@ -100,7 +103,7 @@ public class SelectionScreen<T> extends JPanel implements MessageInterface {
 		descriptionArea.setOpaque(false);
 		descriptionArea.setFont(GuiUtil.DEFAULTBOLDFONT);
 		buttonPanel.add(descriptionArea, "1, 1, fill, top");
-
+		
 		for (int i = 0; i < choices.size(); i++) {
 			final SelectionData<T> choice = choices.get(i);
 			JButton choiceButton = new JButton(choice.getButtonText());
@@ -110,23 +113,23 @@ public class SelectionScreen<T> extends JPanel implements MessageInterface {
 				public void actionPerformed(ActionEvent e) {
 					selectedOption = choice;
 					AccessController.doPrivileged(new PrivilegedAction<Void>() {
-
-                        @Override
-                        public Void run() {
-                            Jasbro.getThreadpool().execute(new Runnable() {
-                                public void run() {
-                                    try {
-                                        Thread.sleep(500); //Sleep shortly to give next message time to load
-                                    } catch (InterruptedException e1) {
-                                    }
-                                    Jasbro.getInstance().getGui().removeLayer(SelectionScreen.this);
-                                };
-                            });
-                            return null;
-                        }
-					    
+						
+						@Override
+						public Void run() {
+							Jasbro.getThreadpool().execute(new Runnable() {
+								public void run() {
+									try {
+										Thread.sleep(500); //Sleep shortly to give next message time to load
+									} catch (InterruptedException e1) {
+									}
+									Jasbro.getInstance().getGui().removeLayer(SelectionScreen.this);
+								};
+							});
+							return null;
+						}
+						
 					});
-
+					
 				}
 			});
 			
@@ -136,7 +139,7 @@ public class SelectionScreen<T> extends JPanel implements MessageInterface {
 			layout.insertRow(i + 2, RowSpec.decode("default:none"));
 			buttonPanel.add(choiceButton, "1," + (i + 2) + ", fill, top");
 		}
-
+		
 		Jasbro.getInstance().getGui().addMessage(this);
 		
 		do {
@@ -146,7 +149,7 @@ public class SelectionScreen<T> extends JPanel implements MessageInterface {
 			}
 		}
 		while (selectedOption == null);
-
+		
 		return selectedOption;
 	}
 	
@@ -158,11 +161,11 @@ public class SelectionScreen<T> extends JPanel implements MessageInterface {
 	@Override
 	public void init() {
 	}
-
+	
 	@Override
 	public void setMessageGroupObject(Object charcterGroupObject) {
 	}
-
+	
 	@Override
 	public Object getMessageGroupObject() {
 		return null;

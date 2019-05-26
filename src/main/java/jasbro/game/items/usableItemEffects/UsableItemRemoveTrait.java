@@ -13,20 +13,20 @@ public class UsableItemRemoveTrait extends UsableItemEffect {
 			character.removeTrait(trait);
 		}
 	}
-
+	
 	@Override
 	public String getName() {
 		return "Remove Trait";
 	}
-
+	
 	public Trait getTrait() {
 		return trait;
 	}
-
+	
 	public void setTrait(Trait trait) {
 		this.trait = trait;
 	}
-
+	
 	@Override
 	public UsableItemEffectType getType() {
 		return UsableItemEffectType.REMOVETRAIT;

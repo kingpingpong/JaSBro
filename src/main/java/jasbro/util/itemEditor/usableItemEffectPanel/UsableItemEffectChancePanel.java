@@ -17,12 +17,12 @@ import com.jgoodies.forms.layout.RowSpec;
 
 public class UsableItemEffectChancePanel extends JPanel {
 	private UsableItemEffectChance itemEffect;
-
+	
 	public UsableItemEffectChancePanel(UsableItemEffect usableItemEffect) {
 		setLayout(new FormLayout(new ColumnSpec[] {
 				ColumnSpec.decode("left:default"),
 				ColumnSpec.decode("default:grow"),},
-			new RowSpec[] {
+				new RowSpec[] {
 				FormFactory.DEFAULT_ROWSPEC,
 				FormFactory.DEFAULT_ROWSPEC,
 				FormFactory.DEFAULT_ROWSPEC,
@@ -30,12 +30,12 @@ public class UsableItemEffectChancePanel extends JPanel {
 				FormFactory.DEFAULT_ROWSPEC,}));
 		add(new JLabel(usableItemEffect.getName()), "1, 1, left, center");
 		this.itemEffect = (UsableItemEffectChance)usableItemEffect;
-
+		
 		final JSpinner spinner = new JSpinner();
 		spinner.setModel(new SpinnerNumberModel(0, 0, 100, 1));
 		spinner.setValue(itemEffect.getChance());
 		add(spinner, "2, 1, fill, top");
-		spinner.addChangeListener(new ChangeListener() {				
+		spinner.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				itemEffect.setChance((int)spinner.getValue());

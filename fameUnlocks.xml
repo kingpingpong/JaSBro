@@ -11,55 +11,55 @@
 	<unlock>
 		<type>HOUSE</type>
 		<name>SCHOOL</name>
-		<fame>100</fame>
+		<fame>5000</fame>
 	</unlock>
 
 	<unlock>
 		<type>HOUSE</type>
 		<name>MANSION</name>
-		<fame>500</fame>
+		<fame>12000</fame>
 	</unlock>
 	
 	<unlock>
 		<type>ROOM</type>
 		<name>ARENA</name>
-		<fame>1000</fame>
+		<fame>5500</fame>
 	</unlock>
 
 	<unlock>
 		<type>HOUSE</type>
 		<name>PALACE</name>
-		<fame>2000</fame>
+		<fame>90000</fame>
 	</unlock>
 	
 	<unlock>
 		<type>ROOM</type>
 		<name>LARGEBEDROOM</name>
-		<fame>2500</fame>
+		<fame>1000</fame>
 	</unlock>
 	
 	<unlock>
 		<type>ROOM</type>
 		<name>STAGE</name>
-		<fame>3000</fame>
+		<fame>550</fame>
 	</unlock>
 	
 	<unlock>
 		<type>ROOM</type>
 		<name>MASTERBEDROOM</name>
-		<fame>4000</fame>
+		<fame>2000</fame>
 	</unlock>
 
 	<unlock>
 		<type>HOUSE</type>
 		<name>GIANTCASTLE</name>
-		<fame>5000</fame>
+		<fame>30000</fame>
 	</unlock>
 	
 	<unlock>
 		<type>ROOM</type>
 		<name>SPAAREA</name>
-		<fame>7000</fame>
+		<fame>4000</fame>
 	</unlock>
 
 	<unlock>
@@ -71,13 +71,13 @@
 	<unlock>
 		<type>ROOM</type>
 		<name>LOBBY</name>
-		<fame>15000</fame>
+		<fame>6000</fame>
 	</unlock>
 
 	<unlock>
 		<type>ROOM</type>
 		<name>CLASSROOM</name>
-		<fame>20000</fame>
+		<fame>4500</fame>
 	</unlock>
 	
 	<unlock>

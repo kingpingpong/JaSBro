@@ -19,7 +19,7 @@ import com.jgoodies.forms.layout.RowSpec;
 
 public class UsableItemAddTraitPanel extends JPanel {
 	private UsableItemAddTrait itemEffect;
-
+	
 	public UsableItemAddTraitPanel(UsableItemEffect usableItemEffect) {
 		setLayout(new FormLayout(new ColumnSpec[] {
 				ColumnSpec.decode("left:default"),
@@ -39,7 +39,7 @@ public class UsableItemAddTraitPanel extends JPanel {
 			traitCombobox.addItem(trait);
 		}
 		traitCombobox.setSelectedItem(itemEffect.getTrait());
-		traitCombobox.addActionListener(new ActionListener() {			
+		traitCombobox.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				itemEffect.setTrait((Trait)traitCombobox.getSelectedItem());

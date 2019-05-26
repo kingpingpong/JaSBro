@@ -17,12 +17,12 @@ public enum EquipmentSlot {
 	private EquipmentSlot(EquipmentType equipmentType) {
 		this.equipmentType = equipmentType;
 	}
-
+	
 	public EquipmentType getEquipmentType() {
 		return equipmentType;
 	}
 	
-    public String getText() {
-    	return TextUtil.t(this.toString());
-    }
+	public String getText() {
+		return TextUtil.t(this.toString());
+	}
 }

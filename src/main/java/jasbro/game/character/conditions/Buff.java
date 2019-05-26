@@ -1,13 +1,18 @@
 package jasbro.game.character.conditions;
 
+import jasbro.Jasbro;
+import jasbro.game.character.CharacterType;
 import jasbro.game.character.Charakter;
 import jasbro.game.character.Condition;
 import jasbro.game.character.Gender;
 import jasbro.game.character.attributes.Attribute;
+import jasbro.game.character.attributes.AttributeModification;
 import jasbro.game.character.attributes.BaseAttributeTypes;
 import jasbro.game.character.attributes.CalculatedAttribute;
+import jasbro.game.character.attributes.EssentialAttributes;
 import jasbro.game.character.attributes.Sextype;
 import jasbro.game.character.specialization.SpecializationAttribute;
+import jasbro.game.character.specialization.SpecializationType;
 import jasbro.game.character.traits.Trait;
 import jasbro.game.events.EventType;
 import jasbro.game.events.MyEvent;
@@ -233,16 +238,195 @@ public class Buff extends Condition {
 
 	public static class Satiated extends Buff {
 		public Satiated(int FoodRank,Charakter sourceCharacter) {
-			super("buff.satiated", new ImageData(), 3);
+			super("buff.satiated", new ImageData(), 4);
 			setIcon(new ImageData("images/icons/chicken.png"));
 
-			addAttributeBuff(BaseAttributeTypes.STAMINA, 2+sourceCharacter.getStamina()*FoodRank/100);
-			addAttributeBuff(BaseAttributeTypes.STRENGTH, 2+sourceCharacter.getStrength()*FoodRank/100);
+			addAttributeBuff(BaseAttributeTypes.STAMINA, FoodRank/6);
+			addAttributeBuff(BaseAttributeTypes.STRENGTH, FoodRank/6);
 			if(sourceCharacter.getTraits().contains(Trait.CATSAREASSHOLES)){
-				addAttributeBuff(BaseAttributeTypes.OBEDIENCE, 2+sourceCharacter.getObedience()/2);
+				addAttributeBuff(BaseAttributeTypes.OBEDIENCE, 6);
 			}
 
 
+		}
+	}
+	
+	public static class LightTan extends Buff {
+		public LightTan() {
+			super("buff.lightTan", new ImageData(), 21);
+			setIcon(new ImageData("images/icons/light_tan.png"));
+
+			addAttributeBuff(BaseAttributeTypes.CHARISMA, 5);
+		}
+	}
+	public static class Tan extends Buff {
+		public Tan() {
+			super("buff.tan", new ImageData(), 21);
+			setIcon(new ImageData("images/icons/light_tan.png"));
+
+			addAttributeBuff(BaseAttributeTypes.CHARISMA, 10);
+		}
+	}
+	public static class Tanlines extends Buff {
+		public Tanlines() {
+			super("buff.tanlines", new ImageData(), 90);
+			setIcon(new ImageData("images/icons/light_tan.png"));
+
+			addAttributeBuff(BaseAttributeTypes.CHARISMA, 10);
+		}
+	}
+	public static class Sunburn extends Buff {
+		public Sunburn() {
+			super("buff.sunburn", new ImageData(), 21);
+			setIcon(new ImageData("images/icons/light_tan.png"));
+
+			addAttributeBuff(BaseAttributeTypes.CHARISMA, -10);
+		}
+	}
+	
+	public static class Watched extends Buff {
+		public Watched(int value) {
+			super("buff.watched", new ImageData(), 7);
+			setIcon(new ImageData("images/icons/intimidate.png"));
+
+			addAttributeBuff(SpecializationAttribute.PICKPOCKETING, -value/3);
+
+		}
+		@Override
+		public String getDescription() {
+			return TextUtil.t("buff.watched.description", getCharacter());
+		}
+	}
+
+	public static class BaseStatBlessing extends Buff {
+		private BaseAttributeTypes statName=null;
+		public void setStatName(BaseAttributeTypes statName) {
+			this.statName = statName;
+		}
+		private String godName=null;
+		public void setGodName(String godName) {
+			this.godName = godName;
+		}
+
+		public BaseStatBlessing(BaseAttributeTypes stat, String godName) {
+			super("buff.blessing", new ImageData(), 10);
+			setIcon(new ImageData("images/icons/motivated.png"));
+			setStatName(stat);	
+			setGodName(godName);
+		}
+
+		@Override
+		public String getDescription() {
+			Object arguments[] = {this.godName, this.statName.getText(), getRemainingTime()};
+			return TextUtil.t("buff.basestatblessing.description", getCharacter(), arguments);
+		}
+
+		@Override
+		public void handleEvent(MyEvent e) {
+			if (e.getType() == EventType.ATTRIBUTECHANGE) {
+				AttributeModification attributeModification = (AttributeModification) e.getSource();
+				if (attributeModification.getAttributeType() == statName) {
+					float modification = attributeModification.getBaseAmount();
+					float change = Math.abs(modification) * 1.5f;
+					attributeModification.addModificator(change);
+				}
+			}
+		}
+	}
+	
+	public static class Exhausted extends Buff {
+
+		public Exhausted() {
+			super("buff.roughenedup", new ImageData(), 6);
+		}
+
+		@Override
+		public String getDescription() {
+			return TextUtil.t("buff.exhausted.description", getCharacter());
+		}
+
+		@Override
+		public void handleEvent(MyEvent e) {
+			if (e.getType() == EventType.ATTRIBUTECHANGE) {
+				AttributeModification attributeModification = (AttributeModification) e.getSource();
+				if (attributeModification.getAttributeType() == EssentialAttributes.ENERGY && attributeModification.getBaseAmount()>0) {
+					float modification = attributeModification.getBaseAmount();
+					float change = -modification/2;
+					attributeModification.addModificator(change);
+				}
+			}
+		}
+	}
+
+	public static class SkillBlessing extends Buff {
+		private SpecializationAttribute statName=null;
+		public void setStatName(SpecializationAttribute statName) {
+			this.statName = statName;
+		}
+		private String godName=null;
+		public void setGodName(String godName) {
+			this.godName = godName;
+		}
+
+		public SkillBlessing(SpecializationAttribute stat, String godName) {
+			super("buff.blessing", new ImageData(), 10);
+			setIcon(new ImageData("images/icons/motivated.png"));
+			setStatName(stat);	
+			setGodName(godName);
+		}
+
+		@Override
+		public String getDescription() {
+			Object arguments[] = {this.godName, this.statName.getText(), getRemainingTime()};
+			return TextUtil.t("buff.basestatblessing.description", getCharacter(), arguments);
+		}
+
+		@Override
+		public void handleEvent(MyEvent e) {
+			if (e.getType() == EventType.ATTRIBUTECHANGE) {
+				AttributeModification attributeModification = (AttributeModification) e.getSource();
+				if (attributeModification.getAttributeType() == statName) {
+					float modification = attributeModification.getBaseAmount();
+					float change = Math.abs(modification) * 1.5f;
+					attributeModification.addModificator(change);
+				}
+			}
+		}
+	}
+	public static class SexBlessing extends Buff {
+		private Sextype statName=null;
+		private String godName=null;
+		public void setStatName(Sextype statName) {
+			this.statName = statName;
+		}
+		
+		public void setGodName(String godName) {
+			this.godName = godName;
+		}
+
+		public SexBlessing(Sextype stat, String godName) {
+			super("buff.blessing", new ImageData(), 10);
+			setIcon(new ImageData("images/icons/motivated.png"));
+			setStatName(stat);	
+			setGodName(godName);
+		}
+
+		@Override
+		public String getDescription() {
+			Object arguments[] = {this.godName, this.statName.getText(), getRemainingTime()};
+			return TextUtil.t("buff.basestatblessing.description", getCharacter(), arguments);
+		}
+
+		@Override
+		public void handleEvent(MyEvent e) {
+			if (e.getType() == EventType.ATTRIBUTECHANGE) {
+				AttributeModification attributeModification = (AttributeModification) e.getSource();
+				if (attributeModification.getAttributeType() == statName) {
+					float modification = attributeModification.getBaseAmount();
+					float change = Math.abs(modification) * 1.5f;
+					attributeModification.addModificator(change);
+				}
+			}
 		}
 	}
 
@@ -250,15 +434,12 @@ public class Buff extends Condition {
 		public Pretty(Charakter sourceCharacter, Charakter target) {
 			super("buff.pretty", new ImageData(), 14);
 			setIcon(new ImageData("images/icons/cucumber.png"));
-			int skill = sourceCharacter.getFinalValue(SpecializationAttribute.WELLNESS)/10;
+			int skill = sourceCharacter.getFinalValue(SpecializationAttribute.MEDICALKNOWLEDGE);
 			int charismaIncrease;
-			charismaIncrease=target.getCharisma()*skill/100;
+			charismaIncrease=1+skill/10;
+			if(sourceCharacter.getTraits().contains(Trait.COSMETICS))
+				charismaIncrease*=3/2;
 
-
-
-			if (sourceCharacter.getTraits().contains(Trait.COSMETICS)) {
-				charismaIncrease+=10;
-			}
 
 			addAttributeBuff(BaseAttributeTypes.CHARISMA, charismaIncrease);
 		}
@@ -266,29 +447,41 @@ public class Buff extends Condition {
 
 	public static class SmoothSkin extends Buff {
 		public SmoothSkin(int magnitude, Charakter target) {
-			super("buff.smoothskin", new ImageData(), 4);
+			super("buff.smoothskin", new ImageData(), 6);
 			setIcon(new ImageData("images/icons/cucumber.png"));
 
-			addAttributeBuff(BaseAttributeTypes.CHARISMA, 2+target.getCharisma()*magnitude/100);	
+			addAttributeBuff(BaseAttributeTypes.CHARISMA, 2+magnitude/2);	
+
+		}
+	}
+	
+	public static class DarkGodSeed extends Buff {
+		public DarkGodSeed() {
+			super("buff.DarkGodSeed", new ImageData(), 13);
+			setIcon(new ImageData("images/icons/Darkness.png"));
+
+			addAttributeBuff(BaseAttributeTypes.CHARISMA, 7);
+			addAttributeBuff(BaseAttributeTypes.INTELLIGENCE, 7);
+			addAttributeBuff(SpecializationAttribute.MAGIC, 20);
 
 		}
 	}
 
 	public static class AllDolledUp extends Buff {
 		public AllDolledUp(int skill, Charakter target) {
-			super("buff.dolledup", new ImageData(), 4);
+			super("buff.dolledup", new ImageData(), 6);
 			setIcon(new ImageData("images/icons/ribbon.png"));
-			addAttributeBuff(BaseAttributeTypes.CHARISMA, 2+target.getCharisma()*skill/100);
+			addAttributeBuff(BaseAttributeTypes.CHARISMA, 2+skill/10);
 
 		}
 	}
 	public static class Stoned extends Buff {
 		public Stoned(int skill, Charakter target, int intellBonus) {
-			super("buff.stoned", new ImageData(), 4);
+			super("buff.stoned", new ImageData(), 6);
 			setIcon(new ImageData("images/icons/stoned.png"));
-			addAttributeBuff(BaseAttributeTypes.OBEDIENCE, 2+target.getObedience()*skill/100);
+			addAttributeBuff(BaseAttributeTypes.OBEDIENCE, 2+skill/10);
 			addAttributeBuff(BaseAttributeTypes.STAMINA, 2);
-			addAttributeBuff(BaseAttributeTypes.INTELLIGENCE, target.getIntelligence()*intellBonus/100);
+			addAttributeBuff(BaseAttributeTypes.INTELLIGENCE, intellBonus/5);
 
 		}
 	}
@@ -301,27 +494,18 @@ public class Buff extends Condition {
 		public String getDescription() {
 			int staminaLoss=0;
 			int strengthLoss=0;
-			staminaLoss=2+getCharacter().getStamina()/8;
-			if(getCharacter().getStamina()<4){staminaLoss=2;}			
-			strengthLoss=2+getCharacter().getStrength()/8;
-			if(getCharacter().getStrength()<4){strengthLoss=2;}
+			staminaLoss=5;
+			strengthLoss=5;
 			Object arguments[]={staminaLoss, strengthLoss};
 			return TextUtil.t("buff.roughenedup.description", getCharacter(), arguments);
 		}
 		@Override
 		public void init() {
 			setIcon(new ImageData("images/icons/roughenedup.png"));
-			int staminaLoss=0;
-			int strengthLoss=0;
-			
-			staminaLoss=2+getCharacter().getStamina()/8;
-			if(getCharacter().getStamina()<4){staminaLoss=2;}
-			
-			strengthLoss=2+getCharacter().getStrength()/8;
-			if(getCharacter().getStrength()<4){strengthLoss=2;}
-			
-			addAttributeBuff(BaseAttributeTypes.STAMINA, -staminaLoss);
-			addAttributeBuff(BaseAttributeTypes.STRENGTH, -strengthLoss);
+
+
+			addAttributeBuff(BaseAttributeTypes.STAMINA, -5);
+			addAttributeBuff(BaseAttributeTypes.STRENGTH, -5);
 
 			super.init();
 		}
@@ -329,12 +513,18 @@ public class Buff extends Condition {
 
 	public static class HornyBuff extends Buff {
 		public HornyBuff(Charakter sourceCharacter) {
-			super("buff.horny", new ImageData(), 2);
+			super("buff.horny", new ImageData(), 6);
 			setIcon(new ImageData("images/icons/Hearts.png"));
-
-
-			addAttributeBuff(BaseAttributeTypes.CHARISMA, 2+sourceCharacter.getCharisma()/4);
-			addAttributeBuff(BaseAttributeTypes.STAMINA, 2+sourceCharacter.getStamina()/4);
+			int bonus=0;
+			
+			bonus=(int) (5+sourceCharacter.getAttribute(BaseAttributeTypes.CHARISMA).getInternValue()/10);
+			addAttributeBuff(BaseAttributeTypes.CHARISMA, bonus);
+			bonus=(int) (5+sourceCharacter.getAttribute(BaseAttributeTypes.STAMINA).getInternValue()/10);
+			addAttributeBuff(BaseAttributeTypes.STAMINA, bonus);
+			for(Sextype sex : Sextype.values()){
+				bonus=(int) (5+sourceCharacter.getAttribute(sex).getInternValue()/10);
+				addAttributeBuff(sex, bonus);
+			}
 		}
 	}
 	public static class Angry extends Buff {
@@ -342,19 +532,50 @@ public class Buff extends Condition {
 			super("buff.angry", new ImageData(), 3);
 			setIcon(new ImageData("images/icons/perks/evenassholeshavestandards.png"));
 
-			addAttributeBuff(BaseAttributeTypes.CHARISMA, 2+sourceCharacter.getCharisma()/4);
+			addAttributeBuff(BaseAttributeTypes.CHARISMA, 5);
 		}
 	}
-	public static class MotivatedTwo extends Buff {
+	public static class MotivatedTwo extends Buff {	
 		public MotivatedTwo(Charakter sourceCharacter) {
-			super("buff.motivated", new ImageData(), 3);
+			super("buff.motivatedtwo", new ImageData(), 1);
 			setIcon(new ImageData("images/icons/motivated.png"));
-
-			addAttributeBuff(BaseAttributeTypes.STAMINA, 2+sourceCharacter.getStamina()/4);
-			addAttributeBuff(BaseAttributeTypes.STRENGTH, 2+sourceCharacter.getStrength()/4);
-			addAttributeBuff(BaseAttributeTypes.OBEDIENCE, 2+sourceCharacter.getObedience()/4);
+			addAttributeBuff(BaseAttributeTypes.COMMAND, sourceCharacter.getCommand()*15/100);
+			addAttributeBuff(BaseAttributeTypes.OBEDIENCE, sourceCharacter.getObedience()*15/100);
+			for(SpecializationType specialization : Jasbro.getInstance().getData().getUnlocks().getAvailableSpecializations()){
+				if(specialization!=SpecializationType.TRAINER && specialization!=SpecializationType.SLAVE)
+				for(AttributeType attribute : specialization.getAssociatedAttributes()){
+					addAttributeBuff(attribute, sourceCharacter.getAttribute(attribute).getValue()*15/100);
+				}
+			}
+		}
+		@Override
+		public String getDescription() {
+			Object arg[]={this.getRemainingTime()};
+			return TextUtil.t("buff.motivated.description", getCharacter(), arg);
 		}
 	}
+		
+	public static class Unmotivated extends Buff {
+		public Unmotivated(Charakter sourceCharacter) {
+			super("buff.unmotivated", new ImageData(), 1);
+			setIcon(new ImageData("images/icons/intimidate.png"));
+			addAttributeBuff(BaseAttributeTypes.COMMAND, -sourceCharacter.getCommand()*45/100);
+			addAttributeBuff(BaseAttributeTypes.OBEDIENCE, -sourceCharacter.getObedience()*45/100);
+			
+			for(SpecializationType specialization : Jasbro.getInstance().getData().getUnlocks().getAvailableSpecializations()){
+				if(specialization!=SpecializationType.TRAINER && specialization!=SpecializationType.SLAVE)
+				for(AttributeType attribute : specialization.getAssociatedAttributes()){
+					addAttributeBuff(attribute, -sourceCharacter.getAttribute(attribute).getValue()*40/100);
+					
+				}
+			}
+		}
+		@Override
+		public String getDescription() {
+			return TextUtil.t("buff.unmotivated.description", getCharacter());
+		}
+	}
+	
 	public static class Happy extends Buff {
 		public Happy(Charakter sourceCharacter) {
 			super("buff.happy", new ImageData(), 3);
@@ -405,7 +626,7 @@ public class Buff extends Condition {
 		public double modifyCalculatedAttribute(CalculatedAttribute calculatedAttribute, double currentValue, Person person) {
 			if (calculatedAttribute == CalculatedAttribute.AMOUNTCUSTOMERSPERSHIFT) {
 				return currentValue + 20;
-			}						                
+			}
 			else {
 				return currentValue;
 			}
@@ -445,5 +666,135 @@ public class Buff extends Condition {
 			}
 			super.init();
 		}
+	}
+
+	public static class Heat1 extends Buff {
+		public Heat1() {
+			super("buff.heat1", new ImageData(), 4);
+		}
+		@Override
+		public void init() {
+			setIcon(new ImageData("images/icons/heart1.png"));
+			super.init();
+		}
+		@Override
+		public String getDescription() {
+			return TextUtil.t("buff.heat1.description", getCharacter());
+		}
+	}
+	public static class Heat2 extends Buff {
+		public Heat2() {
+			super("buff.heat2", new ImageData(), 4);
+		}
+		@Override
+		public void init() {
+			setIcon(new ImageData("images/icons/heart2.png"));
+			super.init();
+		}
+		@Override
+		public String getDescription() {
+			return TextUtil.t("buff.heat2.description", getCharacter());
+		}
+	}
+	public static class Heat3 extends Buff {
+		public Heat3() {
+			super("buff.heat3", new ImageData(), 3);
+		}
+		@Override
+		public void init() {
+			setIcon(new ImageData("images/icons/heart3.png"));
+			super.init();
+		}
+		@Override
+		public String getDescription() {
+			return TextUtil.t("buff.heat3.description", getCharacter());
+		}
+	}
+
+	public static class SadisticDelight extends Buff {
+		public SadisticDelight(Charakter source) {
+			super("buff.sadisticdelight", new ImageData(), 3);
+			setIcon(new ImageData("images/icons/perks/ifrit.png"));
+
+			addAttributeBuff(BaseAttributeTypes.CHARISMA, 2+source.getCharisma()/6);
+			addAttributeBuff(BaseAttributeTypes.STAMINA, 2+source.getStamina()/6);
+			addAttributeBuff(BaseAttributeTypes.COMMAND, 2+source.getCommand()/4);
+		}
+	}
+
+	public static class MasochisticDelight extends Buff {
+		public MasochisticDelight(Charakter source) {
+			super("buff.masochisticdelight", new ImageData(), 3);
+
+			setIcon(new ImageData("images/icons/perks/bleeding-heart.png"));
+
+			addAttributeBuff(BaseAttributeTypes.CHARISMA, 2+source.getCharisma()/6);
+			addAttributeBuff(BaseAttributeTypes.STAMINA, 2+source.getStamina()/6);
+			addAttributeBuff(BaseAttributeTypes.OBEDIENCE, 2+source.getCommand()/4);
+		}
+	}
+	
+	public static class BadDreams extends Buff {
+		public BadDreams(Charakter source) {
+			super("buff.baddreams", new ImageData(), 3);
+
+			setIcon(new ImageData("images/icons/perks/bleeding-heart.png"));
+
+			float buff = -0.5f;
+			
+			if (source.getType() == CharacterType.TRAINER)
+				addAttributeBuff(BaseAttributeTypes.COMMAND, (int) (source.getCommand()*buff));
+			if (source.getType() == CharacterType.SLAVE)
+				addAttributeBuff(BaseAttributeTypes.OBEDIENCE, (int) (source.getObedience()*buff));
+			addAttributeBuff(BaseAttributeTypes.CHARISMA, (int) (source.getCharisma()*buff));
+			addAttributeBuff(BaseAttributeTypes.INTELLIGENCE, (int) (source.getIntelligence()*buff));
+			addAttributeBuff(BaseAttributeTypes.STAMINA, (int) (source.getStamina()*buff));
+			addAttributeBuff(BaseAttributeTypes.STRENGTH, (int) (source.getStrength()*buff));
+		}
+	}
+	
+	public static class AquaticTrait extends Buff {
+		int stage = 3;
+		
+		public AquaticTrait(Charakter source, int stage) {
+			super("buff.aquatictrait"+stage, new ImageData(), 4);
+			
+			this.stage = stage;
+			
+			double buff = 1.00;
+			switch(stage) {
+			case 1: 
+				setIcon(new ImageData("images/icons/perks/bleeding-heart.png")); 
+				buff = -0.75;
+				break;
+			case 2: 
+				setIcon(new ImageData("images/icons/perks/bleeding-heart.png"));
+				buff = -0.25;
+				break;
+			case 3: 
+				setIcon(new ImageData("images/icons/perks/bleeding-heart.png"));
+				buff = 0.05;
+				break;
+			case 4: 
+				setIcon(new ImageData("images/icons/perks/bleeding-heart.png"));
+				buff = 0.10;
+				break;
+			case 5: 
+				setIcon(new ImageData("images/icons/perks/bleeding-heart.png"));
+				buff = 0.20;
+				break;
+			}
+			
+			if (source.getType() == CharacterType.TRAINER)
+				addAttributeBuff(BaseAttributeTypes.COMMAND, (int) (source.getCommand()*buff));
+			if (source.getType() == CharacterType.SLAVE)
+				addAttributeBuff(BaseAttributeTypes.OBEDIENCE, (int) (source.getObedience()*buff));
+			addAttributeBuff(BaseAttributeTypes.CHARISMA, (int) (source.getCharisma()*buff));
+			addAttributeBuff(BaseAttributeTypes.INTELLIGENCE, (int) (source.getIntelligence()*buff));
+			addAttributeBuff(BaseAttributeTypes.STAMINA, (int) (source.getStamina()*buff));
+			addAttributeBuff(BaseAttributeTypes.STRENGTH, (int) (source.getStrength()*buff));
+		}
+		
+		public int getStage() { return this.stage; }
 	}
 }

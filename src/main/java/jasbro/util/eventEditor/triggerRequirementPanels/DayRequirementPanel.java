@@ -16,32 +16,32 @@ import javax.swing.event.ChangeListener;
 
 public class DayRequirementPanel extends JPanel {
 	private DayRequirement triggerRequirement;
-
+	
 	public DayRequirementPanel(TriggerRequirement triggerRequirementTmp) {
 		this.triggerRequirement = (DayRequirement)triggerRequirementTmp;
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-		        
-        final JComboBox<Comparison> comboBox = new JComboBox<Comparison>();
-        add(comboBox);
-        for (Comparison dayComparison : Comparison.values()) {
-            comboBox.addItem(dayComparison);
-        }
-        comboBox.setSelectedItem(triggerRequirement.getDayComparison());
-        comboBox.addActionListener(new ActionListener() {            
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                triggerRequirement.setDayComparison((Comparison)comboBox.getSelectedItem());
-            }
-        });
 		
-        final JSpinner spinner = new JSpinner();
-        spinner.setValue(triggerRequirement.getDay());
-        add(spinner);
-        spinner.addChangeListener(new ChangeListener() {                
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                triggerRequirement.setDay((int)spinner.getValue());
-            }
-        });
+		final JComboBox<Comparison> comboBox = new JComboBox<Comparison>();
+		add(comboBox);
+		for (Comparison dayComparison : Comparison.values()) {
+			comboBox.addItem(dayComparison);
+		}
+		comboBox.setSelectedItem(triggerRequirement.getDayComparison());
+		comboBox.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				triggerRequirement.setDayComparison((Comparison)comboBox.getSelectedItem());
+			}
+		});
+		
+		final JSpinner spinner = new JSpinner();
+		spinner.setValue(triggerRequirement.getDay());
+		add(spinner);
+		spinner.addChangeListener(new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				triggerRequirement.setDay((int)spinner.getValue());
+			}
+		});
 	}
 }

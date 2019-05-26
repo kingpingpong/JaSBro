@@ -13,13 +13,13 @@ import java.util.List;
  *
  */
 public class AllCharacterRequirement implements ActivityRequirement {
-
+	
 	private final CharacterRequirement requirement;
-
+	
 	public AllCharacterRequirement(final CharacterRequirement requirement) {
 		this.requirement = requirement;
 	}
-
+	
 	@Override
 	public boolean isValid(ActivityType activity, List<Charakter> characters, TypeAmounts typeAmounts) {
 		for (Charakter c : characters) {
@@ -27,8 +27,8 @@ public class AllCharacterRequirement implements ActivityRequirement {
 				return false;
 			}
 		}
-
+		
 		return true;
 	}
-
+	
 }

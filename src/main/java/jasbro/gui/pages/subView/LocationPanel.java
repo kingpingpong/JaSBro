@@ -63,7 +63,7 @@ import com.jgoodies.forms.layout.RowSpec;
  * @author Azrael
  */
 public class LocationPanel extends MyImage implements MyEventListener, CanReceiveCharacterDrop {
-
+	
 	private CharacterLocation characterLocation;
 	private JPanel characterPanel;
 	private JList<ActivityDetails> activitySelection;
@@ -73,7 +73,7 @@ public class LocationPanel extends MyImage implements MyEventListener, CanReceiv
 	private JComboBox<SelectionData<?>> selectionDataComboBox;
 	private JScrollPane activityScrollPane;
 	private ListSelectionListener myListener;
-
+	
 	/**
 	 * Creates new form Room
 	 */
@@ -88,34 +88,34 @@ public class LocationPanel extends MyImage implements MyEventListener, CanReceiv
 				RowSpec.decode("10dlu"),
 				RowSpec.decode("1dlu:grow"),});
 		setLayout(formLayout);
-
+		
 		locationStatusLabel = new LocationStatusLabel();
 		locationStatusLabel.setOpaque(true);
 		locationStatusLabel.setHorizontalAlignment(SwingConstants.TRAILING);
 		locationStatusLabel.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(139, 69, 19)));
 		locationStatusLabel.setBackground(new Color(255,255,204));
 		add(locationStatusLabel, "1,1,3,1,fill,fill");
-
+		
 		locationInfoPanel = new JPanel();
 		locationInfoPanel.setBorder(new MatteBorder(0, 0, 1, 0, (Color) new Color(139, 69, 19)));
 		locationInfoPanel.setBackground(new Color(255,255,204));
 		add(locationInfoPanel, "4, 1, fill, fill");
 		locationInfoPanel.setLayout(new GridLayout(1, 0, 2, 2));
-
-
-
+		
+		
+		
 		characterPanel = new JPanel();
 		characterPanel.setOpaque(false);
 		add(characterPanel, "1, 2, 3, 1, fill, fill");
 		characterPanel.setLayout(new MigLayout("", "[center]", "[center]"));
-
+		
 		characterPanel.addHierarchyBoundsListener(new HierarchyBoundsAdapter() {
 			@Override
 			public void ancestorResized(HierarchyEvent e) {
 				characterPanel.revalidate();
 			}
 		});
-
+		
 		activityPanel = new JPanel();
 		activityPanel.setOpaque(false);
 		activityPanel.setBackground(new Color(255, 255, 204));
@@ -131,9 +131,9 @@ public class LocationPanel extends MyImage implements MyEventListener, CanReceiv
 				RowSpec.decode("2dlu:grow"),
 				RowSpec.decode("top:10dlu"),
 				RowSpec.decode("1px"),}));
-
+		
 		this.setBackground(new Color(1f,1,0.9f,0.5f));
-
+		
 		addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentResized(ComponentEvent e) {
@@ -141,29 +141,29 @@ public class LocationPanel extends MyImage implements MyEventListener, CanReceiv
 			}
 		});
 	}
-
+	
 	public LocationPanel(CharacterLocation characterLocation) {
 		this();
 		setCharacterLocation(characterLocation);
 	}
-
+	
 	public CharacterLocation getCharacterLocation() {
 		return characterLocation;
 	}
-
+	
 	public void setCharacterLocation(CharacterLocation characterLocation) {
 		this.characterLocation = characterLocation;
 		characterLocation.addListener(this);
 		init();
 	}
-
+	
 	private void init() {
 		characterPanel.removeAll();
 		activityPanel.removeAll();
 		if (characterLocation != null) {
-
+			
 			List<Charakter> characters = characterLocation.getCurrentUsage().getCharacters();
-
+			
 			int width = getWidth();
 			if (width == 0) {
 				width = Jasbro.getInstance().getGui().getWidth() / 5;
@@ -171,17 +171,17 @@ public class LocationPanel extends MyImage implements MyEventListener, CanReceiv
 			for (int i = 0; i < characters.size(); i++) {
 				final Charakter character = characters.get(i);
 				final CharacterShortView characterView = new CharacterShortView(character);
-
-
+				
+				
 				if (characters.size() > 4 && i == 2) {
 					characterPanel.add(characterView);
 				}
 				else {
 					characterPanel.add(characterView);
 				}
-
+				
 				characterView.setTransferHandler(new MyCharacterTransferHandler());
-
+				
 				ToleranceMouseListener tml = new ToleranceMouseListener() {
 					public void mouseDragged(MouseEvent e) {
 						super.mouseDragged(e);
@@ -194,16 +194,16 @@ public class LocationPanel extends MyImage implements MyEventListener, CanReceiv
 				characterView.addMouseMotionListener(tml);
 				characterView.addMouseListener(tml);
 			}
-
-
-
+			
+			
+			
 			activityScrollPane = new JScrollPane(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 			activityScrollPane.getVerticalScrollBar().setPreferredSize( new Dimension(0,-1) );  
 			activityPanel.add(activityScrollPane, "2, 2");
 			activityScrollPane.setOpaque(false);
 			activityScrollPane.setBorder(null);
 			activityScrollPane.getViewport().setOpaque(false);
-
+			
 			activitySelection = new JList<ActivityDetails>();
 			activitySelection.setOpaque(false);
 			activityScrollPane.setViewportView(activitySelection);
@@ -233,7 +233,7 @@ public class LocationPanel extends MyImage implements MyEventListener, CanReceiv
 						label.setFont(font);
 						metrics = label.getFontMetrics(label.getFont());
 					}
-
+					
 					return label;
 				}
 			});
@@ -247,8 +247,8 @@ public class LocationPanel extends MyImage implements MyEventListener, CanReceiv
 					repaint();
 				}
 			});
-
-			myListener = new ListSelectionListener() {                
+			
+			myListener = new ListSelectionListener() {
 				@Override
 				public void valueChanged(ListSelectionEvent e) {
 					characterLocation.setSelectedActivityDetails(activitySelection.getSelectedValue());
@@ -257,7 +257,7 @@ public class LocationPanel extends MyImage implements MyEventListener, CanReceiv
 			};
 			characterLocation.addListener(new MyEventListener() {
 				private boolean updateInProgress = false;
-
+				
 				@Override
 				public void handleEvent(MyEvent e) {
 					if (!updateInProgress) {
@@ -274,7 +274,7 @@ public class LocationPanel extends MyImage implements MyEventListener, CanReceiv
 				}
 			});
 			updateActivitySelectionList();
-
+			
 			if (characterLocation instanceof RoomSlot && !((RoomSlot)characterLocation).isAvailable()) {
 				setBackgroundImage(null);
 				setImage(characterLocation.getImage());
@@ -286,21 +286,21 @@ public class LocationPanel extends MyImage implements MyEventListener, CanReceiv
 				setBackgroundImage(characterLocation.getImage());
 			}
 		}
-
+		
 		locationInfoPanel.removeAll();
 		if (characterLocation.getDescription() != null) {
 			MyImage infoImage = new MyImage(new ImageData("images/icons/info-pic.png"));
 			infoImage.setToolTipText(TextUtil.htmlPreformatted(characterLocation.getDescription()));
 			locationInfoPanel.add(infoImage);
 		}
-
+		
 		setTransferHandler(new MyCharacterTransferHandler());
-
+		
 		initSelectionComboBox();
-
+		
 		redoLayout();
 	}
-
+	
 	private void updateActivitySelectionList() {
 		activitySelection.removeListSelectionListener(myListener);
 		ActivityDetails selectedDetails = characterLocation.getSelectedActivityDetails();
@@ -309,7 +309,7 @@ public class LocationPanel extends MyImage implements MyEventListener, CanReceiv
 		activitySelection.setSelectedValue(selectedDetails, true);
 		activitySelection.addListSelectionListener(myListener);
 	}
-
+	
 	private void initSelectionComboBox() {
 		List<SelectionData<?>> selectionDataList = characterLocation.getCurrentUsage().getType().getSelectionOptions(
 				characterLocation.getCurrentUsage());
@@ -319,19 +319,19 @@ public class LocationPanel extends MyImage implements MyEventListener, CanReceiv
 			}
 			selectionDataComboBox = new JComboBox<SelectionData<?>>();
 			activityPanel.add(selectionDataComboBox, "2, 4, fill, default");
-
+			
 			for (int i = 0; i < selectionDataComboBox.getComponentCount(); i++) 
 			{
 				if (selectionDataComboBox.getComponent(i) instanceof JComponent) {
 					((JComponent) selectionDataComboBox.getComponent(i)).setBorder(GuiUtil.DEFAULTBORDER);
 				}
-
-
+				
+				
 				if (selectionDataComboBox.getComponent(i) instanceof AbstractButton) {
 					((AbstractButton) selectionDataComboBox.getComponent(i)).setBorder(GuiUtil.DEFAULTBORDER);
 				}
 			}
-
+			
 			selectionDataComboBox.setRenderer(new DefaultListCellRenderer() {
 				@SuppressWarnings("rawtypes")
 				public Component getListCellRendererComponent(JList list,
@@ -357,16 +357,16 @@ public class LocationPanel extends MyImage implements MyEventListener, CanReceiv
 						Font font = label.getFont().deriveFont(label.getFont().getSize() - 1.0f);
 						label.setFont(font);
 						metrics = label.getFontMetrics(label.getFont());
-					}                    
+					}
 					return label;
 				}
 			});
-
+			
 			selectionDataComboBox.addItem(null);
 			for (SelectionData<?> selectionData : selectionDataList) {
 				selectionDataComboBox.addItem(selectionData);
 			}
-			selectionDataComboBox.addActionListener(new ActionListener() {                
+			selectionDataComboBox.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					SelectionData<?> selectionData = (SelectionData<?>)selectionDataComboBox.getSelectedItem();
@@ -394,18 +394,18 @@ public class LocationPanel extends MyImage implements MyEventListener, CanReceiv
 		activityPanel.validate();
 		activityPanel.repaint();
 	}
-
+	
 	private void redoLayout() {
 		int components = characterPanel.getComponents().length;
-
+		
 		if (getWidth() < 300 && components > 2) {
 			if (components < 5) {
 				characterPanel.setLayout(new MigLayout("insets 1", "[center]1", "[center]1"));
-
+				
 			}
 			else {
 				characterPanel.setLayout(new MigLayout("insets 1, wrap 3", "[center]1", "[center]1"));
-			}                	
+			}
 		}
 		else {
 			if (components < 5 || characterPanel.getWidth() > components * 80) {
@@ -414,11 +414,11 @@ public class LocationPanel extends MyImage implements MyEventListener, CanReceiv
 			else {
 				characterPanel.setLayout(new MigLayout("wrap 3", "[center]", "[center]"));
 			}
-		}        
+		}
 		characterPanel.validate();
 		characterPanel.repaint();
 	}
-
+	
 	@Override
 	public synchronized void handleEvent(MyEvent e) {
 		if (characterLocation.getCurrentUsage().getCharacters().size() != characterPanel.getComponents().length) {
@@ -432,7 +432,7 @@ public class LocationPanel extends MyImage implements MyEventListener, CanReceiv
 			});
 		}
 	}
-
+	
 	@Override
 	public void paintComponent(Graphics g) {
 		if (getBackgroundImage() != null) {
@@ -445,9 +445,9 @@ public class LocationPanel extends MyImage implements MyEventListener, CanReceiv
 			super.paintComponent(g);
 		}
 	}
-
+	
 	private class LocationStatusLabel extends JLabel {
-
+		
 		@Override
 		protected void paintComponent(Graphics g) {
 			if (characterLocation != null) {

@@ -20,23 +20,23 @@ import bsh.EvalError;
 import bsh.Interpreter;
 
 public interface TriggerParent {
-    public void putAttribute(WorldEventVariables key, Object object);
-    public Interpreter getInterpreter() throws EvalError;
-    public boolean isInterpreterInitialized();
-    public Map<String, Object> generateAttributeMap() throws EvalError;
-    public Object getAttribute(String key) throws EvalError;    
-    public RunningActivity getActivity() throws EvalError;
-    public Charakter getCharacter() throws EvalError;
-    public List<Charakter> getCharacters() throws EvalError;
-    public TypeAmounts getTypeAmounts() throws EvalError;
-    public ActivityType getActivityType() throws EvalError;
-    public CustomQuest getQuest() throws EvalError;
-    public MyEvent getEvent() throws EvalError;
-    public List<Person> getPeople() throws EvalError;
-    public LocationTypeInterface getLocation() throws EvalError;
-    public void reset(boolean resetInterpreter);
-    public void reset();
-    public void modifyActivities(List<ActivityDetails> activityDetails, Time time, List<Charakter> characters, 
-            TypeAmounts typeAmounts, CharacterLocation characterLocation) throws EvalError;
-    public Set<WorldEvent> getTriggeredEvents();
+	public void putAttribute(WorldEventVariables key, Object object);
+	public Interpreter getInterpreter() throws EvalError;
+	public boolean isInterpreterInitialized();
+	public Map<String, Object> generateAttributeMap() throws EvalError;
+	public Object getAttribute(String key) throws EvalError;
+	public RunningActivity getActivity() throws EvalError;
+	public Charakter getCharacter() throws EvalError;
+	public List<Charakter> getCharacters() throws EvalError;
+	public TypeAmounts getTypeAmounts() throws EvalError;
+	public ActivityType getActivityType() throws EvalError;
+	public CustomQuest getQuest() throws EvalError;
+	public MyEvent getEvent() throws EvalError;
+	public List<Person> getPeople() throws EvalError;
+	public LocationTypeInterface getLocation() throws EvalError;
+	public void reset(boolean resetInterpreter);
+	public void reset();
+	public void modifyActivities(List<ActivityDetails> activityDetails, Time time, List<Charakter> characters, 
+			TypeAmounts typeAmounts, CharacterLocation characterLocation) throws EvalError;
+	public Set<WorldEvent> getTriggeredEvents();
 }

@@ -17,12 +17,12 @@ import com.jgoodies.forms.layout.RowSpec;
 
 public class EquipmentChangeArmorPanel extends JPanel {
 	private EquipmentChangeArmor itemEffect;
-
+	
 	public EquipmentChangeArmorPanel(EquipmentEffect equipmentEffect) {
 		setLayout(new FormLayout(new ColumnSpec[] {
 				ColumnSpec.decode("left:default"),
 				ColumnSpec.decode("default:grow"),},
-			new RowSpec[] {
+				new RowSpec[] {
 				FormFactory.DEFAULT_ROWSPEC,
 				FormFactory.DEFAULT_ROWSPEC,
 				FormFactory.DEFAULT_ROWSPEC,
@@ -30,12 +30,12 @@ public class EquipmentChangeArmorPanel extends JPanel {
 				FormFactory.DEFAULT_ROWSPEC,}));
 		add(new JLabel(equipmentEffect.getName()), "1, 1, left, center");
 		this.itemEffect = (EquipmentChangeArmor)equipmentEffect;
-
+		
 		add(new JLabel(TextUtil.t("ui.amount")), "1, 3, left, center");
 		final JSpinner spinner = new JSpinner();
 		spinner.setValue(itemEffect.getAmount());
 		add(spinner, "2, 3, fill, top");
-		spinner.addChangeListener(new ChangeListener() {				
+		spinner.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				EquipmentChangeArmor effect = (EquipmentChangeArmor) itemEffect;

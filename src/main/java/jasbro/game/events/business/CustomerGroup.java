@@ -1,5 +1,11 @@
 package jasbro.game.events.business;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import jasbro.Util;
 import jasbro.Util.GenderAmounts;
 import jasbro.game.character.Gender;
@@ -7,34 +13,29 @@ import jasbro.game.interfaces.Person;
 import jasbro.game.items.Inventory.ItemData;
 import jasbro.texts.TextUtil;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.log4j.Logger;
-
 public class CustomerGroup extends Customer {
-	private Logger log = Logger.getLogger(CustomerGroup.class);
+	private Logger log = LogManager.getLogger(CustomerGroup.class);
 	private List<Customer> customers = new ArrayList<Customer>();
 	
 	@Override
 	public String getName() {
-	    Object attributesTmp[] = {};
+		Object attributesTmp[] = {};
 		Object attributes[] = {customers.size(), TextUtil.t("groupgender", customers.get(0), attributesTmp), customers.get(0).getName()};
-    	String text;
-    	String key;
-    	if (getGender() == Gender.MALE) {
-    		key = "nocheck.groupname."+customers.get(0).getType().toString()+".male";
-    	}
-    	else {
-    		key = "nocheck.groupname."+customers.get(0).getType().toString()+".female";
-    	}
+		String text;
+		String key;
+		if (getGender() == Gender.MALE) {
+			key = "nocheck.groupname."+customers.get(0).getType().toString()+".male";
+		}
+		else {
+			key = "nocheck.groupname."+customers.get(0).getType().toString()+".female";
+		}
 		text = TextUtil.t(key, attributes);
-    	if (! (key).equals(text)) {
-    		return text;
-    	}
-    	else {
-    		return TextUtil.t("groupname", attributes);
-    	}
+		if (! (key).equals(text)) {
+			return text;
+		}
+		else {
+			return TextUtil.t("groupname", attributes);
+		}
 	}
 	
 	@Override
@@ -58,7 +59,7 @@ public class CustomerGroup extends Customer {
 			return Gender.MALE;
 		}
 	}
-
+	
 	public List<Customer> getCustomers() {
 		return customers;
 	}
@@ -71,7 +72,7 @@ public class CustomerGroup extends Customer {
 		}
 		return sum;
 	}
-
+	
 	@Override
 	public int getMoney() {
 		int sum = 0;
@@ -80,7 +81,7 @@ public class CustomerGroup extends Customer {
 		}
 		return sum;
 	}
-
+	
 	@Override
 	public int getSatisfactionAmount() {
 		int sum = 0;
@@ -89,12 +90,12 @@ public class CustomerGroup extends Customer {
 		}
 		return sum / customers.size();
 	}
-
+	
 	@Override
 	public int getMaxSecondaryActivities() {
 		return 0;
 	}
-
+	
 	@Override
 	public float getImportance() {
 		float sum = 0;
@@ -104,14 +105,14 @@ public class CustomerGroup extends Customer {
 		return sum / customers.size();
 	}
 	
-
+	
 	@Override
 	public void addToSatisfaction(int mod, Object satisfactionModifier) {
 		for (Customer customer : customers) {
 			customer.addToSatisfaction(mod, satisfactionModifier);
 		}
 	}
-
+	
 	@Override
 	public int payFixed(int amount) {
 		int sum = 0;
@@ -120,7 +121,7 @@ public class CustomerGroup extends Customer {
 		}
 		return sum;
 	}
-
+	
 	@Override
 	public int pay(int amount, float modifier) {
 		int sum = 0;
@@ -129,7 +130,7 @@ public class CustomerGroup extends Customer {
 		}
 		return sum;
 	}
-
+	
 	@Override
 	public int pay(float modifier) {
 		int sum = 0;
@@ -138,7 +139,7 @@ public class CustomerGroup extends Customer {
 		}
 		return sum;
 	}
-
+	
 	@Override
 	public List<SatisfactionModifier> getSatisfactionModifiers() {
 		List<SatisfactionModifier> satisfactionModifiers = new ArrayList<SatisfactionModifier>();
@@ -147,14 +148,14 @@ public class CustomerGroup extends Customer {
 		}
 		return satisfactionModifiers;
 	}
-
+	
 	@Override
 	public void changePayModifier(float modifier) {
 		for (Customer customer : customers) {
 			customer.changePayModifier(modifier);
 		}
 	}
-
+	
 	@Override
 	public int getHitpoints() {
 		int sum = 0;
@@ -163,7 +164,7 @@ public class CustomerGroup extends Customer {
 		}
 		return sum;
 	}
-
+	
 	@Override
 	public int getMaxHitpoints() {
 		int sum = 0;
@@ -172,7 +173,7 @@ public class CustomerGroup extends Customer {
 		}
 		return sum;
 	}
-
+	
 	@Override
 	public float modifyHitpoints(float modifier) {
 		for (Customer customer : customers) {
@@ -182,7 +183,7 @@ public class CustomerGroup extends Customer {
 		}
 		return customers.get(0).modifyHitpoints(modifier);
 	}
-
+	
 	@Override
 	public float getDamage() {
 		float sum = 0;
@@ -193,7 +194,7 @@ public class CustomerGroup extends Customer {
 		}
 		return sum;
 	}
-
+	
 	@Override
 	public int getArmor() {
 		for (Customer customer : customers) {
@@ -203,7 +204,7 @@ public class CustomerGroup extends Customer {
 		}
 		return 0;
 	}
-
+	
 	@Override
 	public float takeDamage(float power) {
 		for (Customer customer : customers) {
@@ -213,7 +214,7 @@ public class CustomerGroup extends Customer {
 		}
 		return 0;
 	}
-
+	
 	@Override
 	public int getInitialMoney() {
 		int sum = 0;
@@ -223,20 +224,20 @@ public class CustomerGroup extends Customer {
 		return sum;
 	}
 	
-    public List<ItemData> spawnItems() {
-        List<ItemData> items = new ArrayList<ItemData>();
-        for (Customer customer : getCustomers()) {
-            items.addAll(customer.spawnItems());
-        }
-        return Util.getItemListNormalized(items);
-    }
-    
-    @Override
-    public ItemData getItem() {
-        if (getCustomers().size() > 0) {
-            return getCustomers().get(Util.getInt(0, getCustomers().size())).getItem();
-        }
-        return null;
-    }
+	public List<ItemData> spawnItems() {
+		List<ItemData> items = new ArrayList<ItemData>();
+		for (Customer customer : getCustomers()) {
+			items.addAll(customer.spawnItems());
+		}
+		return Util.getItemListNormalized(items);
+	}
+	
+	@Override
+	public ItemData getItem() {
+		if (getCustomers().size() > 0) {
+			return getCustomers().get(Util.getInt(0, getCustomers().size())).getItem();
+		}
+		return null;
+	}
 	
 }

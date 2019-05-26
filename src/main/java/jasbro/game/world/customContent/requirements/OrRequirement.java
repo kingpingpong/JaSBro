@@ -4,8 +4,8 @@ import jasbro.game.world.customContent.TriggerParent;
 import bsh.EvalError;
 
 public class OrRequirement extends TriggerRequirementContainer {
-
-
+	
+	
 	@Override
 	public boolean isValid(TriggerParent triggerParent) throws EvalError {
 		for (TriggerRequirement ar : getSubRequirements()) {
@@ -18,6 +18,6 @@ public class OrRequirement extends TriggerRequirementContainer {
 	
 	@Override
 	public TriggerRequirementType getType() {
-	    return TriggerRequirementType.ORREQUIREMENT;
+		return TriggerRequirementType.ORREQUIREMENT;
 	}
 }

@@ -31,7 +31,7 @@ public class PeopleImageTagPanel extends JPanel {
 		setLayout(new FormLayout(new ColumnSpec[] {
 				ColumnSpec.decode("default:grow"),
 				ColumnSpec.decode("default:grow"),},
-			new RowSpec[] {
+				new RowSpec[] {
 				FormFactory.DEFAULT_ROWSPEC,
 				FormFactory.DEFAULT_ROWSPEC,
 				FormFactory.DEFAULT_ROWSPEC,
@@ -67,7 +67,7 @@ public class PeopleImageTagPanel extends JPanel {
 				}
 				return label;
 			}
-        });
+		});
 		
 		characterFutaCombobox.addItemListener(new ItemListener() {
 			@Override
@@ -82,7 +82,7 @@ public class PeopleImageTagPanel extends JPanel {
 					characterFutaCombobox.setToolTipText(imageTag.getDescription());
 				}
 				characterBase.setChanged(true);
-                repaint();
+				repaint();
 			} 
 		});
 		
@@ -118,7 +118,7 @@ public class PeopleImageTagPanel extends JPanel {
 				}
 				return label;
 			}
-        });
+		});
 		
 		dominantPositionCombobox.addItemListener(new ItemListener() {
 			@Override
@@ -133,7 +133,7 @@ public class PeopleImageTagPanel extends JPanel {
 					dominantPositionCombobox.setToolTipText(imageTag.getDescription());
 				}
 				characterBase.setChanged(true);
-                repaint();
+				repaint();
 			} 
 		});
 		
@@ -151,7 +151,7 @@ public class PeopleImageTagPanel extends JPanel {
 			if (image.getTags().contains(imageTag)) {
 				genderOthersCombobox.setSelectedItem(imageTag);
 			}
-		}		
+		}
 		genderOthersCombobox.setRenderer(new DefaultListCellRenderer() {
 			@SuppressWarnings("rawtypes")
 			public Component getListCellRendererComponent(JList list,
@@ -169,7 +169,7 @@ public class PeopleImageTagPanel extends JPanel {
 				}
 				return label;
 			}
-        });
+		});
 		
 		genderOthersCombobox.addItemListener(new ItemListener() {
 			@Override
@@ -184,7 +184,7 @@ public class PeopleImageTagPanel extends JPanel {
 					genderOthersCombobox.setToolTipText(imageTag.getDescription());
 				}
 				characterBase.setChanged(true);
-                repaint();
+				repaint();
 			} 
 		});
 		
@@ -202,7 +202,7 @@ public class PeopleImageTagPanel extends JPanel {
 			if (image.getTags().contains(imageTag)) {
 				amountOthersCombobox.setSelectedItem(imageTag);
 			}
-		}		
+		}
 		amountOthersCombobox.setRenderer(new DefaultListCellRenderer() {
 			@SuppressWarnings("rawtypes")
 			public Component getListCellRendererComponent(JList list,
@@ -220,7 +220,7 @@ public class PeopleImageTagPanel extends JPanel {
 				}
 				return label;
 			}
-        });
+		});
 		
 		amountOthersCombobox.addItemListener(new ItemListener() {
 			@Override
@@ -235,9 +235,9 @@ public class PeopleImageTagPanel extends JPanel {
 					amountOthersCombobox.setToolTipText(imageTag.getDescription());
 				}
 				characterBase.setChanged(true);
-                repaint();
+				repaint();
 			} 
 		});
 	}
-
+	
 }

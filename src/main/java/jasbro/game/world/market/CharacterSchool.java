@@ -5,6 +5,7 @@ import jasbro.game.character.Charakter;
 import jasbro.game.character.attributes.Attribute;
 import jasbro.game.character.specialization.SpecializationAttribute;
 import jasbro.game.character.specialization.SpecializationType;
+import jasbro.game.character.traits.Trait;
 import jasbro.game.interfaces.AttributeType;
 import jasbro.texts.TextUtil;
 
@@ -17,42 +18,47 @@ public class CharacterSchool {
 		List<Training> possibleTraining = new ArrayList<CharacterSchool.Training>();
 		
 		for (SpecializationType specializationType : Jasbro.getInstance().getData().getUnlocks().getAvailableSpecializations()) {
-		    if (specializationType != SpecializationType.TRAINER && 
-		            specializationType != SpecializationType.SLAVE &&
-		            specializationType != SpecializationType.UNDERAGE &&
-		            specializationType.isTeachable() &&
-		            !character.getSpecializations().contains(specializationType)) {
-	            possibleTraining.add(new SpecializationBasicTraining(specializationType, character));
-		    }
+			if (specializationType != SpecializationType.TRAINER && 
+					specializationType != SpecializationType.SLAVE &&
+					specializationType != SpecializationType.UNDERAGE &&
+					specializationType.isTeachable()) {
+				/*if (character.getSpecializations().contains(specializationType)) {
+					possibleTraining.add(new SpecializationBasicTraining(specializationType, character));
+				}*/
+				if (!character.getSpecializations().contains(specializationType)) {
+					if (character.getNumberTrees() < Jasbro.maxTrees)
+						possibleTraining.add(new SpecializationBasicTraining(specializationType, character));
+				}
+			}
 		}	
 		
 		for (SpecializationType specializationType : character.getSpecializations()) {
-		    if (specializationType.isTeachable()) {
-		        SpecializationTraining training = new SpecializationTraining(specializationType, character);
-	            possibleTraining.add(training);
-	            if (!training.fulfillsRequirements() && specializationType.getAssociatedAttributes().size() > 1) {
-	                for (AttributeType attributeType : specializationType.getAssociatedAttributes()) {
-	                    AttributeSpecializationTraining attributeSpecializationTraining = new AttributeSpecializationTraining(attributeType, character);
-	                    if (attributeSpecializationTraining.fulfillsRequirements()) {
-	                        boolean containsTraining = false;
-	                        
-	                        for (Training curTraining : possibleTraining) {
-	                            if (curTraining instanceof AttributeSpecializationTraining) {
-	                                AttributeSpecializationTraining curAttributeSpecializationTraining = (AttributeSpecializationTraining) curTraining;
-	                                if (curAttributeSpecializationTraining.getAttributeType() == attributeType) {
-	                                    containsTraining = true;
-	                                    break;
-	                                }
-	                            }
-	                        }
-	                        
-	                        if (!containsTraining) {
-	                            possibleTraining.add(attributeSpecializationTraining);
-	                        }
-	                    }
-	                }
-	            }
-		    }			
+			if (specializationType.isTeachable()) {
+				SpecializationTraining training = new SpecializationTraining(specializationType, character);
+				possibleTraining.add(training);
+				if (!training.fulfillsRequirements() && specializationType.getAssociatedAttributes().size() > 1) {
+					for (AttributeType attributeType : specializationType.getAssociatedAttributes()) {
+						AttributeSpecializationTraining attributeSpecializationTraining = new AttributeSpecializationTraining(attributeType, character);
+						if (attributeSpecializationTraining.fulfillsRequirements()) {
+							boolean containsTraining = false;
+							
+							for (Training curTraining : possibleTraining) {
+								if (curTraining instanceof AttributeSpecializationTraining) {
+									AttributeSpecializationTraining curAttributeSpecializationTraining = (AttributeSpecializationTraining) curTraining;
+									if (curAttributeSpecializationTraining.getAttributeType() == attributeType) {
+										containsTraining = true;
+										break;
+									}
+								}
+							}
+							
+							if (!containsTraining) {
+								possibleTraining.add(attributeSpecializationTraining);
+							}
+						}
+					}
+				}
+			}
 		}
 		
 		Collections.sort(possibleTraining);
@@ -60,18 +66,18 @@ public class CharacterSchool {
 		return possibleTraining;
 	}
 	
-
-    public List<Training> getTrainingOpportunitiesHideUnavailable(Charakter selectedCharacter) {
-        List<Training> trainingOptions = getTrainingOpportunities(selectedCharacter);
-        for (int i = 0; i < trainingOptions.size(); i++) {
-            Training training = trainingOptions.get(i);
-            if (!training.fulfillsRequirements()) {
-                trainingOptions.remove(training);
-                i--;
-            }
-        }
-        return trainingOptions;
-    }
+	
+	public List<Training> getTrainingOpportunitiesHideUnavailable(Charakter selectedCharacter) {
+		List<Training> trainingOptions = getTrainingOpportunities(selectedCharacter);
+		for (int i = 0; i < trainingOptions.size(); i++) {
+			Training training = trainingOptions.get(i);
+			if (!training.fulfillsRequirements()) {
+				trainingOptions.remove(training);
+				i--;
+			}
+		}
+		return trainingOptions;
+	}
 	
 	public static abstract class Training implements Comparable<Training> {
 		public abstract String getName();
@@ -124,7 +130,7 @@ public class CharacterSchool {
 			this.specializationType = specializationType;
 			this.character = character;
 		}
-
+		
 		@Override
 		public String getName() {
 			return TextUtil.t("school.basic."+specializationType.toString()+".title", character);
@@ -138,29 +144,33 @@ public class CharacterSchool {
 			}
 			return description;
 		}
-
+		
 		@Override
 		public void apply() {
 			Jasbro.getInstance().getData().spendMoney(getPrice(), "School");
-			character.getSpecializations().add(specializationType);
+			character.addSpecialization(specializationType);
 		}
-
+		
 		@Override
 		public long getPrice() {
 			int amountSpecialisations = character.getSpecializations().size() - 1;
+			int d=1;
+			if(Jasbro.getInstance().getData().getProtagonist().getTraits().contains(Trait.DISCOUNTSCHOOL))
+				d=2;
 			switch (amountSpecialisations) {
-			case 1: return 100;
-			case 2: return 500;
-			case 3: return 10000;
-			case 4: return 50000;
-			case 5: return 100000;
-			case 6: return 120000;
-			case 7: return 150000;
+			case 1: return 100/d;
+			case 2: return 1000/d;
+			case 3: return 10000/d;
+			case 4: return 20000/d;
+			case 5: return 50000/d;
+			case 6: return 100000/d;
+			case 7: return 150000/d;
 			default:
 			}
 			return 10l * ((amountSpecialisations * amountSpecialisations * amountSpecialisations * amountSpecialisations * amountSpecialisations) / 1000 * 1000);
+			
 		}
-
+		
 		@Override
 		public boolean fulfillsRequirements() {
 			int amount = 0;
@@ -195,7 +205,7 @@ public class CharacterSchool {
 			this.specializationType = specializationType;
 			this.character = character;
 		}
-
+		
 		@Override
 		public String getName() {
 			Object arguments[] = {specializationType.getText(), specializationType.getTrainingLevel(character)};
@@ -214,7 +224,7 @@ public class CharacterSchool {
 			}
 			return description;
 		}
-
+		
 		@Override
 		public void apply() {
 			Jasbro.getInstance().getData().spendMoney(getPrice(), "School");
@@ -227,23 +237,26 @@ public class CharacterSchool {
 				}
 			}
 		}
-
+		
 		@Override
 		public long getPrice() {
 			int level = specializationType.getTrainingLevel(character);
-            switch (level) {
-            case 1: return 1000;
-            case 2: return 10000;
-            case 3: return 30000;
-            case 4: return 50000;
-            case 5: return 100000;
-            case 6: return 150000;
-            case 7: return 200000;
-            default:
-            }
-            return 100l * ((level * level * level * level) / 1000 * 1000);
+			int d=1;
+			if(Jasbro.getInstance().getData().getProtagonist().getTraits().contains(Trait.DISCOUNTSCHOOL))
+				d=2;
+			switch (level) {
+			case 1: return 1000/d;
+			case 2: return 5000/d;
+			case 3: return 25000/d;
+			case 4: return 50000/d;
+			case 5: return 100000/d;
+			case 6: return 150000/d;
+			case 7: return 200000/d;
+			default:
+			}
+			return 100l * ((level * level * level * level) / 1000 * 1000);
 		}
-
+		
 		@Override
 		public boolean fulfillsRequirements() {
 			int sum = 0;
@@ -261,10 +274,10 @@ public class CharacterSchool {
 				return false;
 			}
 		}
-
-        public SpecializationType getSpecializationType() {
-            return specializationType;
-        }
+		
+		public SpecializationType getSpecializationType() {
+			return specializationType;
+		}
 	}
 	
 	public static class AttributeSpecializationTraining extends Training {
@@ -275,7 +288,7 @@ public class CharacterSchool {
 			this.attributeType = attributeType;
 			this.character = character;
 		}
-
+		
 		@Override
 		public String getName() {
 			Object arguments[] = {attributeType.getText()};
@@ -291,40 +304,43 @@ public class CharacterSchool {
 			}
 			return description;
 		}
-
+		
 		@Override
 		public void apply() {
 			Jasbro.getInstance().getData().spendMoney(getPrice(), "School");
 			Attribute attribute = character.getAttribute(attributeType);
 			attribute.setMaxValue(attribute.getMaxValue() + attributeType.getRaiseMaxBy());
 		}
-
+		
 		@Override
 		public long getPrice() {
 			Attribute attribute = character.getAttribute(attributeType);
+			int d=1;
+			if(Jasbro.getInstance().getData().getProtagonist().getTraits().contains(Trait.GENIUS))
+				d=2;
 			int level = 1 + (attribute.getMaxValue() - attributeType.getDefaultMax()) / attributeType.getRaiseMaxBy();
-            switch (level) {
-            case 1: return 1000;
-            case 2: return 5000;
-            case 3: return 10000;
-            case 4: return 30000;
-            case 5: return 50000;
-            case 6: return 100000;
-            case 7: return 150000;
-            default:
-            }
-            return 100l * ((level * level * level * level) / 1000 * 1000);
+			switch (level) {
+			case 1: return 500/d;
+			case 2: return 2500/d;
+			case 3: return 5000/d;
+			case 4: return 15000/d;
+			case 5: return 35000/d;
+			case 6: return 70000/d;
+			case 7: return 150000/d;
+			default:
+			}
+			return 100l * ((level * level * level * level) / 1000 * 1000);
 		}
-
+		
 		@Override
 		public boolean fulfillsRequirements() {
 			Attribute attribute = character.getAttribute(attributeType);
 			return attribute.getMaxValue() == attribute.getInternValue();
 		}
-
+		
 		public AttributeType getAttributeType() {
 			return attributeType;
-		}		
+		}
 		
 	}
 }

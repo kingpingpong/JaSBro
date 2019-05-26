@@ -17,7 +17,7 @@ import java.util.List;
  *
  */
 public class ConfigurableRoom extends Room {
-
+	
 	private static final long serialVersionUID = 1L;
 	
 	/**
@@ -25,16 +25,16 @@ public class ConfigurableRoom extends Room {
 	 * 
 	 * @param roomType
 	 */
-	public ConfigurableRoom(final RoomType roomType) {
-		super(roomType);
+	public ConfigurableRoom(final RoomInfo roomInfo) {
+		super(roomInfo);
 	}
-
-	public ConfigurableRoom(final RoomType roomType, final House house) {
-		this(roomType);
+	
+	public ConfigurableRoom(final RoomInfo roomInfo, final House house) {
+		this(roomInfo);
 		setHouse(house);
 		
 	}
-
+	
 	@Override
 	public List<ActivityDetails> getPossibleActivities(Time time, TypeAmounts typeAmounts) {
 		List<ActivityDetails> valid = new ArrayList<ActivityDetails>();
@@ -45,7 +45,7 @@ public class ConfigurableRoom extends Room {
 		}
 		return valid;
 	}
-
+	
 	@Override
 	public List<ActivityDetails> getPossibleActivitiesChildCare(Time time, TypeAmounts typeAmounts) {
 		List<ActivityDetails> valid = new ArrayList<ActivityDetails>();
@@ -56,22 +56,18 @@ public class ConfigurableRoom extends Room {
 		}
 		return valid;
 	}
-
+	
 	@Override
 	public ImageData getImage() {
 		return getRoomInfo().getImage();
 	}
-
+	
 	@Override
 	public void handleEvent(MyEvent e) {
 		if (getRoomInfo().hasEventHandler()) {
-		    getRoomInfo().getEventHandler().handleEvent(e);
+			getRoomInfo().getEventHandler().handleEvent(e);
 		}
 		super.handleEvent(e);
-	}
-	
-	private RoomInfo getRoomInfo() {
-	    return getRoomType().getRoomInfo();
 	}
 	
 	@Override

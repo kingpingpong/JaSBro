@@ -21,24 +21,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SellSlaveQuest extends Quest {
-
-    private Charakter slave;
-    private int timeRemaining;
-    private int targetAmount;
-    private String clientType;
-    
+	
+	private Charakter slave;
+	private int timeRemaining;
+	private int targetAmount;
+	private String clientType;
+	
 	public SellSlaveQuest(Charakter slave, int time, int targetAmount) {
-	    this.slave = slave;
-	    this.timeRemaining = time;
-	    this.targetAmount = targetAmount;
+		this.slave = slave;
+		this.timeRemaining = time;
+		this.targetAmount = targetAmount;
 	}
-
-    @Override
-    public List<QuestStage> getInitStages() {
-        List<QuestStage> questStages = new ArrayList<QuestStage>();
-        questStages.add(new SellGirlQuestStage());
-        return questStages;
-    }
+	
+	@Override
+	public List<QuestStage> getInitStages() {
+		List<QuestStage> questStages = new ArrayList<QuestStage>();
+		questStages.add(new SellGirlQuestStage());
+		return questStages;
+	}
 	
 	private class SellGirlQuestStage extends QuestStage {
 		
@@ -66,7 +66,7 @@ public class SellSlaveQuest extends Quest {
 		public Charakter getSlave() {
 			return slave;
 		}
-
+		
 		public int getTimeRemaining() {
 			return timeRemaining;
 		}
@@ -116,7 +116,7 @@ public class SellSlaveQuest extends Quest {
 				}
 			}
 		}
-
+		
 		public String getClientType() {
 			if (clientType == null) {
 				SpawnData spawnData = new SpawnData();

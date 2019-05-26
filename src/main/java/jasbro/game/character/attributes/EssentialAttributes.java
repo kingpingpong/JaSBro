@@ -4,21 +4,21 @@ import jasbro.game.interfaces.AttributeType;
 import jasbro.texts.TextUtil;
 
 public enum EssentialAttributes implements AttributeType {
-    HEALTH, ENERGY;
-    
-    private int startValue = 0;
-    
-    private EssentialAttributes() {
-    }
-    
-    private EssentialAttributes(int startValue) {
-        this.startValue = startValue;
-    }
-        
-    public String getText() {
-    	return TextUtil.t(this.toString());
-    }
-    
+	HEALTH, ENERGY, MOTIVATION;
+	
+	private int startValue = 0;
+	
+	private EssentialAttributes() {
+	}
+	
+	private EssentialAttributes(int startValue) {
+		this.startValue = startValue;
+	}
+	
+	public String getText() {
+		return TextUtil.t(this.toString());
+	}
+	
 	@Override
 	public int getDefaultMin() {
 		return 0;
@@ -37,12 +37,12 @@ public enum EssentialAttributes implements AttributeType {
 	    return startValue;
 	}
 	
-    public String getDescription() {
-        String text = TextUtil.tNoCheck(this.toString() + ".description");
-        if (!(this.toString() + ".description").equals(text)) {
-            return text;
-        } else {
-            return null;
-        }
-    }
+	public String getDescription() {
+		String text = TextUtil.tNoCheck(this.toString() + ".description");
+		if (!(this.toString() + ".description").equals(text)) {
+			return text;
+		} else {
+			return null;
+		}
+	}
 }

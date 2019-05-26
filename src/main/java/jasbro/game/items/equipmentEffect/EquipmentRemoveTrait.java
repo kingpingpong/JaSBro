@@ -15,11 +15,11 @@ public class EquipmentRemoveTrait extends EquipmentEffect {
 			traits.remove(trait);
 		}
 	}
-
+	
 	public Trait getTrait() {
 		return trait;
 	}
-
+	
 	public void setTrait(Trait trait) {
 		this.trait = trait;
 	}
@@ -29,31 +29,31 @@ public class EquipmentRemoveTrait extends EquipmentEffect {
 		return EquipmentEffectType.REMOVETRAIT;
 	}
 	
-    @Override
-    public String getDescription() {
-        if (trait == null) {
-            return "";
-        }
-        return TextUtil.t("equipment.removeTrait", new Object[] { trait.getText() });
-    }
-    
-    @Override
-    public double getValue() {
-        if (trait != null) {
-            return -trait.getValueModifier();
-        }
-        else {
-            return 0;
-        }
-    }
-    
-    @Override
-    public int getAmountEffects() {
-        if (trait != null) {
-            return 1;
-        }
-        else {
-            return 0;
-        }
-    }
+	@Override
+	public String getDescription() {
+		if (trait == null) {
+			return "";
+		}
+		return TextUtil.t("equipment.removeTrait", new Object[] { trait.getText() });
+	}
+	
+	@Override
+	public double getValue() {
+		if (trait != null) {
+			return -trait.getValueModifier();
+		}
+		else {
+			return 0;
+		}
+	}
+	
+	@Override
+	public int getAmountEffects() {
+		if (trait != null) {
+			return 1;
+		}
+		else {
+			return 0;
+		}
+	}
 }

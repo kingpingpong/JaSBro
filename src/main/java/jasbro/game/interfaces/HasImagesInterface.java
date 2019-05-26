@@ -6,6 +6,6 @@ import jasbro.gui.pictures.ImageTag;
 import java.util.List;
 
 public interface HasImagesInterface {
-    public List<ImageData> getImages();
-    public List<ImageTag> getBaseTags();
+	public List<ImageData> getImages();
+	public List<ImageTag> getBaseTags();
 }

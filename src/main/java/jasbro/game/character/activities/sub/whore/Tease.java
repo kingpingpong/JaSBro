@@ -99,4 +99,12 @@ public class Tease extends Whore {
 	public Float getAmountActions() {
 		return 0.7f;
 	}
+	@Override
+	public float getExecutionModifier() {
+		return -0.5f;
+	}
+	@Override
+	public float getCooldownModifier() {
+		return -100.0f;
+	}
 }

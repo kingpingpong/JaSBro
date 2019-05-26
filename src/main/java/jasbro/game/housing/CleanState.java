@@ -4,22 +4,22 @@ import jasbro.texts.TextUtil;
 
 public enum CleanState {
 	
-	SPOTLESS(15), CLEAN(5), TIDY(0), MESSY(-5), DIRTY(-15), FILTHY(-60);
+	SPOTLESS(6), CLEAN(3), TIDY(0), MESSY(-5), DIRTY(-10), FILTHY(-50);
 	
 	private int satisfactionModifier;
 	
 	private CleanState(int satisfactionModifier) {
 		this.satisfactionModifier = satisfactionModifier;
 	}
-
-    public String getText() {
-    	return TextUtil.t(this.toString());
-    }
+	
+	public String getText() {
+		return TextUtil.t(this.toString());
+	}
 	
 	public int getSatisfactionModifier() {
 		return satisfactionModifier;
 	}
-
+	
 	public static CleanState calcState(House house) {
 		int amount = house.getDirt() / house.getRoomAmount();
 		if (amount < 5) {
@@ -32,7 +32,7 @@ public enum CleanState {
 			return TIDY;
 		}
 		if (amount < 35) {
-			return TIDY;
+			return MESSY;
 		}
 		if (amount < 45) {
 			return DIRTY;

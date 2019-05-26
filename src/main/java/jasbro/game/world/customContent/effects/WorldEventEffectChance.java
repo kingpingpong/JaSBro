@@ -28,23 +28,23 @@ public class WorldEventEffectChance extends WorldEventEffect {
 			itemEffect.perform(worldEvent);
 		}
 	}	
-
+	
 	public void addEffect(WorldEventEffect itemEffect) {
 		subEffects.add(itemEffect);
 	}
-
+	
 	public List<WorldEventEffect> getSubEffects() {
 		return subEffects;
 	}
-
+	
 	public int getChance() {
 		return chance;
 	}
-
+	
 	public void setChance(int chance) {
 		this.chance = chance;
 	}
-
+	
 	@Override
 	public WorldEventEffectType getType() {
 		return WorldEventEffectType.EFFECTCHANCE;

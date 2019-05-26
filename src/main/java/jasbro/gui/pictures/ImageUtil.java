@@ -1,15 +1,5 @@
 package jasbro.gui.pictures;
 
-import jasbro.Jasbro;
-import jasbro.MyException;
-import jasbro.Util;
-import jasbro.game.character.Charakter;
-import jasbro.game.character.Gender;
-import jasbro.game.character.attributes.Sextype;
-import jasbro.game.events.MessageData;
-import jasbro.game.interfaces.HasImagesInterface;
-import jasbro.texts.TextUtil;
-
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -23,7 +13,9 @@ import java.security.AccessController;
 import java.security.PrivilegedAction;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
@@ -34,10 +26,8 @@ import javax.imageio.metadata.IIOMetadata;
 import javax.imageio.metadata.IIOMetadataNode;
 import javax.imageio.stream.ImageInputStream;
 
-import net.java.truevfs.access.TFile;
-import net.java.truevfs.access.TFileInputStream;
-
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.imgscalr.Scalr;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -46,23 +36,34 @@ import org.w3c.dom.NodeList;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 
+import jasbro.Jasbro;
+import jasbro.Util;
+import jasbro.game.character.Charakter;
+import jasbro.game.character.Gender;
+import jasbro.game.character.attributes.Sextype;
+import jasbro.game.events.MessageData;
+import jasbro.game.interfaces.HasImagesInterface;
+import jasbro.texts.TextUtil;
+import net.java.truevfs.access.TFile;
+import net.java.truevfs.access.TFileInputStream;
+
 public class ImageUtil implements ImageObserver {
-    private final static Logger log = Logger.getLogger(ImageUtil.class);
+    private final static Logger log = LogManager.getLogger(ImageUtil.class);
     private static ImageUtil instance;    
     private Cache<String, Image> images;
     private Cache<String, Image> resizedImages;
 
     public ImageUtil() {
-        long memoryMB = Runtime.getRuntime().maxMemory() / 1024 / 1024;
+        long memoryMB = Runtime.getRuntime().maxMemory() / (1024 * 1024);
         long cacheSize = memoryMB / 15;
-        log.info("Max-memory: " + memoryMB + " Cache size: " + cacheSize);
+        log.info("Max-memory: {} Cache size: {}", memoryMB, cacheSize);
     	images = CacheBuilder.newBuilder()
         	       .maximumSize(cacheSize)
-        	       .expireAfterAccess(10, TimeUnit.MINUTES)
+        	       .expireAfterAccess(1, TimeUnit.MINUTES)
         	       .build();
     	resizedImages = CacheBuilder.newBuilder()
                 .maximumSize(cacheSize / 4)
-                .expireAfterAccess(5, TimeUnit.MINUTES)
+                .expireAfterAccess(30, TimeUnit.SECONDS)
                 .build();
     }
 
@@ -73,25 +74,30 @@ public class ImageUtil implements ImageObserver {
         return instance;
     }
 
-    public Image getImage(final ImageData image) {
-    	Image img = images.getIfPresent(image.getKey());
-        if (img == null) {
-            try {
-            	img = AccessController.doPrivileged(new PrivilegedAction<Image>() {
+	public Image getImage(final ImageData image) {
+		Image img = images.getIfPresent(image.getKey());
+		if (img == null) {
+			img = AccessController.doPrivileged(new PrivilegedAction<Image>() {
 
-					@Override
-					public Image run() {
+				@Override
+				public Image run() {
+					try {
 						return loadImage(image);
+					} catch (IOException e) {
+						return null;
 					}
-            	});
-            } catch (Exception e) {
-                log.error("Error on loading image", e);
-            }
-        }
-        return img;
+				}
+			});
+			
+			if(img == null) {
+				log.error("Failed to load image");
+			}
+		}
+		
+		return img;
     }
 
-	private Image loadImage(ImageData imageData) {
+	private Image loadImage(ImageData imageData) throws IOException {
         InputStream input = null;
         try {
         	Image image = null;
@@ -123,8 +129,9 @@ public class ImageUtil implements ImageObserver {
                     return null;
                 }
         	}
-        } catch (Exception e) {
-            throw new MyException("Error loading the image", e);
+        } catch (IOException e) {
+        	log.error("Failed to load image for file '{}'", imageData.getFilename());
+        	throw log.throwing(e);
         }
         finally {
             try {
@@ -158,7 +165,7 @@ public class ImageUtil implements ImageObserver {
     }
     
     public ImageData getImageDataByTag(ImageTag tag, List<ImageData> imageList) {
-    	ImageTag orginalTag = tag;
+    	//ImageTag orginalTag = tag;
     	List<ImageData> imagePool;
     	List<ImageData> imagesTag;
     	imagePool = removeStrongTags(tag, imageList);
@@ -242,6 +249,7 @@ public class ImageUtil implements ImageObserver {
                 List<ImageData> imageListTmp = removeStrongTags(tags, imageList);
                 int highestValue = -10000;
                 ImageData bestMatch = null;
+                Map<ImageData, Integer> imageValueMap=new HashMap<>();
                 for (ImageData imageData : imageListTmp) {
                     int sumValue = 0;
                     int tagValue = 0;
@@ -318,10 +326,18 @@ public class ImageUtil implements ImageObserver {
                         bestMatch = imageData;
                         highestValue = sumValue;
                     }
+                    
+                    if (log.isDebugEnabled()) {
+                    	imageValueMap.put(imageData, sumValue);
+                    }
+                }
+
+                if (log.isDebugEnabled()) {
+                	log.debug("Image values for tags {}: {}", tags, imageValueMap);
                 }
 
                 if (bestMatch == null) {
-                    log.debug("No fitting image found by searching for tags, use getByTag method" + tags.get(0));
+                    log.debug("No fitting image found by searching for tags, use getByTag method {}", tags.get(0));
                     bestMatch = getImageDataByTag(tags.get(0), imageList);
                 }
                 imageDataEmpty.setCurAccuracy(highestValue);

@@ -26,12 +26,12 @@ import com.jgoodies.forms.layout.RowSpec;
 
 public class UsableItemChangeAttributePanel extends JPanel {
 	private UsableItemChangeAttribute itemEffect;
-
+	
 	public UsableItemChangeAttributePanel(UsableItemEffect usableItemEffect) {
 		setLayout(new FormLayout(new ColumnSpec[] {
 				ColumnSpec.decode("left:default"),
 				ColumnSpec.decode("default:grow"),},
-			new RowSpec[] {
+				new RowSpec[] {
 				FormFactory.DEFAULT_ROWSPEC,
 				FormFactory.DEFAULT_ROWSPEC,
 				FormFactory.DEFAULT_ROWSPEC,
@@ -55,7 +55,7 @@ public class UsableItemChangeAttributePanel extends JPanel {
 			attributeTypeCombobox.addItem(attributeType);
 		}
 		attributeTypeCombobox.setSelectedItem(itemEffect.getAttribute());
-		attributeTypeCombobox.addActionListener(new ActionListener() {			
+		attributeTypeCombobox.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				UsableItemChangeAttribute effect = (UsableItemChangeAttribute) itemEffect;
@@ -66,7 +66,7 @@ public class UsableItemChangeAttributePanel extends JPanel {
 		final JSpinner spinner = new JSpinner();
 		spinner.setValue(itemEffect.getMinChange());
 		add(spinner, "2, 3, fill, top");
-		spinner.addChangeListener(new ChangeListener() {				
+		spinner.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				UsableItemChangeAttribute effect = (UsableItemChangeAttribute) itemEffect;
@@ -78,7 +78,7 @@ public class UsableItemChangeAttributePanel extends JPanel {
 		final JSpinner spinner2 = new JSpinner();
 		spinner2.setValue(itemEffect.getMaxChange());
 		add(spinner2, "2, 4, fill, top");
-		spinner2.addChangeListener(new ChangeListener() {				
+		spinner2.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				UsableItemChangeAttribute effect = (UsableItemChangeAttribute) itemEffect;

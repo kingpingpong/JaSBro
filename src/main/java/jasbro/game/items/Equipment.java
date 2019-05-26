@@ -30,19 +30,19 @@ public class Equipment extends Item implements AttributeModifier {
 	
 	@Override
 	public String getText() {
-	    String text = "<b>"+getName() + "</b>\n" +
-	                  TextUtil.t("slotItem", new Object[]{equipmentType.getText()}) + "\n";
-	    if (equipmentType == EquipmentType.ACCESSORY && accessoryType != null) {
-	        text +=   TextUtil.t("accessoryType", new Object[]{accessoryType.getText()}) + "\n";
-	    }
-	    text +=       TextUtil.t("valueItem", new Object[]{getValue()}) + "\n" +
-	                  getDescription() + "\n\n";
-	    for (EquipmentEffect effect : equipmentEffects) {
-	        text += effect.getDescription() + "\n";
-	    }
-	    return text;
+		String text = "<b>"+getName() + "</b>\n" +
+				TextUtil.t("slotItem", new Object[]{equipmentType.getText()}) + "\n";
+		if (equipmentType == EquipmentType.ACCESSORY && accessoryType != null) {
+			text +=   TextUtil.t("accessoryType", new Object[]{accessoryType.getText()}) + "\n";
+		}
+		text += TextUtil.t("valueItem", new Object[]{getValue()}) + "\n" +
+				getDescription() + "\n\n";
+		for (EquipmentEffect effect : equipmentEffects) {
+			text += effect.getDescription() + "\n";
+		}
+		return text;
 	}
-
+	
 	@Override
 	public float getAttributeModifier(Attribute attribute) {
 		float modifier = 0;
@@ -59,21 +59,21 @@ public class Equipment extends Item implements AttributeModifier {
 	}
 	
 	public boolean equip(EquipmentSlot equipmentSlot, Charakter character) {
-	    boolean equipSuccess = true;
+		boolean equipSuccess = true;
 		for (EquipmentEffect effect : equipmentEffects) {
 			if (!effect.canEquip(character)) {
-			    equipSuccess = false;
-			    break;
+				equipSuccess = false;
+				break;
 			}
 		}
 		if (equipSuccess) {
-	        for (EquipmentEffect effect : equipmentEffects) {
-	            effect.doAtEquip(character);
-	        }
+			for (EquipmentEffect effect : equipmentEffects) {
+				effect.doAtEquip(character);
+			}
 		}
 		return equipSuccess;
-	}	
-
+	}
+	
 	public void unequip(EquipmentSlot equipmentSlot, Charakter character) {
 		if (character.getCharacterInventory().getItem(equipmentSlot) == this) {
 			for (EquipmentEffect effect : equipmentEffects) {
@@ -93,60 +93,60 @@ public class Equipment extends Item implements AttributeModifier {
 			effect.modifyTraits(traits, character);
 		}
 	}
-
+	
 	public List<EquipmentEffect> getEquipmentEffects() {
 		return equipmentEffects;
 	}
-
+	
 	public void setEquipmentEffects(List<EquipmentEffect> equipmentEffects) {
 		this.equipmentEffects = equipmentEffects;
 	}
-
+	
 	public EquipmentType getEquipmentType() {
 		return equipmentType;
 	}
-
+	
 	public void setEquipmentType(EquipmentType equipmentType) {
 		this.equipmentType = equipmentType;
 	}
-
-    public double modifyCalculatedAttribute(CalculatedAttribute attribute, double value, Charakter character) {
-        for (EquipmentEffect effect : equipmentEffects) {
-            value = effect.modifyCalculatedAttribute(attribute, value, character);
-        }
-        return value;
-    }
-    
-    public AccessoryType getAccessoryType() {
-        return accessoryType;
-    }
-
-    public void setAccessoryType(AccessoryType accessoryType) {
-        this.accessoryType = accessoryType;
-    }
-    
-    public long calculateValue() {
-        double valueSum = 0;
-        double valueExp = 1;
-        for (EquipmentEffect effect : equipmentEffects) {
-            valueSum += effect.getValue() * effect.getAmountEffects();
-            for (int i = 0; i < effect.getAmountEffects(); i++)  {
-                if (effect.getValue() >= 0) {
-                    valueExp *= (1 + effect.getValueExponential());
-                }
-                else {
-                    valueExp /= - (1 + effect.getValueExponential());
-                }
-            }
-        }
-        double valueFinal = (long) (valueSum * valueExp);
-        if (equipmentType == EquipmentType.ACCESSORY && accessoryType == AccessoryType.ONEHANDED) {
-            valueFinal = valueFinal * 4 / 5;
-        }
-        else if (equipmentType == EquipmentType.ACCESSORY && accessoryType == AccessoryType.TWOHANDED) {
-            valueFinal = valueFinal * 2 / 3;
-        }
-        
-        return (long) valueFinal;
-    }
+	
+	public double modifyCalculatedAttribute(CalculatedAttribute attribute, double value, Charakter character) {
+		for (EquipmentEffect effect : equipmentEffects) {
+			value = effect.modifyCalculatedAttribute(attribute, value, character);
+		}
+		return value;
+	}
+	
+	public AccessoryType getAccessoryType() {
+		return accessoryType;
+	}
+	
+	public void setAccessoryType(AccessoryType accessoryType) {
+		this.accessoryType = accessoryType;
+	}
+	
+	public long calculateValue() {
+		double valueSum = 0;
+		double valueExp = 1;
+		for (EquipmentEffect effect : equipmentEffects) {
+			valueSum += effect.getValue() * effect.getAmountEffects();
+			for (int i = 0; i < effect.getAmountEffects(); i++)  {
+				if (effect.getValue() >= 0) {
+					valueExp *= (1 + effect.getValueExponential());
+				}
+				else {
+					valueExp /= - (1 + effect.getValueExponential());
+				}
+			}
+		}
+		double valueFinal = (long) (valueSum * valueExp);
+		if (equipmentType == EquipmentType.ACCESSORY && accessoryType == AccessoryType.ONEHANDED) {
+			valueFinal = valueFinal * 4 / 5;
+		}
+		else if (equipmentType == EquipmentType.ACCESSORY && accessoryType == AccessoryType.TWOHANDED) {
+			valueFinal = valueFinal * 2 / 3;
+		}
+		
+		return (long) valueFinal;
+	}
 }

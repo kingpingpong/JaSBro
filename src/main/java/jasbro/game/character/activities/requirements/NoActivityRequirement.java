@@ -15,10 +15,10 @@ import java.util.List;
  *
  */
 public class NoActivityRequirement implements ActivityRequirement {
-
+	
 	@Override
 	public boolean isValid(ActivityType activity, List<Charakter> characters, TypeAmounts typeAmounts) {
 		return true;
 	}
-
+	
 }

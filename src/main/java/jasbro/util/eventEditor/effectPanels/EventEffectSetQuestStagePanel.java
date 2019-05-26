@@ -15,26 +15,26 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.RowSpec;
 
 public class EventEffectSetQuestStagePanel extends JPanel {
-    
-    private WorldEventSetQuestStage worldEventEffect;
-
-    public EventEffectSetQuestStagePanel(WorldEventEffect worldEventEffectTmp, WorldEvent worldEventTmp) {
-        setLayout(new FormLayout(new ColumnSpec[] {
-                ColumnSpec.decode("default:grow"),},
-            new RowSpec[] {
-                RowSpec.decode("default:grow"),}));
-        this.worldEventEffect = (WorldEventSetQuestStage)worldEventEffectTmp;        
-        
-        final JSpinner spinner = new JSpinner();
-        spinner.setModel(new SpinnerNumberModel(0, null, null, 1));
-        spinner.setValue(worldEventEffect.getQuestStage());
-        add(spinner, "1, 1, fill, top");
-        spinner.addChangeListener(new ChangeListener() {                
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                worldEventEffect.setQuestStage((int)spinner.getValue());
-            }
-        });
-    }
-
+	
+	private WorldEventSetQuestStage worldEventEffect;
+	
+	public EventEffectSetQuestStagePanel(WorldEventEffect worldEventEffectTmp, WorldEvent worldEventTmp) {
+		setLayout(new FormLayout(new ColumnSpec[] {
+				ColumnSpec.decode("default:grow"),},
+				new RowSpec[] {
+				RowSpec.decode("default:grow"),}));
+		this.worldEventEffect = (WorldEventSetQuestStage)worldEventEffectTmp;
+		
+		final JSpinner spinner = new JSpinner();
+		spinner.setModel(new SpinnerNumberModel(0, null, null, 1));
+		spinner.setValue(worldEventEffect.getQuestStage());
+		add(spinner, "1, 1, fill, top");
+		spinner.addChangeListener(new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				worldEventEffect.setQuestStage((int)spinner.getValue());
+			}
+		});
+	}
+	
 }

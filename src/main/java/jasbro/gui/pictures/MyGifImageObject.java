@@ -84,21 +84,21 @@ public class MyGifImageObject extends BufferedImage {
 		active = true;
 		lastActive = System.currentTimeMillis();
 		if ((renderThread == null || !renderThread.isAlive())) {
-		    AccessController.doPrivileged(new PrivilegedAction<Void>() {
-		        @Override
-	            public Void run() {
-        			renderThread = new RenderThread();
-        			renderThread.start();
-        			return null;
-		        }
-		    });
+			AccessController.doPrivileged(new PrivilegedAction<Void>() {
+				@Override
+				public Void run() {
+					renderThread = new RenderThread();
+					renderThread.start();
+					return null;
+				}
+			});
 		}
 	}
 	
 	public BufferedImage getCurrentImage() {
 		return imageFrames.get(currentImage).getImage();
 	}
-
+	
 	@Override
 	public int getWidth(ImageObserver observer) {
 		if (observer != null) {
@@ -107,7 +107,7 @@ public class MyGifImageObject extends BufferedImage {
 		setActive();
 		return super.getWidth(observer);
 	}
-
+	
 	@Override
 	public int getHeight(ImageObserver observer) {
 		if (observer != null) {

@@ -34,7 +34,7 @@ public class TrainerGuildPanel extends JPanel {
 				ColumnSpec.decode("default:grow"),
 				ColumnSpec.decode("default:grow(8)"),
 				ColumnSpec.decode("default:grow"),},
-			new RowSpec[] {
+				new RowSpec[] {
 				RowSpec.decode("pref:grow"),
 				RowSpec.decode("pref:grow(8)"),
 				RowSpec.decode("pref:grow"),}));
@@ -48,7 +48,7 @@ public class TrainerGuildPanel extends JPanel {
 			tabbedPane.addTab("Take Quest", null, panel, null);
 			panel.setLayout(new FormLayout(new ColumnSpec[] {
 					ColumnSpec.decode("default:grow"),},
-				new RowSpec[] {
+					new RowSpec[] {
 					RowSpec.decode("20dlu"),
 					RowSpec.decode("default:grow"),}));
 			
@@ -64,7 +64,7 @@ public class TrainerGuildPanel extends JPanel {
 					ColumnSpec.decode("center:min:grow"),
 					ColumnSpec.decode("center:min:grow"),
 					ColumnSpec.decode("center:min:grow"),},
-				new RowSpec[] {					
+					new RowSpec[] {
 					FormFactory.DEFAULT_ROWSPEC,});
 			layout.setColumnGroups(new int[][]{ {1, 2, 3, 4}});
 			questPanel.setLayout(layout);
@@ -76,7 +76,7 @@ public class TrainerGuildPanel extends JPanel {
 			
 			panel.setLayout(new FormLayout(new ColumnSpec[] {
 					ColumnSpec.decode("default:grow"),},
-				new RowSpec[] {
+					new RowSpec[] {
 					RowSpec.decode("20dlu"),
 					RowSpec.decode("default:grow"),}));
 			
@@ -97,7 +97,7 @@ public class TrainerGuildPanel extends JPanel {
 					ColumnSpec.decode("center:min:grow"),
 					ColumnSpec.decode("center:min:grow"),
 					ColumnSpec.decode("center:min:grow"),},
-				new RowSpec[] {					
+					new RowSpec[] {
 					FormFactory.DEFAULT_ROWSPEC,});
 			layout.setColumnGroups(new int[][]{ {1, 2, 3, 4}});
 			activeQuestsPanel.setLayout(layout);
@@ -124,7 +124,7 @@ public class TrainerGuildPanel extends JPanel {
 			
 			JButton questButton = new JButton(TextUtil.t("quest.accept"));
 			panel.add(questButton, "1, 3, fill, fill");
-			questButton.addActionListener(new ActionListener() {				
+			questButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					questManager.activateQuest(quest);
@@ -136,7 +136,7 @@ public class TrainerGuildPanel extends JPanel {
 		validate();
 		repaint();
 	}
-
+	
 	
 	public void initActiveQuestsPanel() {
 		activeQuestsPanel.removeAll();
@@ -145,9 +145,9 @@ public class TrainerGuildPanel extends JPanel {
 		FormLayout layout = (FormLayout) activeQuestsPanel.getLayout();
 		List<Quest> quests = questManager.getActiveQuests();
 		for (Quest quest : questManager.getInactiveQuests()) {
-		    if (quest.showInQuestLog()) {
-		        quests.add(quest);
-		    }
+			if (quest.showInQuestLog()) {
+				quests.add(quest);
+			}
 		}
 		
 		for (int i = 0; i < quests.size(); i++) {
@@ -162,7 +162,7 @@ public class TrainerGuildPanel extends JPanel {
 			if (quest.canFinishEarly()) {
 				JButton finishQuestButton = new JButton(TextUtil.t("quest.finish"));
 				panel.add(finishQuestButton, "1, 3, fill, fill");
-				finishQuestButton.addActionListener(new ActionListener() {				
+				finishQuestButton.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						quest.finish();

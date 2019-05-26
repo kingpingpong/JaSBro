@@ -1,10 +1,5 @@
 package jasbro.util.itemEditor;
 
-import jasbro.game.items.UsableItem;
-import jasbro.game.items.usableItemEffects.UsableItemEffect;
-import jasbro.game.items.usableItemEffects.UsableItemEffectContainer;
-import jasbro.game.items.usableItemEffects.UsableItemEffectType;
-
 import java.awt.Container;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -16,15 +11,21 @@ import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.jgoodies.forms.factories.FormFactory;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.RowSpec;
 
+import jasbro.game.items.UsableItem;
+import jasbro.game.items.usableItemEffects.UsableItemEffect;
+import jasbro.game.items.usableItemEffects.UsableItemEffectContainer;
+import jasbro.game.items.usableItemEffects.UsableItemEffectType;
+
 public class UsableItemEditorPanel extends JPanel {
-	private final static Logger log = Logger.getLogger(UsableItemEditorPanel.class);
+	private final static Logger log = LogManager.getLogger(UsableItemEditorPanel.class);
 	private UsableItem item;
 	private UsableItemEffectPanel selectedEffectPanel;
 	private JComboBox<UsableItemEffectType> effectTypeComboBox;
@@ -32,17 +33,17 @@ public class UsableItemEditorPanel extends JPanel {
 	public UsableItemEditorPanel(UsableItem curItem) {
 		this.item = curItem;
 		setLayout(new FormLayout(new ColumnSpec[] {
-		        ColumnSpec.decode("default:grow(8)"),
-		        FormFactory.UNRELATED_GAP_COLSPEC,
-		        ColumnSpec.decode("default:grow"),},
-		    new RowSpec[] {
-		        FormFactory.DEFAULT_ROWSPEC,
-		        RowSpec.decode("default:grow"),}));
+				ColumnSpec.decode("default:grow(8)"),
+				FormFactory.UNRELATED_GAP_COLSPEC,
+				ColumnSpec.decode("default:grow"),},
+				new RowSpec[] {
+				FormFactory.DEFAULT_ROWSPEC,
+				RowSpec.decode("default:grow"),}));
 		
 		
 		final JPanel effectPanel = new JPanel();
 		JScrollPane scrollPane = new JScrollPane(effectPanel);
-
+		
 		add(scrollPane, "1, 1, 1, 2, fill, fill");
 		effectPanel.setLayout(new GridLayout(1, 1, 0, 0));
 		
@@ -50,7 +51,7 @@ public class UsableItemEditorPanel extends JPanel {
 		add(panel, "3, 1, fill, fill");
 		panel.setLayout(new FormLayout(new ColumnSpec[] {
 				ColumnSpec.decode("default:grow"),},
-			new RowSpec[] {
+				new RowSpec[] {
 				FormFactory.DEFAULT_ROWSPEC,
 				FormFactory.DEFAULT_ROWSPEC,
 				FormFactory.DEFAULT_ROWSPEC,
@@ -69,7 +70,7 @@ public class UsableItemEditorPanel extends JPanel {
 		
 		JButton btnAdd = new JButton("Add");
 		panel.add(btnAdd, "1, 2");
-		btnAdd.addActionListener(new ActionListener() {			
+		btnAdd.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -113,7 +114,7 @@ public class UsableItemEditorPanel extends JPanel {
 		});
 		
 		JButton btnDelete = new JButton("Delete");
-		btnDelete.addActionListener(new ActionListener() {			
+		btnDelete.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (!selectedEffectPanel.hasChildEffects()) {
@@ -155,15 +156,15 @@ public class UsableItemEditorPanel extends JPanel {
 			catch (Exception e) {
 				log.error("Error while initializing item effect panel", e);
 			}
-
+			
 		}
 		
-        add(new SpawnDataPanel(curItem), "3, 2, fill, fill");
-
-        validate();
-        repaint();
-    }
-
+		add(new SpawnDataPanel(curItem), "3, 2, fill, fill");
+		
+		validate();
+		repaint();
+	}
+	
 	private void initEffectPanel(UsableItemEffectPanel itemEffectPanel) 
 			throws InstantiationException, IllegalAccessException {
 		UsableItemEffect effect = itemEffectPanel.getItemEffect();
@@ -178,7 +179,7 @@ public class UsableItemEditorPanel extends JPanel {
 	
 	private class MyMouseListener extends MouseAdapter {
 		public void mouseClicked(java.awt.event.MouseEvent e) {
-			if (selectedEffectPanel != null) { 								
+			if (selectedEffectPanel != null) {
 				selectedEffectPanel.setSelected(false);
 			}
 			UsableItemEffectPanel newPanel = (UsableItemEffectPanel) e.getSource();
@@ -189,5 +190,5 @@ public class UsableItemEditorPanel extends JPanel {
 			repaint();
 		};
 	}
-
+	
 }

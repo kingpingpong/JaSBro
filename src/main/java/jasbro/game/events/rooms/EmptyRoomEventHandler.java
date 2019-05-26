@@ -32,5 +32,5 @@ public class EmptyRoomEventHandler extends AbstractRoomEventHandler {
 			activity.setIncome(activity.getIncome() / 2);
 		}
 	}
-
+	
 }

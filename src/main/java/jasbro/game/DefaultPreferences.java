@@ -15,27 +15,27 @@ public class DefaultPreferences {
 		allowedServicesMale.setServiceFutas(false);
 		allowedServicesFuta = new AllowedServices();
 	}
-
+	
 	public AllowedServices getAllowedServicesMale() {
 		return allowedServicesMale;
 	}
-
+	
 	public void setAllowedServicesMale(AllowedServices allowedServicesMale) {
 		this.allowedServicesMale = allowedServicesMale;
 	}
-
+	
 	public AllowedServices getAllowedServicesFemale() {
 		return allowedServicesFemale;
 	}
-
+	
 	public void setAllowedServicesFemale(AllowedServices allowedServicesFemale) {
 		this.allowedServicesFemale = allowedServicesFemale;
 	}
-
+	
 	public AllowedServices getAllowedServicesFuta() {
 		return allowedServicesFuta;
 	}
-
+	
 	public void setAllowedServicesFuta(AllowedServices allowedServicesFuta) {
 		this.allowedServicesFuta = allowedServicesFuta;
 	}

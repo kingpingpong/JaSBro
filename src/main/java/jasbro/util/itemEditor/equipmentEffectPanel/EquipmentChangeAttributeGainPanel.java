@@ -26,12 +26,12 @@ import com.jgoodies.forms.layout.RowSpec;
 
 public class EquipmentChangeAttributeGainPanel extends JPanel {
 	private EquipmentChangeAttributeGain itemEffect;
-
+	
 	public EquipmentChangeAttributeGainPanel(EquipmentEffect equipmentEffect) {
 		setLayout(new FormLayout(new ColumnSpec[] {
 				ColumnSpec.decode("left:default"),
 				ColumnSpec.decode("default:grow"),},
-			new RowSpec[] {
+				new RowSpec[] {
 				FormFactory.DEFAULT_ROWSPEC,
 				FormFactory.DEFAULT_ROWSPEC,
 				FormFactory.DEFAULT_ROWSPEC,
@@ -55,7 +55,7 @@ public class EquipmentChangeAttributeGainPanel extends JPanel {
 			attributeTypeCombobox.addItem(attributeType);
 		}
 		attributeTypeCombobox.setSelectedItem(itemEffect.getAttributeType());
-		attributeTypeCombobox.addActionListener(new ActionListener() {			
+		attributeTypeCombobox.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				EquipmentChangeAttributeGain effect = (EquipmentChangeAttributeGain) itemEffect;
@@ -66,7 +66,7 @@ public class EquipmentChangeAttributeGainPanel extends JPanel {
 		final JSpinner spinner = new JSpinner();
 		spinner.setValue(itemEffect.getAmountPercent());
 		add(spinner, "2, 3, fill, top");
-		spinner.addChangeListener(new ChangeListener() {				
+		spinner.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				EquipmentChangeAttributeGain effect = (EquipmentChangeAttributeGain) itemEffect;

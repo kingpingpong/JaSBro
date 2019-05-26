@@ -1,17 +1,19 @@
 package jasbro.game.housing;
 
 import jasbro.Jasbro;
+import jasbro.game.events.rooms.Crypt;
+import jasbro.game.events.rooms.Garden;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class RoomPlanning {
 	private House house;	
-	private List<RoomType> newRooms;
+	private List<RoomInfo> newRooms;
 	
 	public RoomPlanning(House house) {
 		this.house = house;
-		newRooms = getRoomTypeList(house);
+		newRooms = getRoomInfoList(house);
 	}
 	
 	public int getCosts() {
@@ -19,10 +21,10 @@ public class RoomPlanning {
 		if (newRooms.size() < house.getRoomAmount()) {
 			return 0; //TODO error
 		}
-		List<RoomType> roomTypeList = getRoomTypeList(house);
-
+		List<RoomInfo> roomTypeList = getRoomInfoList(house);
+		
 		for (int i = 0; i < newRooms.size(); i++) {
-			RoomType newRoomType = newRooms.get(i);
+			RoomInfo newRoomType = newRooms.get(i);
 			if (i >= roomTypeList.size()) {
 				costs += 500;
 				costs += newRoomType.getCost();
@@ -45,41 +47,47 @@ public class RoomPlanning {
 		Jasbro.getInstance().getData().spendMoney(cost, "Rooms");
 		
 		for (int i = 0; i < newRooms.size(); i++) {
-			RoomType newType = newRooms.get(i);
-			if (i >= house.getRooms().size()) {
-				house.getRooms().add(newType.getRoom());
+			RoomInfo newType = newRooms.get(i);
+			
+			Room newRoom = null;
+			if("GARDEN".equals(newType.getId()) || "BIGGARDEN".equals(newType.getId())) {
+				newRoom = new Garden(newType);
+			} else if ("CRYPT".equals(newType.getId())){
+				newRoom = new Crypt(newType);
 			}
 			else {
-				if (!newType.isOfType(house.getRooms().get(i))) {
+				newRoom = new ConfigurableRoom(newType);
+			}
+			
+			
+			if (i >= house.getRooms().size()) {
+				house.getRooms().add(newRoom);
+			}
+			else {
+				if (!newType.getId().equals((house.getRooms().get(i).getRoomInfo().getId()))) {
 				    RoomSlot roomSlot = house.getRoomSlots().get(i);
 				    roomSlot.getRoom().empty();
-					Room room = newType.getRoom();
-					room.setHouse(house);
-					roomSlot.setRoom(room);
+					newRoom.setHouse(house);
+					roomSlot.setRoom(newRoom);
 					roomSlot.setDownTime(roomSlot.getSlotType().getDownTime());
 				}
 			}
 		}
 	}
 	
-	public List<RoomType> getNewRooms() {
+	public List<RoomInfo> getNewRooms() {
 		return newRooms;
 	}
-
+	
 	public void reset() {
-		newRooms = getRoomTypeList(house);
+		newRooms = getRoomInfoList(house);
 	}
 	
-	public List<RoomType> getRoomTypeList(House house) {
-		List<RoomType> roomTypeList = new ArrayList<RoomType>();
-		for (Room room : house.getRooms()) {
-			for (RoomType type : RoomType.values()) {
-				if (type.isOfType(room)) {
-					roomTypeList.add(type);
-					break;
-				}
-			}
+	public List<RoomInfo> getRoomInfoList(final House house) {
+		List<RoomInfo> roomInfoList = new ArrayList<>();
+		for (final Room room : house.getRooms()) {
+			roomInfoList.add(room.getRoomInfo());
 		}
-		return roomTypeList;
+		return roomInfoList;
 	}
 }

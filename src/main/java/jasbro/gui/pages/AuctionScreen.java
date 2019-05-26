@@ -41,13 +41,13 @@ public class AuctionScreen extends JPanel implements AuctionGui {
 		setBorder(new EmptyBorder(5, 5, 5, 5));
 		this.auction = auction;
 		setLayout(new FormLayout(new ColumnSpec[] {
-		        FormFactory.UNRELATED_GAP_COLSPEC,
-		        ColumnSpec.decode("1dlu:grow(2)"),
-		        ColumnSpec.decode("1dlu:grow"),},
-		    new RowSpec[] {
-		        RowSpec.decode("1dlu:grow"),
-		        RowSpec.decode("fill:30dlu"),}));
-		
+				FormFactory.UNRELATED_GAP_COLSPEC,
+				ColumnSpec.decode("1dlu:grow(2)"),
+				ColumnSpec.decode("1dlu:grow"),},
+				new RowSpec[] {
+				RowSpec.decode("1dlu:grow"),
+				RowSpec.decode("fill:30dlu"),}));
+			
 		MyImage girlImage = new MyImage();
 		add(girlImage, "2, 1, fill, fill");
 		girlImage.setOpaque(false);
@@ -61,14 +61,14 @@ public class AuctionScreen extends JPanel implements AuctionGui {
 		add(messageScrollPane, "3, 1, fill, fill");
 		
 		messageField = new JTextArea();
-        messageField.setLineWrap(true);
-        messageField.setWrapStyleWord(true);
-        messageField.setEditable(false);
-        messageField.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        
-        messageScrollPane.setViewportView(messageField);
-        
-        ActionListener al = new ActionListener() {
+		messageField.setLineWrap(true);
+		messageField.setWrapStyleWord(true);
+		messageField.setEditable(false);
+		messageField.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		
+		messageScrollPane.setViewportView(messageField);
+		
+		ActionListener al = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -77,66 +77,76 @@ public class AuctionScreen extends JPanel implements AuctionGui {
 				catch (Exception ex) {
 					ex.printStackTrace();
 				}
-			}        	
-        };
-        
-        leaveEarlyButton = new JButton(TextUtil.t("ui.auction.leaveEarly"));
-        leaveEarlyButton.setEnabled(false);
-        leaveEarlyButton.addActionListener(new ActionListener() {            
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                AuctionScreen.this.auction.setAbort(true);
-            }
-        });
-        add(leaveEarlyButton, "2, 2, left, center");
-        
-        JPanel bidPanel = new JPanel();
-        add(bidPanel, "3, 2, fill, fill");
-        bidPanel.setBorder(GuiUtil.DEFAULTBORDER);
-        bidPanel.setBackground(GuiUtil.DEFAULTTRANSPARENTCOLOR);
-        bidPanel.setAutoscrolls(true);
-        bidPanel.setLayout(new FormLayout(new ColumnSpec[] {
-        		ColumnSpec.decode("center:15dlu:grow"),
-        		ColumnSpec.decode("center:15dlu:grow"),
-        		ColumnSpec.decode("center:15dlu:grow"),
-        		ColumnSpec.decode("center:20dlu:grow"),},
-        	new RowSpec[] {
-        		RowSpec.decode("10dlu:grow"),}));
-        
-        JButton btnBidMore = new JButton("Bid 1 more");
-        bidPanel.add(btnBidMore, "1, 1");
-        btnBidMore.setActionCommand("1");
-        btnBidMore.addActionListener(al);
-        
-        btnBidMore = new JButton("Bid 10 more");
-        bidPanel.add(btnBidMore, "2, 1");
-        btnBidMore.setActionCommand("10");
-        btnBidMore.addActionListener(al);
-        
-        btnBidMore = new JButton("Bid 100 more");
-        bidPanel.add(btnBidMore, "3, 1");
-        btnBidMore.setActionCommand("100");
-        btnBidMore.addActionListener(al);
-        
-        btnBidMore = new JButton("Bid 1000 more");
-        bidPanel.add(btnBidMore, "4, 1");
-        btnBidMore.setActionCommand("1000");
-        btnBidMore.addActionListener(al);
-        
-        playerBidder = new UiBidder();
-        playerBidder.setAuction(auction);
-        
-        validate();
+			}
+		};
+		
+		leaveEarlyButton = new JButton(TextUtil.t("ui.auction.leaveEarly"));
+		leaveEarlyButton.setEnabled(false);
+		leaveEarlyButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				AuctionScreen.this.auction.setAbort(true);
+			}
+		});
+		add(leaveEarlyButton, "2, 2, left, center");
+		
+		JPanel bidPanel = new JPanel();
+		add(bidPanel, "3, 2, fill, fill");
+		bidPanel.setBorder(GuiUtil.DEFAULTBORDER);
+		bidPanel.setBackground(GuiUtil.DEFAULTTRANSPARENTCOLOR);
+		bidPanel.setAutoscrolls(true);
+		bidPanel.setLayout(new FormLayout(new ColumnSpec[] {
+				ColumnSpec.decode("3dlu:grow"),
+				ColumnSpec.decode("15dlu:grow"),
+				ColumnSpec.decode("15dlu:grow"),},
+				new RowSpec[] {
+				RowSpec.decode("10dlu:grow"),
+				RowSpec.decode("10dlu:grow"),}));
+		
+		JButton btnBidMore = new JButton("Bid 1 more");
+		bidPanel.add(btnBidMore, "1, 1");
+		btnBidMore.setActionCommand("1");
+		btnBidMore.addActionListener(al);
+		
+		btnBidMore = new JButton("Bid 10 more");
+		bidPanel.add(btnBidMore, "2, 1");
+		btnBidMore.setActionCommand("10");
+		btnBidMore.addActionListener(al);
+		
+		btnBidMore = new JButton("Bid 100 more");
+		bidPanel.add(btnBidMore, "3, 1");
+		btnBidMore.setActionCommand("100");
+		btnBidMore.addActionListener(al);
+		
+		btnBidMore = new JButton("Bid 1000 more");
+		bidPanel.add(btnBidMore, "1, 2");
+		btnBidMore.setActionCommand("1000");
+		btnBidMore.addActionListener(al);
+		
+		btnBidMore = new JButton("Bid 10000 more");
+		bidPanel.add(btnBidMore, "2, 2");
+		btnBidMore.setActionCommand("10000");
+		btnBidMore.addActionListener(al);
+		
+		btnBidMore = new JButton("Bid 100000 more");
+		bidPanel.add(btnBidMore, "3, 2");
+		btnBidMore.setActionCommand("100000");
+		btnBidMore.addActionListener(al);
+		
+		playerBidder = new UiBidder();
+		playerBidder.setAuction(auction);
+		
+		validate();
 	}
 	
 	@Override
 	public void update() {
 		messageField.setText(auction.getMessages());
 		if (auction.isOwnSlave() || auction.getMaxBidder() instanceof UiBidder) {
-		    leaveEarlyButton.setEnabled(false);
+			leaveEarlyButton.setEnabled(false);
 		}
 		else {
-		    leaveEarlyButton.setEnabled(true);
+			leaveEarlyButton.setEnabled(true);
 		}
 		
 		JScrollBar vertical = messageScrollPane.getVerticalScrollBar();
@@ -151,9 +161,9 @@ public class AuctionScreen extends JPanel implements AuctionGui {
 	
 	@Override
 	public void setVisible(boolean visibility) {
-	    if (visibility == false) {
-	        auction.setAbort(true);
-	    }
-	    super.setVisible(visibility);
+		if (visibility == false) {
+			auction.setAbort(true);
+		}
+		super.setVisible(visibility);
 	}
 }

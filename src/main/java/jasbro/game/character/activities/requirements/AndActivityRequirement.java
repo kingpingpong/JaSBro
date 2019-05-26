@@ -18,13 +18,13 @@ import java.util.List;
  *
  */
 public class AndActivityRequirement implements ActivityRequirement {
-
+	
 	final ActivityRequirement[] requirements;
-
+	
 	public AndActivityRequirement(final ActivityRequirement... requirements) {
 		this.requirements = requirements;
 	}
-
+	
 	@Override
 	public boolean isValid(ActivityType activity, List<Charakter> characters, TypeAmounts typeAmounts) {
 		for (ActivityRequirement ar : requirements) {
@@ -32,8 +32,8 @@ public class AndActivityRequirement implements ActivityRequirement {
 				return false;
 			}
 		}
-
+		
 		return true;
 	}
-
+	
 }

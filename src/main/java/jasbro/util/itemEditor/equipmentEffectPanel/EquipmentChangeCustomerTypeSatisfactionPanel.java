@@ -22,12 +22,12 @@ import com.jgoodies.forms.layout.RowSpec;
 
 public class EquipmentChangeCustomerTypeSatisfactionPanel extends JPanel {
 	private EquipmentChangeCustomerTypeSatisfaction itemEffect;
-
+	
 	public EquipmentChangeCustomerTypeSatisfactionPanel(EquipmentEffect equipmentEffect) {
 		setLayout(new FormLayout(new ColumnSpec[] {
 				ColumnSpec.decode("left:default"),
 				ColumnSpec.decode("default:grow"),},
-			new RowSpec[] {
+				new RowSpec[] {
 				FormFactory.DEFAULT_ROWSPEC,
 				FormFactory.DEFAULT_ROWSPEC,
 				FormFactory.DEFAULT_ROWSPEC,
@@ -42,7 +42,7 @@ public class EquipmentChangeCustomerTypeSatisfactionPanel extends JPanel {
 			customerTypeComboBox.addItem(customerType);
 		}
 		customerTypeComboBox.setSelectedItem(itemEffect.getCustomerType());
-		customerTypeComboBox.addActionListener(new ActionListener() {			
+		customerTypeComboBox.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				itemEffect.setCustomerType((CustomerType)customerTypeComboBox.getSelectedItem());
@@ -53,7 +53,7 @@ public class EquipmentChangeCustomerTypeSatisfactionPanel extends JPanel {
 		final JSpinner spinner = new JSpinner();
 		spinner.setValue(itemEffect.getAmount());
 		add(spinner, "2, 3, fill, top");
-		spinner.addChangeListener(new ChangeListener() {				
+		spinner.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				itemEffect.setAmount((int)spinner.getValue());

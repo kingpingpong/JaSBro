@@ -5,17 +5,11 @@ import jasbro.game.character.Charakter;
 import jasbro.game.character.activities.RunningActivity;
 import jasbro.game.character.attributes.BaseAttributeTypes;
 import jasbro.game.character.attributes.EssentialAttributes;
-import jasbro.game.character.specialization.SpecializationAttribute;
-import jasbro.game.character.specialization.SpecializationType;
 import jasbro.game.character.traits.Trait;
 import jasbro.game.events.MessageData;
 import jasbro.game.events.rooms.Garden;
 import jasbro.game.events.rooms.Garden.Plant;
-import jasbro.game.housing.House;
-import jasbro.game.housing.Room;
 import jasbro.game.items.Item;
-import jasbro.gui.pages.SelectionData;
-import jasbro.gui.pages.SelectionScreen;
 import jasbro.gui.pictures.ImageData;
 import jasbro.gui.pictures.ImageTag;
 import jasbro.gui.pictures.ImageUtil;
@@ -25,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Harvest extends RunningActivity {
-
+	
 	private final static float BASEMODIFICATION = 1f;
 	private final static float OBEDIENCEMODIFICATION = 0.01f;
 	private int efficiency = 1;
@@ -62,30 +56,30 @@ public class Harvest extends RunningActivity {
 	
 	
 	
-
-
+	
+	
 	@Override
 	public List<ModificationData> getStatModifications() {
 		List<ModificationData> modifications = new ArrayList<ModificationData>();
 		float modification = BASEMODIFICATION;
-
+		
 		modifications.add(new ModificationData(TargetType.SLAVE, OBEDIENCEMODIFICATION, BaseAttributeTypes.OBEDIENCE));
 		modifications.add(new ModificationData(TargetType.ALL, -20, EssentialAttributes.ENERGY));
 		return modifications;
 	}
-
+	
 	@Override
 	public void init() {
 		efficiency+=getCharacters().get(0).getIntelligence();
 	}
-
+	
 	@Override
 	public void perform() {
 		
 		
 		
 	}
-
+	
 	@Override
 	public MessageData getBaseMessage() {
 		Charakter character = getCharacters().get(0);
@@ -132,7 +126,7 @@ public class Harvest extends RunningActivity {
 				itemString="boxes of catnip";
 				Jasbro.getInstance().getData().getInventory().addItems(item, amount);
 			}
-
+			
 			else{
 				amount=room.getGrowth()/14;
 				if(character.getTraits().contains(Trait.FLOWERARRANGEMENT)){amount*=2;}
@@ -149,7 +143,7 @@ public class Harvest extends RunningActivity {
 				itemString="patches of weed";
 				Jasbro.getInstance().getData().getInventory().addItems(item, amount);
 			}
-
+			
 			else{
 				amount=room.getGrowth()/30;
 				if(character.getTraits().contains(Trait.FLOWERARRANGEMENT)){amount*=2;}
@@ -166,7 +160,7 @@ public class Harvest extends RunningActivity {
 				itemString="box of cherries";
 				Jasbro.getInstance().getData().getInventory().addItems(item, amount);
 			}
-
+			
 			else{
 				amount=room.getGrowth()/18;
 				if(character.getTraits().contains(Trait.FLOWERARRANGEMENT)){amount*=2;}
@@ -183,7 +177,7 @@ public class Harvest extends RunningActivity {
 				itemString="bags of berries";
 				Jasbro.getInstance().getData().getInventory().addItems(item, amount);
 			}
-
+			
 			else{
 				amount=room.getGrowth()/20;
 				if(character.getTraits().contains(Trait.FLOWERARRANGEMENT)){amount*=2;}
@@ -200,7 +194,7 @@ public class Harvest extends RunningActivity {
 				itemString="oranges";
 				Jasbro.getInstance().getData().getInventory().addItems(item, amount);
 			}
-
+			
 			else{
 				amount=room.getGrowth()/15;
 				if(character.getTraits().contains(Trait.FLOWERARRANGEMENT)){amount*=2;}
@@ -217,7 +211,7 @@ public class Harvest extends RunningActivity {
 				itemString="peaches";
 				Jasbro.getInstance().getData().getInventory().addItems(item, amount);
 			}
-
+			
 			else{
 				amount=room.getGrowth()/24;
 				if(character.getTraits().contains(Trait.FLOWERARRANGEMENT)){amount*=2;}
@@ -230,15 +224,15 @@ public class Harvest extends RunningActivity {
 			if(room.getQuality()<50){
 				amount=room.getGrowth()/30;
 				if(character.getTraits().contains(Trait.FLOWERARRANGEMENT)){amount*=2;}
-				item = Jasbro.getInstance().getItems().get(weed);
+				item = Jasbro.getInstance().getItems().get(vine);
 				itemString="bundles of weird vines.";
 				Jasbro.getInstance().getData().getInventory().addItems(item, amount);
 			}
-
+			
 			else{
 				amount=room.getGrowth()/40;
 				if(character.getTraits().contains(Trait.FLOWERARRANGEMENT)){amount*=2;}
-				item = Jasbro.getInstance().getItems().get(hqWeed);
+				item = Jasbro.getInstance().getItems().get(hqvine);
 				itemString="wiggly bundles of tentacle vines";
 				Jasbro.getInstance().getData().getInventory().addItems(item, amount);
 			}
@@ -247,20 +241,20 @@ public class Harvest extends RunningActivity {
 			if(room.getQuality()<50){
 				amount=room.getGrowth()/20;
 				if(character.getTraits().contains(Trait.FLOWERARRANGEMENT)){amount*=2;}
-				item = Jasbro.getInstance().getItems().get(weed);
+				item = Jasbro.getInstance().getItems().get(shroom);
 				itemString="shrooms";
 				Jasbro.getInstance().getData().getInventory().addItems(item, amount);
 			}
-
+			
 			else{
 				amount=room.getGrowth()/30;
 				if(character.getTraits().contains(Trait.FLOWERARRANGEMENT)){amount*=2;}
-				item = Jasbro.getInstance().getItems().get(hqWeed);
+				item = Jasbro.getInstance().getItems().get(hqshroom);
 				itemString="penishrooms";
 				Jasbro.getInstance().getData().getInventory().addItems(item, amount);
 			}
 		}
-
+		
 		Object arguments[] = {amount, itemString};
 		String message ="";
 		if(amount>0 && room.getPlant()!=Plant.GRASS){ message = TextUtil.t("harvest.basic", character,arguments);}
@@ -271,13 +265,13 @@ public class Harvest extends RunningActivity {
 		 room.setPlantName("Grass");
 		return new MessageData(message, image, null);
 	}
-
-
-
+	
+	
+	
 	public float getEfficiency() {
 		return efficiency;
 	}
-
+	
 	public void setEfficiencyn(int efficiency) {
 		this.efficiency = efficiency;
 	}
@@ -285,7 +279,7 @@ public class Harvest extends RunningActivity {
 	public float getAmount() {
 		return amount;
 	}
-
+	
 	public void setAmount(int amount) {
 		this.amount = amount;
 	}

@@ -1,13 +1,5 @@
 package jasbro.gui.pages.subView;
 
-import jasbro.Jasbro;
-import jasbro.game.housing.House;
-import jasbro.game.housing.RoomPlanning;
-import jasbro.game.housing.RoomSlot;
-import jasbro.game.housing.RoomType;
-import jasbro.gui.GuiUtil;
-import jasbro.texts.TextUtil;
-
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -23,15 +15,24 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.jgoodies.forms.factories.FormFactory;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.RowSpec;
 
+import jasbro.Jasbro;
+import jasbro.game.housing.House;
+import jasbro.game.housing.RoomInfo;
+import jasbro.game.housing.RoomPlanning;
+import jasbro.game.housing.RoomSlot;
+import jasbro.gui.GuiUtil;
+import jasbro.texts.TextUtil;
+
 public class InteriorDecorationPanel extends JPanel {
-	private Logger log = Logger.getLogger(InteriorDecorationPanel.class);
+	private Logger log = LogManager.getLogger(InteriorDecorationPanel.class);
 	private RoomPlanning roomPlanning;
 	private JLabel costLabel;
 	
@@ -71,43 +72,43 @@ public class InteriorDecorationPanel extends JPanel {
 		final JComboBox<House> houseSelectBox = new JComboBox<House>();
 		housePanel.add(houseSelectBox, "1, 6, fill, default");
 		houseSelectBox.addItem(null);
-    	houseSelectBox.setSelectedIndex(0);
-    	for (House house : Jasbro.getInstance().getData().getHouses()) {
-    		houseSelectBox.addItem(house);
-    	}
-    	
-    	final JPanel roomPanel = new JPanel();
-    	roomPanel.setOpaque(false);
-    	housePanel.add(roomPanel, "1, 8, fill, default");
-
+		houseSelectBox.setSelectedIndex(0);
+		for (House house : Jasbro.getInstance().getData().getHouses()) {
+			houseSelectBox.addItem(house);
+		}
+		
+		final JPanel roomPanel = new JPanel();
+		roomPanel.setOpaque(false);
+		housePanel.add(roomPanel, "1, 8, fill, default");
+		
 		final ItemListener roomListener = new ItemListener() {
 			@SuppressWarnings("unchecked")
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				try {
 					if (e.getStateChange() == ItemEvent.SELECTED) {
-						JComboBox<RoomType> jComboBox = (JComboBox<RoomType>) e.getSource();
+						JComboBox<RoomInfo> jComboBox = (JComboBox<RoomInfo>) e.getSource();
 						int id = Integer.parseInt(jComboBox.getActionCommand());
 						roomPlanning.getNewRooms().remove(id);
-						RoomType roomType = (RoomType)jComboBox.getSelectedItem();
-						roomPlanning.getNewRooms().add(id, roomType);
-						jComboBox.setToolTipText(roomType.getDescription());
+						RoomInfo roomInfo = (RoomInfo)jComboBox.getSelectedItem();
+						roomPlanning.getNewRooms().add(id, roomInfo);
+						jComboBox.setToolTipText(roomInfo.getDescription());
 						updateCostLabel();
 					}
 				}
 				catch (Exception ex) {
 					log.error("Error", ex);
 				}
-			}        	
-        };
-    	
-    	
-        houseSelectBox.addItemListener(new ItemListener() {
+			}
+		};
+		
+		
+		houseSelectBox.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				FormLayout fl = new FormLayout(new ColumnSpec[] {
-		        		ColumnSpec.decode("default:grow"),},
-		        	new RowSpec[] {RowSpec.decode("default:grow")});
+						ColumnSpec.decode("default:grow"),},
+						new RowSpec[] {RowSpec.decode("default:grow")});
 				House house = (House)houseSelectBox.getSelectedItem();
 				roomPanel.removeAll();
 				roomPanel.setLayout(fl);
@@ -116,8 +117,8 @@ public class InteriorDecorationPanel extends JPanel {
 					roomPlanning = new RoomPlanning(house);
 					int i = -1;
 					for (RoomSlot roomSlot : house.getRoomSlots()) {
-					    i++;
-						JComboBox<RoomType> roomSelect = new JComboBox<RoomType>();
+						i++;
+						JComboBox<RoomInfo> roomSelect = new JComboBox<>();
 						roomSelect.setRenderer(new DefaultListCellRenderer() {
 							@SuppressWarnings("rawtypes")
 							public Component getListCellRendererComponent(JList list,
@@ -125,36 +126,37 @@ public class InteriorDecorationPanel extends JPanel {
 									boolean hasFocus) {
 								JLabel label = (JLabel) super.getListCellRendererComponent(
 										list, value, index, isSelected, hasFocus);
-								RoomType roomType = (RoomType) value;
-								label.setText(roomType.getText());
-								label.setToolTipText(roomType.getDescription());
+								RoomInfo roomInfo = (RoomInfo) value;
+								label.setText(roomInfo.getText());
+								label.setToolTipText(roomInfo.getDescription());
 								label.setForeground(Color.BLACK);
-	                            label.setOpaque(false);
+								label.setOpaque(false);
 								return label;
 							}
 						});
-					    fl.insertRow(i+1, RowSpec.decode("default:none"));
-					    roomPanel.add(roomSelect, "1,"+(i+1)+", fill, top");
+						fl.insertRow(i+1, RowSpec.decode("default:none"));
+						roomPanel.add(roomSelect, "1,"+(i+1)+", fill, top");
 						roomSelect.setBorder(new EmptyBorder(2, 2, 2, 2));
 						roomSelect.setActionCommand(i+"");
 						roomSelect.setOpaque(false);
 						
 						boolean actualRoomTypeAdded = false;
-						for (RoomType roomType : Jasbro.getInstance().getData().getUnlocks().getAvailableRoomTypes()) {
-						    if (roomType.fitsInSlot(roomSlot.getSlotType())) {
-                                roomSelect.addItem(roomType);
-                                if (roomType == roomSlot.getRoom().getRoomType()) {
-                                    roomSelect.setSelectedItem(roomType);
-                                    roomSelect.setToolTipText(roomType.getDescription());
-                                    actualRoomTypeAdded = true;
-                                }
-						    }
+						for (RoomInfo roomInfo : Jasbro.getInstance().getData().getUnlocks().getAvailableRoomTypes()) {
+							// FIXME glue code to keep things working for now
+							if (roomInfo.fitsInSlot(roomSlot.getSlotType())) {
+								roomSelect.addItem(roomInfo);
+								if (roomInfo.getId().equals(roomSlot.getRoom().getRoomInfo().getId())) {
+									roomSelect.setSelectedItem(roomInfo);
+									roomSelect.setToolTipText(roomInfo.getDescription());
+									actualRoomTypeAdded = true;
+								}
+							}
 						}
 						
 						if (!actualRoomTypeAdded) {
-						    roomSelect.addItem(roomSlot.getRoom().getRoomType());
-						    roomSelect.setSelectedItem(roomSlot.getRoom().getRoomType());
-                            roomSelect.setToolTipText(roomSlot.getRoom().getRoomType().getDescription());
+							roomSelect.addItem(roomSlot.getRoom().getRoomInfo());
+							roomSelect.setSelectedItem(roomSlot.getRoom().getRoomInfo());
+							roomSelect.setToolTipText(roomSlot.getRoom().getRoomInfo().getDescription());
 						}
 						
 						roomSelect.addItemListener(roomListener);
@@ -163,12 +165,12 @@ public class InteriorDecorationPanel extends JPanel {
 				roomPanel.validate();
 				roomPanel.repaint();
 			}
-        });
-    	
-    	
+		});
 		
-
-        
+		
+		
+		
+		
 		
 		
 		

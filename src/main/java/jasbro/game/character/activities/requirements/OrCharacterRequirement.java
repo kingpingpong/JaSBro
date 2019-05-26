@@ -17,7 +17,7 @@ public class OrCharacterRequirement implements CharacterRequirement {
 	public OrCharacterRequirement(final CharacterRequirement... requirements) {
 		this.requirements = requirements;
 	}
-
+	
 	@Override
 	public boolean isValid(ActivityType activity, Charakter character) {
 		for(CharacterRequirement requirement : requirements) {
@@ -28,5 +28,5 @@ public class OrCharacterRequirement implements CharacterRequirement {
 		
 		return false;
 	}
-
+	
 }

@@ -6,12 +6,12 @@ import jasbro.game.items.Item;
 
 public class UsableItemAddCondition extends UsableItemEffect {
 	private ConditionType conditionType;
-
+	
 	@Override
 	public String getName() {
 		return "Add Condition";
 	}
-
+	
 	@Override
 	public void apply(Charakter character, Item item) {
 		if (conditionType != null) {
@@ -26,16 +26,16 @@ public class UsableItemAddCondition extends UsableItemEffect {
 			}
 		}
 	}
-
+	
 	@Override
 	public UsableItemEffectType getType() {
 		return UsableItemEffectType.ADDCONDITION;
 	}
-
+	
 	public ConditionType getConditionType() {
 		return conditionType;
 	}
-
+	
 	public void setConditionType(ConditionType conditionType) {
 		this.conditionType = conditionType;
 	}

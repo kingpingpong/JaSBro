@@ -5,13 +5,13 @@ import jasbro.game.world.customContent.TriggerParent;
 import bsh.EvalError;
 
 public class ChildCareRequirement extends TriggerRequirement {
-
+	
 	@Override
 	public boolean isValid(TriggerParent triggerParent) throws EvalError {
-	    TypeAmounts typeAmounts = triggerParent.getTypeAmounts();
-	    if (typeAmounts == null) {
-	        return false;
-	    }
+		TypeAmounts typeAmounts = triggerParent.getTypeAmounts();
+		if (typeAmounts == null) {
+			return false;
+		}
 		if (typeAmounts.getInfantAmount() > 0) {
 			if (typeAmounts.getChildAmount() == 0 && typeAmounts.getTeenAmount() == 0 && typeAmounts.isAdultPresent()) {
 				return true;
@@ -23,6 +23,6 @@ public class ChildCareRequirement extends TriggerRequirement {
 	
 	@Override
 	public TriggerRequirementType getType() {
-	    return TriggerRequirementType.CHILDCAREREQUIREMENT;
+		return TriggerRequirementType.CHILDCAREREQUIREMENT;
 	}
 }

@@ -11,20 +11,20 @@ import javax.swing.event.ChangeListener;
 
 public class ChanceRequirementPanel extends JPanel {
 	private ChanceRequirement triggerRequirement;
-
+	
 	public ChanceRequirementPanel(TriggerRequirement triggerRequirementTmp) {
 		this.triggerRequirement = (ChanceRequirement)triggerRequirementTmp;
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-		        
 		
-        final JSpinner spinner = new JSpinner();
-        spinner.setValue(triggerRequirement.getChance());
-        add(spinner);
-        spinner.addChangeListener(new ChangeListener() {                
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                triggerRequirement.setChance((int)spinner.getValue());
-            }
-        });
+		
+		final JSpinner spinner = new JSpinner();
+		spinner.setValue(triggerRequirement.getChance());
+		add(spinner);
+		spinner.addChangeListener(new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				triggerRequirement.setChance((int)spinner.getValue());
+			}
+		});
 	}
 }

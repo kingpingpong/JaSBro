@@ -13,28 +13,28 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class ActivityTypeRequirementPanel extends JPanel {
-    private ActivityRequirement triggerRequirement;
-    private JComboBox<ActivityType> activityTypeComboBox;
-
-    public ActivityTypeRequirementPanel(TriggerRequirement triggerRequirementTmp) {
-        this.triggerRequirement = (ActivityRequirement) triggerRequirementTmp;
-        JLabel label_1 = new JLabel(TextUtil.t("eventEditor.activityType"));
-        add(label_1, "1, 2, left, center");
-        activityTypeComboBox = new JComboBox<ActivityType>();
-        add(activityTypeComboBox, "2, 2, fill, top");
-        activityTypeComboBox.addItem(null);
-        for (ActivityType activityType : ActivityType.values()) {
-            activityTypeComboBox.addItem(activityType);
-        }
-        activityTypeComboBox.setSelectedItem(triggerRequirement.getActivityType());
-        activityTypeComboBox.addActionListener(new ActionListener() {          
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                triggerRequirement.setActivityType((ActivityType)activityTypeComboBox.getSelectedItem());
-            }
-        });
-        
-    }
-    
-
+	private ActivityRequirement triggerRequirement;
+	private JComboBox<ActivityType> activityTypeComboBox;
+	
+	public ActivityTypeRequirementPanel(TriggerRequirement triggerRequirementTmp) {
+		this.triggerRequirement = (ActivityRequirement) triggerRequirementTmp;
+		JLabel label_1 = new JLabel(TextUtil.t("eventEditor.activityType"));
+		add(label_1, "1, 2, left, center");
+		activityTypeComboBox = new JComboBox<ActivityType>();
+		add(activityTypeComboBox, "2, 2, fill, top");
+		activityTypeComboBox.addItem(null);
+		for (ActivityType activityType : ActivityType.values()) {
+			activityTypeComboBox.addItem(activityType);
+		}
+		activityTypeComboBox.setSelectedItem(triggerRequirement.getActivityType());
+		activityTypeComboBox.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				triggerRequirement.setActivityType((ActivityType)activityTypeComboBox.getSelectedItem());
+			}
+		});
+		
+	}
+	
+	
 }

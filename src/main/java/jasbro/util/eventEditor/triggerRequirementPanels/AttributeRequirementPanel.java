@@ -22,57 +22,57 @@ import javax.swing.event.ChangeListener;
 
 public class AttributeRequirementPanel extends JPanel {
 	private AttributeRequirement triggerRequirement;
-
+	
 	public AttributeRequirementPanel(TriggerRequirement triggerRequirementTmp) {
 		this.triggerRequirement = (AttributeRequirement)triggerRequirementTmp;
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-		        
-        final JComboBox<AttributeType> attributeTypeCombobox = new JComboBox<AttributeType>();
-        add(attributeTypeCombobox, "1, 1");
-        for (AttributeType attributeType : EssentialAttributes.values()) {
-            attributeTypeCombobox.addItem(attributeType);
-        }
-        for (AttributeType attributeType : BaseAttributeTypes.values()) {
-            attributeTypeCombobox.addItem(attributeType);
-        }
-        for (AttributeType attributeType : Sextype.values()) {
-            attributeTypeCombobox.addItem(attributeType);
-        }
-        for (AttributeType attributeType : SpecializationAttribute.values()) {
-            attributeTypeCombobox.addItem(attributeType);
-        }
-        for (AttributeType attributeType : CalculatedAttribute.values()) {
-            attributeTypeCombobox.addItem(attributeType);
-        }
-        attributeTypeCombobox.setSelectedItem(triggerRequirement.getAttributeType());
-        attributeTypeCombobox.addActionListener(new ActionListener() {          
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                triggerRequirement.setAttributeType((AttributeType)attributeTypeCombobox.getSelectedItem());
-            }
-        });
 		
-        final JComboBox<Comparison> comboBox = new JComboBox<Comparison>();
-        add(comboBox);
-        for (Comparison dayComparison : Comparison.values()) {
-            comboBox.addItem(dayComparison);
-        }
-        comboBox.setSelectedItem(triggerRequirement.getComparison());
-        comboBox.addActionListener(new ActionListener() {            
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                triggerRequirement.setComparison((Comparison)comboBox.getSelectedItem());
-            }
-        });
+		final JComboBox<AttributeType> attributeTypeCombobox = new JComboBox<AttributeType>();
+		add(attributeTypeCombobox, "1, 1");
+		for (AttributeType attributeType : EssentialAttributes.values()) {
+			attributeTypeCombobox.addItem(attributeType);
+		}
+		for (AttributeType attributeType : BaseAttributeTypes.values()) {
+			attributeTypeCombobox.addItem(attributeType);
+		}
+		for (AttributeType attributeType : Sextype.values()) {
+			attributeTypeCombobox.addItem(attributeType);
+		}
+		for (AttributeType attributeType : SpecializationAttribute.values()) {
+			attributeTypeCombobox.addItem(attributeType);
+		}
+		for (AttributeType attributeType : CalculatedAttribute.values()) {
+			attributeTypeCombobox.addItem(attributeType);
+		}
+		attributeTypeCombobox.setSelectedItem(triggerRequirement.getAttributeType());
+		attributeTypeCombobox.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				triggerRequirement.setAttributeType((AttributeType)attributeTypeCombobox.getSelectedItem());
+			}
+		});
 		
-        final JSpinner spinner = new JSpinner();
-        spinner.setValue(triggerRequirement.getAmount());
-        add(spinner);
-        spinner.addChangeListener(new ChangeListener() {                
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                triggerRequirement.setAmount((int)spinner.getValue());
-            }
-        });
+		final JComboBox<Comparison> comboBox = new JComboBox<Comparison>();
+		add(comboBox);
+		for (Comparison dayComparison : Comparison.values()) {
+			comboBox.addItem(dayComparison);
+		}
+		comboBox.setSelectedItem(triggerRequirement.getComparison());
+		comboBox.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				triggerRequirement.setComparison((Comparison)comboBox.getSelectedItem());
+			}
+		});
+		
+		final JSpinner spinner = new JSpinner();
+		spinner.setValue(triggerRequirement.getAmount());
+		add(spinner);
+		spinner.addChangeListener(new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				triggerRequirement.setAmount((int)spinner.getValue());
+			}
+		});
 	}
 }

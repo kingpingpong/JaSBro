@@ -13,15 +13,15 @@ import java.util.List;
  *
  */
 public class MinimumCharacterRequirement implements ActivityRequirement {
-
+	
 	final CharacterRequirement requirement;
 	final int minimum;
-
+	
 	public MinimumCharacterRequirement(final CharacterRequirement requirement, final int minimum) {
 		this.requirement = requirement;
 		this.minimum = minimum;
 	}
-
+	
 	@Override
 	public boolean isValid(ActivityType activity, List<Charakter> characters, TypeAmounts typeAmounts) {
 		int count = 0;
@@ -33,5 +33,5 @@ public class MinimumCharacterRequirement implements ActivityRequirement {
 		
 		return count >= minimum;
 	}
-
+	
 }

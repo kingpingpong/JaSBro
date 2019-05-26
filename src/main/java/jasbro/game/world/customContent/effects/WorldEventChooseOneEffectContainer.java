@@ -10,7 +10,7 @@ import java.util.List;
 import bsh.EvalError;
 
 public class WorldEventChooseOneEffectContainer extends WorldEventEffectContainer {
-
+	
 	@Override
 	public void perform(WorldEvent worldEvent) throws EvalError {
 		List<WorldEventEffect> effects = getSubEffects();

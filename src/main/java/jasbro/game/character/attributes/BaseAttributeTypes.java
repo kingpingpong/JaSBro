@@ -4,12 +4,12 @@ import jasbro.game.interfaces.AttributeType;
 import jasbro.texts.TextUtil;
 
 public enum BaseAttributeTypes implements AttributeType {
-    CHARISMA, OBEDIENCE, COMMAND, STAMINA, INTELLIGENCE, STRENGTH;
-    
-    public String getText() {
-    	return TextUtil.t(this.toString());
-    }
-
+	CHARISMA, OBEDIENCE, COMMAND, STAMINA, INTELLIGENCE, STRENGTH;
+	
+	public String getText() {
+		return TextUtil.t(this.toString());
+	}
+	
 	@Override
 	public int getDefaultMin() {
 		return 0;
@@ -25,15 +25,15 @@ public enum BaseAttributeTypes implements AttributeType {
 	
 	@Override
 	public int getStartValue() {
-	    return 1;
+		return 1;
 	}
 	
-    public String getDescription() {
-        String text = TextUtil.tNoCheck(this.toString() + ".description");
-        if (!(this.toString() + ".description").equals(text)) {
-            return text;
-        } else {
-            return null;
-        }
-    }
+	public String getDescription() {
+		String text = TextUtil.tNoCheck(this.toString() + ".description");
+		if (!(this.toString() + ".description").equals(text)) {
+			return text;
+		} else {
+			return null;
+		}
+	}
 }

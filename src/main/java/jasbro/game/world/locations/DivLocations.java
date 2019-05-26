@@ -11,27 +11,27 @@ import java.util.List;
 
 public class DivLocations implements AreaInterface {
 	private LocationType locationTypes[] = {LocationType.BEACH, LocationType.RESTAURANT, LocationType.LIBRARY, LocationType.STREETS};
-
+	
 	@Override
 	public String getName() {
 		return "Locations";
 	}
-
+	
 	@Override
 	public List<CharacterLocation> getLocations() {
 		return getLocationList();
 	}
-
+	
 	@Override
 	public ImageData getImage() {
 		return new ImageData("images/backgrounds/sky.jpg");
 	}
-
+	
 	@Override
 	public int getLocationAmount() {
 		return locationTypes.length;
 	}
-
+	
 	public List<CharacterLocation> getLocationList() {
 		List<CharacterLocation> characterLocations = new ArrayList<CharacterLocation>();
 		GameData gameData = Jasbro.getInstance().getData();

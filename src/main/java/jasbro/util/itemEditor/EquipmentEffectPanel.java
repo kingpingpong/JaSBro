@@ -28,7 +28,7 @@ public class EquipmentEffectPanel extends JPanel {
 				FormFactory.UNRELATED_GAP_COLSPEC,
 				ColumnSpec.decode("default:grow"),
 				FormFactory.UNRELATED_GAP_COLSPEC,},
-			new RowSpec[] {
+				new RowSpec[] {
 				FormFactory.UNRELATED_GAP_ROWSPEC,
 				RowSpec.decode("default:none"),
 				RowSpec.decode("default:grow"),
@@ -39,11 +39,11 @@ public class EquipmentEffectPanel extends JPanel {
 		add(contentPanel, "2, 3, fill, fill");
 		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
 	}
-
+	
 	public boolean isSelected() {
 		return selected;
 	}
-
+	
 	public void setSelected(boolean selected) {
 		this.selected = selected;
 		if (selected) {
@@ -54,13 +54,13 @@ public class EquipmentEffectPanel extends JPanel {
 		}
 		repaint();
 	}
-
+	
 	public EquipmentEffect getItemEffect() {
 		return itemEffect;
 	}
-
+	
 	public void setItemEffect(EquipmentEffect usableItemEffect) {
-		this.itemEffect = usableItemEffect;		
+		this.itemEffect = usableItemEffect;
 		try {
 			Class<? extends JPanel> panelClass = getItemEffect().getType().getItemEffectPanelClass();
 			if (panelClass != null) {
@@ -71,7 +71,7 @@ public class EquipmentEffectPanel extends JPanel {
 				dataPanel.add(new JLabel(usableItemEffect.getName()));
 			}
 			add(dataPanel, "2, 2, fill, fill");
-
+			
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -95,5 +95,5 @@ public class EquipmentEffectPanel extends JPanel {
 	public JPanel getDataPanel() {
 		return dataPanel;
 	}
-
+	
 }

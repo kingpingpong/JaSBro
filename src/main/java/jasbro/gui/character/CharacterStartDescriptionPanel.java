@@ -22,7 +22,7 @@ public class CharacterStartDescriptionPanel extends TranslucentPanel {
 		setPreferredSize(null);
 		setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
 		
-		JPanel mainPanel = new JPanel();		
+		JPanel mainPanel = new JPanel();
 		mainPanel.setOpaque(false);
 		JScrollPane scrollPane = new JScrollPane(mainPanel);
 		add(scrollPane);
@@ -39,37 +39,37 @@ public class CharacterStartDescriptionPanel extends TranslucentPanel {
 				FormFactory.RELATED_GAP_ROWSPEC,
 				RowSpec.decode("default:grow"),}));
 		
-    	JPanel traitPanel = new JPanel();
-    	traitPanel.setPreferredSize(null);
-    	FormLayout layout = new FormLayout(new ColumnSpec[] {
-        		ColumnSpec.decode("1dlu:grow"),},
-        	new RowSpec[] {
-    			RowSpec.decode("default:none")
-    		});
-    	
-    	traitPanel.setOpaque(false);
-    	traitPanel.setLayout(layout);
-    	mainPanel.add(traitPanel, "2, 2, fill, fill");
-    	JLabel label = new JLabel(TextUtil.t("ui.traits"));
-    	label.setFont(GuiUtil.DEFAULTBOLDFONT.deriveFont(GuiUtil.DEFAULTBOLDFONT.getSize() + 1f));
-    	traitPanel.add(label, "1, 1, left, top");
-    	
-    	int i = 0;
-    	for(Trait trait : characterBase.getTraits()) {
-    		layout.appendRow(RowSpec.decode("min:none"));
-    		JLabel traitLabel = new JLabel(trait.getText());
-    		traitLabel.setToolTipText(trait.getDescription());
-    		traitLabel.setFont(GuiUtil.DEFAULTSMALLBOLDFONT);
-    		traitPanel.add(traitLabel, "1,"+(i+2)+", left, top");
-    		++i;
-    	}
+		JPanel traitPanel = new JPanel();
+		traitPanel.setPreferredSize(null);
+		FormLayout layout = new FormLayout(new ColumnSpec[] {
+				ColumnSpec.decode("1dlu:grow"),},
+				new RowSpec[] {
+				RowSpec.decode("default:none")
+		});
 		
-
-        JTextArea descriptionTextArea = GuiUtil.getDefaultTextarea();
-        JScrollPane scrollPaneDescription = new JScrollPane(descriptionTextArea);
-        scrollPaneDescription.setBorder(null);
-        descriptionTextArea.setText(characterBase.getFullDescription());
-        descriptionTextArea.setFont(GuiUtil.DEFAULTBOLDFONT);
-        mainPanel.add(scrollPaneDescription, "2, 4, 2, 1, fill, fill");
+		traitPanel.setOpaque(false);
+		traitPanel.setLayout(layout);
+		mainPanel.add(traitPanel, "2, 2, fill, fill");
+		JLabel label = new JLabel(TextUtil.t("ui.traits"));
+		label.setFont(GuiUtil.DEFAULTBOLDFONT.deriveFont(GuiUtil.DEFAULTBOLDFONT.getSize() + 1f));
+		traitPanel.add(label, "1, 1, left, top");
+		
+		int i = 0;
+		for(Trait trait : characterBase.getTraits()) {
+			layout.appendRow(RowSpec.decode("min:none"));
+			JLabel traitLabel = new JLabel(trait.getText());
+			traitLabel.setToolTipText(trait.getDescription());
+			traitLabel.setFont(GuiUtil.DEFAULTSMALLBOLDFONT);
+			traitPanel.add(traitLabel, "1,"+(i+2)+", left, top");
+			++i;
+		}
+		
+		
+		JTextArea descriptionTextArea = GuiUtil.getDefaultTextarea();
+		JScrollPane scrollPaneDescription = new JScrollPane(descriptionTextArea);
+		scrollPaneDescription.setBorder(null);
+		descriptionTextArea.setText(characterBase.getFullDescription());
+		descriptionTextArea.setFont(GuiUtil.DEFAULTBOLDFONT);
+		mainPanel.add(scrollPaneDescription, "2, 4, 2, 1, fill, fill");
 	}
 }

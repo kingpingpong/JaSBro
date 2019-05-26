@@ -12,43 +12,43 @@ import java.util.Map;
 
 public class Inventory {
 	private Map<String, Integer> items = new HashMap<String, Integer>();
-
+	
 	public void addItem(Item item) {
 		String itemId = item.getId();
 		if (checkTriggerUnlock(item)) {
-		    unlock((UnlockItem)item);
+			unlock((UnlockItem)item);
 		}
 		else {
-	        if (!items.containsKey(itemId)) {
-	            items.put(itemId, 1);
-	        }
-	        else {
-	            items.put(itemId, items.get(itemId) + 1);
-	        }
+			if (!items.containsKey(itemId)) {
+				items.put(itemId, 1);
+			}
+			else {
+				items.put(itemId, items.get(itemId) + 1);
+			}
 		}
 	}
 	
 	public void addItems(Item item, int amount) {
-        if (amount > 0) {
-            if (checkTriggerUnlock(item)) {
-                unlock((UnlockItem) item);
-            } else {
-                String itemId = item.getId();
-                if (!items.containsKey(itemId)) {
-                    items.put(itemId, amount);
-                } else {
-                    items.put(itemId, items.get(itemId) + amount);
-                }
-            }
-        }
+		if (amount > 0) {
+			if (checkTriggerUnlock(item)) {
+				unlock((UnlockItem) item);
+			} else {
+				String itemId = item.getId();
+				if (!items.containsKey(itemId)) {
+					items.put(itemId, amount);
+				} else {
+					items.put(itemId, items.get(itemId) + amount);
+				}
+			}
+		}
 	}
 	
-
-    public void addItems(List<ItemData> items) {
-        for (ItemData itemData : items) {
-            addItems(itemData.getItem(), itemData.getAmount());
-        }
-    }
+	
+	public void addItems(List<ItemData> items) {
+		for (ItemData itemData : items) {
+			addItems(itemData.getItem(), itemData.getAmount());
+		}
+	}
 	
 	public void removeItem(Item item) {
 		String itemId = item.getId();
@@ -60,21 +60,21 @@ public class Inventory {
 		}
 	}
 	
-    public void removeItems(Item item, int amount) {
-        String itemId = item.getId();
-        if (items.containsKey(itemId)) {
-            items.put(itemId, items.get(itemId) - amount);
-            if (items.get(itemId) < 1) {
-                items.remove(itemId);
-            }
-        }
-    }
+	public void removeItems(Item item, int amount) {
+		String itemId = item.getId();
+		if (items.containsKey(itemId)) {
+			items.put(itemId, items.get(itemId) - amount);
+			if (items.get(itemId) < 1) {
+				items.remove(itemId);
+			}
+		}
+	}
 	
 	public int getAmount(Item item) {
-	    if (item == null) {
-	        return 0;
-	    }
-	    else if (!items.containsKey(item.getId())) {
+		if (item == null) {
+			return 0;
+		}
+		else if (!items.containsKey(item.getId())) {
 			return 0;
 		}
 		else {
@@ -118,19 +118,19 @@ public class Inventory {
 	}
 	
 	public boolean checkTriggerUnlock(Item item) {
-	    if (item.getType() == ItemType.UNLOCK) {
-	        if (this == Jasbro.getInstance().getData().getInventory()) {
-	            return true;
-	        }
-	    }
-	    return false;
+		if (item.getType() == ItemType.UNLOCK) {
+			if (this == Jasbro.getInstance().getData().getInventory()) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	public void unlock(UnlockItem item) {
-	    Jasbro.getInstance().getData().getUnlocks().addUnlock(item.getUnlockObject());
-	    MessageData messageData = new MessageData(item.getUnlockMessage(), item.getUnlockObject().getImage(), 
-	            new ImageData("images/backgrounds/sky.jpg"), true);
-	    messageData.createMessageScreen();
+		Jasbro.getInstance().getData().getUnlocks().addUnlock(item.getUnlockObject());
+		MessageData messageData = new MessageData(item.getUnlockMessage(), item.getUnlockObject().getImage(), 
+				new ImageData("images/backgrounds/sky.jpg"), true);
+		messageData.createMessageScreen();
 	}
 	
 	

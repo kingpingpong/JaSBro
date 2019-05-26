@@ -1,9 +1,12 @@
 package jasbro.game.events.business;
 
+import jasbro.Jasbro;
 import jasbro.Util;
 import jasbro.game.character.Gender;
 import jasbro.game.character.activities.ActivityType;
 import jasbro.game.character.attributes.Sextype;
+import jasbro.game.character.traits.SkillTree;
+import jasbro.game.character.traits.perktrees.DominatrixPerks;
 import jasbro.game.events.EventType;
 import jasbro.game.events.MyEvent;
 import jasbro.game.interfaces.MyEventListener;
@@ -225,8 +228,6 @@ public class SpawnData implements MyEventListener {
 		
 		customer.setGender(generateGender());		
 		customer.setPreferredSextype(Sextype.getPreferredSextype(customer));
-		customer.setPreferedSecondaryActivity1(ActivityType.getRandomSecondaryActivity(customer));
-		customer.setPreferedSecondaryActivity2(ActivityType.getRandomSecondaryActivity(customer));
 		int i=Util.getInt(0, 65);
 		if(i<5){customer.setStatus(CustomerStatus.PISSED);}
 		else if(i<11){customer.setStatus(CustomerStatus.SHYSTATUS);}
@@ -238,16 +239,32 @@ public class SpawnData implements MyEventListener {
 		else if(i<55){customer.setStatus(CustomerStatus.LIVELY);}
 		else if(i<60){customer.setStatus(CustomerStatus.DRUNK);}
 		else {customer.setStatus(CustomerStatus.VERYHORNY);}
+		
+		for (jasbro.game.character.Charakter character : Jasbro.getInstance().getData().getCharacters()) {
+			if (character.getSkillTrees().contains(SkillTree.DOMINATRIX)) {
+				if (character.getConditions().contains(DominatrixPerks.aggressiveAdvertiser)) {
+					if (character.getActivity().getType() == ActivityType.ADVERTISE) {
+						int j = Util.getInt(0, 100);
+						if (j < 30) {
+							customer.setStatus(CustomerStatus.HORNYSTATUS);
+						} else if (j < 40) {
+							customer.setStatus(CustomerStatus.VERYHORNY);
+						}
+					}
+				}
+			}
+		}
+		
 		return customer;
 	}
 	
 	private void initGroup(CustomerGroup customerGroup) {
 		int amount;
 		int chance = Util.getInt(0, 100);
-		if (chance < 40) {
+		if (chance < 30) {
 			amount = 2;
 		}
-		else if (chance < 60) {
+		else if (chance < 50) {
 			amount = 3;
 		}
 		else if (chance < 70) {
@@ -271,7 +288,7 @@ public class SpawnData implements MyEventListener {
  		else {
  			amount = 10;
  		}
-		amount+=1;
+		amount++;
 		Customer subCustomer;
 		do {
 			subCustomer = spawnCustomer(-10);
@@ -347,3 +364,4 @@ public class SpawnData implements MyEventListener {
 	    modCustomerAmount += modAmount;
 	}
 }
+

@@ -10,12 +10,14 @@ import jasbro.game.character.activities.sub.whore.Whore;
 import jasbro.game.character.attributes.Attribute;
 import jasbro.game.character.attributes.AttributeModification;
 import jasbro.game.character.attributes.BaseAttributeTypes;
+import jasbro.game.character.attributes.CalculatedAttribute;
 import jasbro.game.character.attributes.EssentialAttributes;
 import jasbro.game.character.warnings.Severity;
 import jasbro.game.character.warnings.Warning;
 import jasbro.game.events.EventType;
 import jasbro.game.events.MessageData;
 import jasbro.game.events.MyEvent;
+import jasbro.game.interfaces.Person;
 import jasbro.gui.pages.MessageScreen;
 import jasbro.gui.pictures.ImageData;
 import jasbro.gui.pictures.ImageTag;
@@ -29,21 +31,21 @@ public abstract class Illness extends Condition {
 	
 	public Illness() {
 	}
-
+	
 	@Override
 	public void init() {
-	    super.init();
-	    getCharacter().getCounter().add(CounterNames.SICK.toString());
+		super.init();
+		getCharacter().getCounter().add(CounterNames.SICK.toString());
 	}
 	
 	public int getRemainingTime() {
 		return remainingTime;
 	}
-
+	
 	public void setRemainingTime(int remainingTime) {
 		this.remainingTime = remainingTime;
 	}
-
+	
 	public static class Flu extends Illness {
 		private boolean showMessage = true;
 		public Flu() {
@@ -51,7 +53,15 @@ public abstract class Illness extends Condition {
 		public Flu(boolean showMessage) {
 			this.showMessage = showMessage;
 		}
-		
+		@Override
+		public double modifyCalculatedAttribute(CalculatedAttribute calculatedAttribute, double currentValue, Person person) {
+			if (calculatedAttribute == CalculatedAttribute.AMOUNTCUSTOMERSPERSHIFT) {
+				return -255;
+			}
+			else {
+				return currentValue;
+			}
+		}
 		@Override
 		public void init() {
 			super.init();
@@ -63,12 +73,13 @@ public abstract class Illness extends Condition {
 			}
 		}
 		
+		
 		public MessageData getInfectMessage() {
-		    return new MessageData(getTextStart(), 
-                    ImageUtil.getInstance().getImageDataByTag(ImageTag.SLEEP, getCharacter()), 
-                    getCharacter().getBackground(), true);
+			return new MessageData(getTextStart(), 
+					ImageUtil.getInstance().getImageDataByTag(ImageTag.SLEEP, getCharacter()), 
+					getCharacter().getBackground(), true);
 		}
-
+		
 		public String getTextStart() {
 			return TextUtil.t("flu.start", getCharacter());
 		}
@@ -77,12 +88,12 @@ public abstract class Illness extends Condition {
 		public String getName() {
 			return "Flu";
 		}
-
+		
 		@Override
 		public ImageData getIcon() {
 			return new ImageData("images/icons/flu.png");
 		}
-
+		
 		@Override
 		public String getDescription() {
 			return getCharacter().getName() +" has the Flu and can not work.";
@@ -129,7 +140,7 @@ public abstract class Illness extends Condition {
 		
 		@Override
 		public void modifyWarnings(List<Warning> warnings) {
-            warnings.add(new Warning(Severity.WARN, getDescription()));
+			warnings.add(new Warning(Severity.WARN, getDescription()));
 		}
 	}
 	
@@ -151,12 +162,12 @@ public abstract class Illness extends Condition {
 			}
 		}
 		
-        public MessageData getInfectMessage() {
-            return new MessageData(getTextStart(), 
-                    ImageUtil.getInstance().getImageDataByTag(ImageTag.SLEEP, getCharacter()), 
-                    getCharacter().getBackground(), true);
-        }
-
+		public MessageData getInfectMessage() {
+			return new MessageData(getTextStart(), 
+					ImageUtil.getInstance().getImageDataByTag(ImageTag.SLEEP, getCharacter()), 
+					getCharacter().getBackground(), true);
+		}
+		
 		public String getTextStart() {
 			return TextUtil.t("smallpox.start", getCharacter());
 		}
@@ -165,12 +176,12 @@ public abstract class Illness extends Condition {
 		public String getName() {
 			return TextUtil.t("smallpox");
 		}
-
+		
 		@Override
 		public ImageData getIcon() {
 			return new ImageData("images/icons/biohazard.png");
 		}
-
+		
 		@Override
 		public String getDescription() {
 			return TextUtil.t("smallpox.description", getCharacter());
@@ -192,7 +203,7 @@ public abstract class Illness extends Condition {
 					message.addToMessage(TextUtil.t("smallpox.sleep", getCharacter()));
 					activity.getAttributeModifications().add(new AttributeModification(5, EssentialAttributes.HEALTH, getCharacter()));
 					infect(activity);
-				}				
+				}
 				else {
 					infect(activity);
 				}
@@ -238,11 +249,11 @@ public abstract class Illness extends Condition {
 		
 		@Override
 		public void modifyWarnings(List<Warning> warnings) {
-		    warnings.add(new Warning(Severity.DANGER, getDescription()));
+			warnings.add(new Warning(Severity.DANGER, getDescription()));
 		}
-        public void setShowMessage(boolean showMessage) {
-            this.showMessage = showMessage;
-        }
+		public void setShowMessage(boolean showMessage) {
+			this.showMessage = showMessage;
+		}
 		
 		
 	}

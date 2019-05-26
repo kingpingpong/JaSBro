@@ -11,29 +11,29 @@ import bsh.EvalError;
 
 public class WorldEventEffectContainer extends WorldEventEffect {
 	private List<WorldEventEffect> subEffects = new ArrayList<WorldEventEffect>();
-
+	
 	public void addEffect(WorldEventEffect worldEventEffect) {
 		subEffects.add(worldEventEffect);
 	}
-
+	
 	@Override
 	public void perform(WorldEvent worldEvent) throws EvalError {
 		for (WorldEventEffect eventEffect : subEffects) {
 			((WorldEventEffect)eventEffect).perform(worldEvent);
 		}
 	}
-
+	
 	@Override
 	public WorldEventEffectType getType() {
 		return WorldEventEffectType.EFFECTCONTAINER;
 	}
-
+	
 	public List<WorldEventEffect> getSubEffects() {
 		return subEffects;
 	}
 	
-    public boolean canAddSubEffect() {
-        return true;
-    }
+	public boolean canAddSubEffect() {
+		return true;
+	}
 	
 }

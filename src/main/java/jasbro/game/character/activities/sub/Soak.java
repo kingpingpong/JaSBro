@@ -6,6 +6,7 @@ import jasbro.game.character.activities.RunningActivity;
 import jasbro.game.character.attributes.BaseAttributeTypes;
 import jasbro.game.character.attributes.EssentialAttributes;
 import jasbro.game.character.conditions.Buff;
+import jasbro.game.character.conditions.Buff.RoughenedUp;
 import jasbro.game.character.conditions.Buff.Sore;
 import jasbro.game.events.MessageData;
 import jasbro.gui.pictures.ImageTag;
@@ -16,18 +17,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Soak extends RunningActivity {
-
+	
 	@Override
 	public MessageData getBaseMessage() {
 		String message = TextUtil.t("soak.basic", getCharacter());
 		if(Util.getInt(0, 3)==2){
 			getCharacter().addCondition(new Buff.SmoothSkin(4,getCharacter()));
 		}
-		for (Condition condition: getCharacter().getConditions()) {
-			if (condition instanceof Sore) {
-				getCharacter().removeCondition(condition);
-			}
-		}
+
 		
 		
 		return new MessageData(message, ImageUtil.getInstance().getImageDataByTag(ImageTag.SWIM, getCharacter()),
@@ -36,9 +33,10 @@ public class Soak extends RunningActivity {
 	
 	@Override
 	public List<ModificationData> getStatModifications() {
-        List<ModificationData> modifications = new ArrayList<ModificationData>();
-        modifications.add(new ModificationData(TargetType.ALL, 20, EssentialAttributes.ENERGY));
-        modifications.add(new ModificationData(TargetType.ALL, 0.1f, BaseAttributeTypes.CHARISMA));
-        return modifications;
+		List<ModificationData> modifications = new ArrayList<ModificationData>();
+		modifications.add(new ModificationData(TargetType.ALL, 1.3f, EssentialAttributes.MOTIVATION));
+		modifications.add(new ModificationData(TargetType.ALL, 20, EssentialAttributes.ENERGY));
+		modifications.add(new ModificationData(TargetType.ALL, 0.1f, BaseAttributeTypes.CHARISMA));
+		return modifications;
 	}
 }

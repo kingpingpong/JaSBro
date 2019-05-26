@@ -12,27 +12,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Play extends RunningActivity {
-
-    @Override
-    public MessageData getBaseMessage() {
-        MessageData messageData = new MessageData();
-        for (Charakter character : getCharacters()) {
-            messageData.addImage(ImageUtil.getInstance().getImageDataByTag(ImageTag.PLAY, character));
-        }
-        Object[] arguments = {getCharacterLocation()};
-        if (getHouse() != null) {
-            messageData.addToMessage(TextUtil.t("play.basic.room", getCharacters(), arguments));
-        }
-        else {
-            messageData.addToMessage(TextUtil.t("play.basic.outside", getCharacters(), arguments));
-        }
-        return messageData;
-    }
-
-    @Override
-    public List<ModificationData> getStatModifications() {
-        List<ModificationData> modifications = new ArrayList<ModificationData>();
-        modifications.add(new ModificationData(TargetType.ALL, -30, EssentialAttributes.ENERGY));
-        return modifications;
-    }
+	
+	@Override
+	public MessageData getBaseMessage() {
+		MessageData messageData = new MessageData();
+		for (Charakter character : getCharacters()) {
+			messageData.addImage(ImageUtil.getInstance().getImageDataByTag(ImageTag.PLAY, character));
+		}
+		Object[] arguments = {getCharacterLocation()};
+		if (getHouse() != null) {
+			messageData.addToMessage(TextUtil.t("play.basic.room", getCharacters(), arguments));
+		}
+		else {
+			messageData.addToMessage(TextUtil.t("play.basic.outside", getCharacters(), arguments));
+		}
+		return messageData;
+	}
+	
+	@Override
+	public List<ModificationData> getStatModifications() {
+		List<ModificationData> modifications = new ArrayList<ModificationData>();
+		modifications.add(new ModificationData(TargetType.ALL, -30, EssentialAttributes.ENERGY));
+		return modifications;
+	}
 }
