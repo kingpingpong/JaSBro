@@ -1,0 +1,1369 @@
+<rooms>
+	<room id="EMPTYROOM" image="images/backgrounds/emptyroom.jpg"
+		cost="10" max-occupancy="6">
+		<slots>
+			<slot type="SMALLROOM" />
+			<slot type="LARGEROOM" />
+			<slot type="UNDERGROUND" />
+		</slots>
+		<activities>
+			<activity id="SLEEP">
+				<requirement type="none" />
+			</activity>
+			<activity id="CLEAN">
+				<requirement type="none" />
+			</activity>
+			<activity id="WHORE">
+				<requirement type="max-occupant" count="3" />
+			</activity>
+			<activity id="SEX">
+				<requirement type="exact-occupant" count="2" />
+			</activity>
+			<activity id="THREESOME">
+				<requirement type="exact-occupant" count="3" />
+			</activity>
+			<activity id="ORGY">
+				<requirement type="min-occupant" count="4" />
+			</activity>
+			<activity id="TRAIN">
+				<requirement type="and">
+					<requirement type="exact-occupant" count="2" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="char-type" char-type="TRAINER" />
+					</requirement>
+				</requirement>
+			</activity>
+			<activity id="TALK">
+				<requirement type="and">
+					<requirement type="exact-occupant" count="2" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="char-type" char-type="TRAINER" />
+					</requirement>
+				</requirement>
+			</activity>
+			<activity id="NURSE">
+				<requirement type="and">
+					<requirement type="min-occupant" count="2" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="specialization"
+							specialization="NURSE" />
+					</requirement>
+				</requirement>
+			</activity>
+			<activity id="PAMPER">
+				<requirement type="and">
+					<requirement type="min-occupant" count="2" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="specialization"
+							specialization="NURSE" />
+					</requirement>
+				</requirement>
+			</activity>
+			<activity id="BODYWRAP">
+				<requirement type="and">
+					<requirement type="min-occupant" count="2" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="trait" trait="COSMETICS" />
+					</requirement>
+				</requirement>
+			</activity>
+			<activity id="DOMINATE">
+				<requirement type="and">
+					<requirement type="exact-occupant" count="1" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="trait" trait="MYWHIPISALLINEED" />
+					</requirement>
+				</requirement>
+			</activity>
+			<child-activity id="SLEEP">
+				<requirement type="child-care" />
+			</child-activity>
+			<child-activity id="PLAY">
+				<requirement type="child-care" />
+			</child-activity>
+			<child-activity id="NURSE">
+				<requirement type="min-character" count="1">
+					<char-requirement type="specialization"
+						specialization="NURSE" />
+				</requirement>
+			</child-activity>
+		</activities>
+	</room>
+	<room id="SMALLBEDROOM" image="images/backgrounds/smallbedroom.jpg"
+		cost="500" max-occupancy="2">
+		<slots>
+			<slot type="SMALLROOM" />
+		</slots>
+		<activities>
+			<activity id="SLEEP">
+				<requirement type="none" />
+			</activity>
+			<activity id="CLEAN">
+				<requirement type="none" />
+			</activity>
+			<activity id="WHORE">
+				<requirement type="max-occupant" count="1" />
+			</activity>
+			<activity id="SEX">
+				<requirement type="exact-occupant" count="2" />
+			</activity>
+			<activity id="THREESOME">
+				<requirement type="exact-occupant" count="3" />
+			</activity>
+			<activity id="ORGY">
+				<requirement type="min-occupant" count="4" />
+			</activity>
+			<activity id="TRAIN">
+				<requirement type="and">
+					<requirement type="exact-occupant" count="2" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="char-type" char-type="TRAINER" />
+					</requirement>
+				</requirement>
+			</activity>
+			<activity id="TALK">
+				<requirement type="and">
+					<requirement type="exact-occupant" count="2" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="char-type" char-type="TRAINER" />
+					</requirement>
+				</requirement>
+			</activity>
+			<activity id="NURSE">
+				<requirement type="and">
+					<requirement type="min-occupant" count="2" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="specialization"
+							specialization="NURSE" />
+					</requirement>
+				</requirement>
+			</activity>
+			<activity id="PAMPER">
+				<requirement type="and">
+					<requirement type="min-occupant" count="2" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="specialization"
+							specialization="NURSE" />
+					</requirement>
+				</requirement>
+			</activity>
+			<activity id="BODYWRAP">
+				<requirement type="and">
+					<requirement type="min-occupant" count="2" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="trait" trait="COSMETICS" />
+					</requirement>
+				</requirement>
+			</activity>
+			<activity id="DOMINATE">
+				<requirement type="and">
+					<requirement type="exact-occupant" count="1" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="trait" trait="MYWHIPISALLINEED" />
+					</requirement>
+				</requirement>
+			</activity>
+			<child-activity id="SLEEP">
+				<requirement type="child-care" />
+			</child-activity>
+			<child-activity id="PLAY">
+				<requirement type="child-care" />
+			</child-activity>
+			<child-activity id="NURSE">
+				<requirement type="min-character" count="1">
+					<char-requirement type="specialization"
+						specialization="NURSE" />
+				</requirement>
+			</child-activity>
+		</activities>
+	</room>
+	<room id="BEDROOM" image="images/backgrounds/bedroom.jpg"
+		cost="1000" max-occupancy="4">
+		<slots>
+			<slot type="SMALLROOM" />
+		</slots>
+		<activities>
+			<activity id="SLEEP">
+				<requirement type="none" />
+			</activity>
+			<activity id="CLEAN">
+				<requirement type="none" />
+			</activity>
+			<activity id="WHORE">
+				<requirement type="max-occupant" count="2" />
+			</activity>
+			<activity id="SEX">
+				<requirement type="exact-occupant" count="2" />
+			</activity>
+			<activity id="THREESOME">
+				<requirement type="exact-occupant" count="3" />
+			</activity>
+			<activity id="ORGY">
+				<requirement type="min-occupant" count="4" />
+			</activity>
+			<activity id="TRAIN">
+				<requirement type="and">
+					<requirement type="exact-occupant" count="2" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="char-type" char-type="TRAINER" />
+					</requirement>
+				</requirement>
+			</activity>
+			<activity id="TALK">
+				<requirement type="and">
+					<requirement type="exact-occupant" count="2" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="char-type" char-type="TRAINER" />
+					</requirement>
+				</requirement>
+			</activity>
+			<activity id="NURSE">
+				<requirement type="and">
+					<requirement type="min-occupant" count="2" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="specialization"
+							specialization="NURSE" />
+					</requirement>
+				</requirement>
+			</activity>
+			<activity id="PAMPER">
+				<requirement type="and">
+					<requirement type="min-occupant" count="2" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="specialization"
+							specialization="NURSE" />
+					</requirement>
+				</requirement>
+			</activity>
+			<activity id="BODYWRAP">
+				<requirement type="and">
+					<requirement type="min-occupant" count="2" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="trait" trait="COSMETICS" />
+					</requirement>
+				</requirement>
+			</activity>
+			<activity id="DOMINATE">
+				<requirement type="and">
+					<requirement type="exact-occupant" count="1" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="trait" trait="MYWHIPISALLINEED" />
+					</requirement>
+				</requirement>
+			</activity>
+			<child-activity id="SLEEP">
+				<requirement type="child-care" />
+			</child-activity>
+			<child-activity id="PLAY">
+				<requirement type="child-care" />
+			</child-activity>
+			<child-activity id="NURSE">
+				<requirement type="min-character" count="1">
+					<char-requirement type="specialization"
+						specialization="NURSE" />
+				</requirement>
+			</child-activity>
+		</activities>
+	</room>
+	<room id="LARGEBEDROOM" image="images/backgrounds/bigbedroom.jpg"
+		cost="2000" max-occupancy="6">
+		<slots>
+			<slot type="LARGEROOM" />
+		</slots>
+		<activities>
+			<activity id="SLEEP">
+				<requirement type="none" />
+			</activity>
+			<activity id="CLEAN">
+				<requirement type="none" />
+			</activity>
+			<activity id="WHORE">
+				<requirement type="max-occupant" count="3" />
+			</activity>
+			<activity id="SEX">
+				<requirement type="exact-occupant" count="2" />
+			</activity>
+			<activity id="THREESOME">
+				<requirement type="exact-occupant" count="3" />
+			</activity>
+			<activity id="ORGY">
+				<requirement type="min-occupant" count="4" />
+			</activity>
+			<activity id="TRAIN">
+				<requirement type="and">
+					<requirement type="exact-occupant" count="2" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="char-type" char-type="TRAINER" />
+					</requirement>
+				</requirement>
+			</activity>
+			<activity id="TALK">
+				<requirement type="and">
+					<requirement type="exact-occupant" count="2" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="char-type" char-type="TRAINER" />
+					</requirement>
+				</requirement>
+			</activity>
+			<activity id="NURSE">
+				<requirement type="and">
+					<requirement type="min-occupant" count="2" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="specialization"
+							specialization="NURSE" />
+					</requirement>
+				</requirement>
+			</activity>
+			<activity id="PAMPER">
+				<requirement type="and">
+					<requirement type="min-occupant" count="2" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="specialization"
+							specialization="NURSE" />
+					</requirement>
+				</requirement>
+			</activity>
+			<activity id="BODYWRAP">
+				<requirement type="and">
+					<requirement type="min-occupant" count="2" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="trait" trait="COSMETICS" />
+					</requirement>
+				</requirement>
+			</activity>
+			<activity id="DOMINATE">
+				<requirement type="and">
+					<requirement type="exact-occupant" count="1" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="trait" trait="MYWHIPISALLINEED" />
+					</requirement>
+				</requirement>
+			</activity>
+			<child-activity id="SLEEP">
+				<requirement type="child-care" />
+			</child-activity>
+			<child-activity id="PLAY">
+				<requirement type="child-care" />
+			</child-activity>
+			<child-activity id="NURSE">
+				<requirement type="min-character" count="1">
+					<char-requirement type="specialization"
+						specialization="NURSE" />
+				</requirement>
+			</child-activity>
+		</activities>
+	</room>
+	<room id="MASTERBEDROOM" image="images/backgrounds/MasterBedroom.jpg"
+		cost="5000" max-occupancy="2">
+		<slots>
+			<slot type="SMALLROOM" />
+		</slots>
+		<activities>
+			<activity id="SLEEP">
+				<requirement type="none" />
+			</activity>
+			<activity id="CLEAN">
+				<requirement type="none" />
+			</activity>
+			<activity id="WHORE">
+				<requirement type="max-occupant" count="1" />
+			</activity>
+			<activity id="SEX">
+				<requirement type="exact-occupant" count="2" />
+			</activity>
+			<activity id="THREESOME">
+				<requirement type="exact-occupant" count="3" />
+			</activity>
+			<activity id="ORGY">
+				<requirement type="min-occupant" count="4" />
+			</activity>
+			<activity id="TRAIN">
+				<requirement type="and">
+					<requirement type="exact-occupant" count="2" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="char-type" char-type="TRAINER" />
+					</requirement>
+				</requirement>
+			</activity>
+			<activity id="TALK">
+				<requirement type="and">
+					<requirement type="exact-occupant" count="2" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="char-type" char-type="TRAINER" />
+					</requirement>
+				</requirement>
+			</activity>
+			<activity id="NURSE">
+				<requirement type="and">
+					<requirement type="min-occupant" count="2" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="specialization"
+							specialization="NURSE" />
+					</requirement>
+				</requirement>
+			</activity>
+			<activity id="PAMPER">
+				<requirement type="and">
+					<requirement type="min-occupant" count="2" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="specialization"
+							specialization="NURSE" />
+					</requirement>
+				</requirement>
+			</activity>
+			<activity id="BODYWRAP">
+				<requirement type="and">
+					<requirement type="min-occupant" count="2" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="trait" trait="COSMETICS" />
+					</requirement>
+				</requirement>
+			</activity>
+			<activity id="DOMINATE">
+				<requirement type="and">
+					<requirement type="exact-occupant" count="1" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="trait" trait="MYWHIPISALLINEED" />
+					</requirement>
+				</requirement>
+			</activity>
+			<child-activity id="SLEEP">
+				<requirement type="child-care" />
+			</child-activity>
+			<child-activity id="PLAY">
+				<requirement type="child-care" />
+			</child-activity>
+			<child-activity id="NURSE">
+				<requirement type="min-character" count="1">
+					<char-requirement type="specialization"
+						specialization="NURSE" />
+				</requirement>
+			</child-activity>
+		</activities>
+	</room>
+	<room id="SICKROOM" image="images/backgrounds/sickroom.jpg"
+		cost="4000"	max-occupancy="4">
+		<slots>
+			<slot type="SMALLROOM" />
+		</slots>
+		<activities>
+			<activity id="SLEEP">
+				<requirement type="none" />
+			</activity>
+			<activity id="CLEAN">
+				<requirement type="none" />
+			</activity>
+			<activity id="WHORE">
+				<requirement type="max-occupant" count="1" />
+			</activity>
+			<activity id="SEX">
+				<requirement type="exact-occupant" count="2" />
+			</activity>
+			<activity id="THREESOME">
+				<requirement type="exact-occupant" count="3" />
+			</activity>
+			<activity id="ORGY">
+				<requirement type="min-occupant" count="4" />
+			</activity>
+			<activity id="TRAIN">
+				<requirement type="and">
+					<requirement type="exact-occupant" count="2" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="char-type" char-type="TRAINER" />
+					</requirement>
+				</requirement>
+			</activity>
+			<activity id="TALK">
+				<requirement type="and">
+					<requirement type="exact-occupant" count="2" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="char-type" char-type="TRAINER" />
+					</requirement>
+				</requirement>
+			</activity>
+			<activity id="NURSE">
+				<requirement type="and">
+					<requirement type="min-occupant" count="2" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="specialization"
+							specialization="NURSE" />
+					</requirement>
+				</requirement>
+			</activity>
+			<activity id="PAMPER">
+				<requirement type="and">
+					<requirement type="min-occupant" count="2" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="specialization"
+							specialization="NURSE" />
+					</requirement>
+				</requirement>
+			</activity>
+			<activity id="BODYWRAP">
+				<requirement type="and">
+					<requirement type="min-occupant" count="2" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="trait" trait="COSMETICS" />
+					</requirement>
+				</requirement>
+			</activity>
+			<activity id="DOMINATE">
+				<requirement type="and">
+					<requirement type="exact-occupant" count="1" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="trait" trait="MYWHIPISALLINEED" />
+					</requirement>
+				</requirement>
+			</activity>
+			<child-activity id="SLEEP">
+				<requirement type="child-care" />
+			</child-activity>
+			<child-activity id="PLAY">
+				<requirement type="child-care" />
+			</child-activity>
+			<child-activity id="NURSE">
+				<requirement type="min-character" count="1">
+					<char-requirement type="specialization"
+						specialization="NURSE" />
+				</requirement>
+			</child-activity>
+		</activities>
+	</room>
+	<room id="ORGYROOM" image="images/backgrounds/orgyroom.jpg"
+		cost="12000" max-occupancy="10">
+		<slots>
+			<slot type="LARGEROOM" />
+		</slots>
+		<activities>
+			<activity id="SLEEP">
+				<requirement type="none" />
+			</activity>
+			<activity id="CLEAN">
+				<requirement type="none" />
+			</activity>
+			<activity id="WHORE">
+				<requirement type="max-occupant" count="5" />
+			</activity>
+			<activity id="SEX">
+				<requirement type="exact-occupant" count="2" />
+			</activity>
+			<activity id="THREESOME">
+				<requirement type="exact-occupant" count="3" />
+			</activity>
+			<activity id="ORGY">
+				<requirement type="min-occupant" count="4" />
+			</activity>
+			<activity id="PUBLICUSE">
+				<requirement type="none" />
+			</activity>
+			<activity id="TRAIN">
+				<requirement type="and">
+					<requirement type="exact-occupant" count="2" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="char-type" char-type="TRAINER" />
+					</requirement>
+				</requirement>
+			</activity>
+			<activity id="TALK">
+				<requirement type="and">
+					<requirement type="exact-occupant" count="2" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="char-type" char-type="TRAINER" />
+					</requirement>
+				</requirement>
+			</activity>
+			<activity id="NURSE">
+				<requirement type="and">
+					<requirement type="min-occupant" count="2" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="specialization"
+							specialization="NURSE" />
+					</requirement>
+				</requirement>
+			</activity>
+			<activity id="PAMPER">
+				<requirement type="and">
+					<requirement type="min-occupant" count="2" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="specialization"
+							specialization="NURSE" />
+					</requirement>
+				</requirement>
+			</activity>
+			<activity id="BODYWRAP">
+				<requirement type="and">
+					<requirement type="min-occupant" count="2" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="trait" trait="COSMETICS" />
+					</requirement>
+				</requirement>
+			</activity>
+			<activity id="DOMINATE">
+				<requirement type="and">
+					<requirement type="exact-occupant" count="1" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="trait" trait="MYWHIPISALLINEED" />
+					</requirement>
+				</requirement>
+			</activity>
+			<child-activity id="SLEEP">
+				<requirement type="child-care" />
+			</child-activity>
+			<child-activity id="PLAY">
+				<requirement type="child-care" />
+			</child-activity>
+			<child-activity id="NURSE">
+				<requirement type="min-character" count="1">
+					<char-requirement type="specialization"
+						specialization="NURSE" />
+				</requirement>
+			</child-activity>
+		</activities>
+	</room>
+	<room id="KITCHEN" image="images/backgrounds/kitchen.jpg"
+		cost="650" max-occupancy="1">
+		<slots>
+			<slot type="SMALLROOM" />
+		</slots>
+		<activities>
+			<activity id="SLEEP">
+				<requirement type="and">
+					<requirement type="exact-occupant" count="1" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="trait" trait="CATNAP" />
+					</requirement>
+				</requirement>
+			</activity>
+			<activity id="COOK">
+				<requirement type="none" />
+			</activity>
+			<activity id="CLEAN">
+				<requirement type="none" />
+			</activity>
+			<activity id="SELLFOOD">
+				<requirement type="min-character" count="1">
+					<requirement type="specialization" specialization="MAID" />
+				</requirement>
+			</activity>
+		</activities>
+	</room>
+	<room id="ARENA" image="images/backgrounds/arena.jpg"
+		cost="6000" max-occupancy="2">
+		<slots>
+			<slot type="UNDERGROUND" />
+		</slots>
+		<activities>
+			<activity id="SLEEP">
+				<requirement type="and">
+					<requirement type="exact-occupant" count="1" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="trait" trait="CATNAP" />
+					</requirement>
+				</requirement>
+			</activity>
+			<activity id="TRAINTOFIGHT">
+				<requirement type="all-character">
+					<char-requirement type="or">
+						<char-requirement type="specialization" specialization="FIGHTER" />
+						<char-requirement type="char-type" char-type="TRAINER" />
+					</char-requirement>
+				</requirement>
+			</activity>
+			<activity id="FIGHT">
+				<requirement type="all-character">
+					<char-requirement type="specialization" specialization="FIGHTER" />
+				</requirement>
+			</activity>
+			<activity id="MONSTERFIGHT">
+				<requirement type="all-character">
+					<char-requirement type="or">
+						<char-requirement type="specialization" specialization="FIGHTER" />
+						<char-requirement type="char-type" char-type="TRAINER" />
+					</char-requirement>
+				</requirement>
+			</activity>
+		</activities>
+	</room>
+	<room id="STABLE" image="images/backgrounds/stable.jpg"
+		cost="6000" max-occupancy="4">
+		<slots>
+			<slot type="LARGEROOM" />
+		</slots>
+		<activities>
+			<activity id="SLEEP">
+				<requirement type="and">
+					<requirement type="exact-occupant" count="1" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="trait" trait="CATNAP" />
+					</requirement>
+				</requirement>
+			</activity>
+			<activity id="SUBMITTOMONSTER">
+				<requirement type="max-occupant" count="1" />
+			</activity>
+		</activities>
+	</room>
+	<room id="BAR" image="images/backgrounds/bar.jpg"
+		cost="1800" max-occupancy="2">
+		<slots>
+			<slot type="LARGEROOM" />
+			<slot type="UNDERGROUND" />
+		</slots>
+		<activities>
+			<activity id="SLEEP">
+				<requirement type="and">
+					<requirement type="exact-occupant" count="1" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="trait" trait="CATNAP" />
+					</requirement>
+				</requirement>
+			</activity>
+			<activity id="CLEAN">
+				<requirement type="none" />
+			</activity>
+			<activity id="BARTEND">
+				<requirement type="none" />
+			</activity>
+			<activity id="WHORE">
+				<requirement type="and">
+					<requirement type="all-character">
+						<char-requirement type="trait" trait="ANYPLACE" />
+					</requirement>
+					<requirement type="min-occupant" count="1" />
+					<requirement type="max-occupant" count="1" />
+				</requirement>
+			</activity>
+		</activities>
+	</room>
+<room id="TAVERN" image="images/backgrounds/bar.jpg"
+		cost="6800" max-occupancy="4">
+		<slots>
+			<slot type="LARGEROOM" />
+			<slot type="UNDERGROUND" />
+		</slots>
+		<activities>
+			<activity id="SLEEP">
+				<requirement type="and">
+					<requirement type="exact-occupant" count="1" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="trait" trait="CATNAP" />
+					</requirement>
+				</requirement>
+			</activity>
+			<activity id="CLEAN">
+				<requirement type="none" />
+			</activity>
+			<activity id="BARTEND">
+				<requirement type="none" />
+			</activity>
+			<activity id="WHORE">
+				<requirement type="and">
+					<requirement type="all-character">
+						<char-requirement type="trait" trait="ANYPLACE" />
+					</requirement>
+					<requirement type="min-occupant" count="1" />
+					<requirement type="max-occupant" count="1" />
+				</requirement>
+			</activity>
+		</activities>
+	</room>
+	<room id="STAGE" image="images/backgrounds/stripclub.jpg"
+		cost="2500" max-occupancy="1">
+		<slots>
+			<slot type="LARGEROOM" />
+			<slot type="UNDERGROUND" />
+		</slots>
+		<activities>
+			<activity id="SLEEP">
+				<requirement type="and">
+					<requirement type="exact-occupant" count="1" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="trait" trait="CATNAP" />
+					</requirement>
+				</requirement>
+			</activity>
+			<activity id="CLEAN">
+				<requirement type="none" />
+			</activity>
+			<activity id="STRIP">
+				<requirement type="none" />
+			</activity>
+		</activities>
+	</room>
+	<room id="DUNGEON" image="images/backgrounds/dungeon.jpg"
+		cost="4500" max-occupancy="2">
+		<slots>
+			<slot type="UNDERGROUND" />
+		</slots>
+		<activities>
+			<activity id="SLEEP">
+				<requirement type="and">
+					<requirement type="exact-occupant" count="1" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="trait" trait="CATNAP" />
+					</requirement>
+				</requirement>
+			</activity>
+			<activity id="CLEAN">
+				<requirement type="none" />
+			</activity>
+			<activity id="BREAK">
+				<requirement type="and">
+					<requirement type="min-character" count="1">
+						<char-requirement type="char-type" char-type="TRAINER" />
+					</requirement>
+					<requirement type="min-character" count="1">
+						<char-requirement type="char-type" char-type="SLAVE" />
+					</requirement>
+				</requirement>
+			</activity>
+			<activity id="DOMINATE">
+				<requirement type="and">
+					<requirement type="exact-occupant" count="1" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="specialization" specialization="DOMINATRIX" />
+					</requirement>
+				</requirement>
+			</activity>
+			<activity id="SUBMIT">
+				<requirement type="exact-occupant" count="1" />
+			</activity>
+			<activity id="STRUGGLE">
+				<requirement type="all-character">
+					<char-requirement type="trait" trait="MASTERANDSLAVE" />
+				</requirement>
+			</activity>
+			<activity id="WHORE">
+				<requirement type="and">
+					<requirement type="all-character">
+						<char-requirement type="trait" trait="ANYPLACE" />
+					</requirement>
+					<requirement type="min-occupant" count="1" />
+					<requirement type="max-occupant" count="1" />
+				</requirement>
+			</activity>
+		</activities>
+	</room>
+	<room id="GLASSROOM" image="images/backgrounds/glassroom.jpg"
+		cost="4000" max-occupancy="6">
+		<slots>
+			<slot type="LARGEROOM" />
+		</slots>
+		<activities>
+			<activity id="SLEEP">
+				<requirement type="and">
+					<requirement type="exact-occupant" count="1" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="trait" trait="CATNAP" />
+					</requirement>
+				</requirement>
+			</activity>
+			<activity id="CLEAN">
+				<requirement type="none" />
+			</activity>
+			<activity id="TEASE">
+				<requirement type="none" />
+			</activity>
+		</activities>
+	</room>
+	<room id="GLORYHOLE" image="images/backgrounds/dungeon.jpg"
+		cost="4500" max-occupancy="2">
+		<slots>
+			<slot type="SMALLROOM" />
+		</slots>
+		<activities>
+			<activity id="SLEEP">
+				<requirement type="and">
+					<requirement type="exact-occupant" count="1" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="trait" trait="CATNAP" />
+					</requirement>
+				</requirement>
+			</activity>
+			<activity id="CLEAN">
+				<requirement type="none" />
+			</activity>
+			<activity id="SUCK">
+				<requirement type="none" />
+			</activity>
+		</activities>
+	</room>
+	<room id="CABARET" image="images/backgrounds/cabaret.jpg"
+		cost="6000" max-occupancy="6">
+		<slots>
+			<slot type="LARGEROOM" />
+		</slots>
+		<activities>
+			<activity id="SLEEP">
+				<requirement type="and">
+					<requirement type="exact-occupant" count="1" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="trait" trait="CATNAP" />
+					</requirement>
+				</requirement>
+			</activity>
+			<activity id="CLEAN">
+				<requirement type="none" />
+			</activity>
+			<activity id="STRIP">
+				<requirement type="max-occupant" count="1" />
+			</activity>
+			<activity id="ATTEND">
+				<requirement type="and">
+					<requirement type="min-occupant" count="2" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="specialization" specialization="DANCER" />
+					</requirement>
+				</requirement>
+			</activity>
+			<activity id="WHORE">
+				<requirement type="and">
+					<requirement type="all-character">
+						<char-requirement type="trait" trait="ANYPLACE" />
+					</requirement>
+					<requirement type="min-occupant" count="1" />
+					<requirement type="max-occupant" count="3" />
+				</requirement>
+			</activity>
+		</activities>
+	</room>
+	<room id="SPAAREA" image="images/backgrounds/spaarea.jpg"
+		cost="4600" max-occupancy="6">
+		<slots>
+			<slot type="OUTDOOR" />
+			<slot type="UNDERGROUND" />
+		</slots>
+		<activities>
+			<activity id="SLEEP">
+				<requirement type="and">
+					<requirement type="exact-occupant" count="1" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="trait" trait="CATNAP" />
+					</requirement>
+				</requirement>
+			</activity>
+			<activity id="CLEAN">
+				<requirement type="none" />
+			</activity>
+			<activity id="BATHATTENDANT">
+				<requirement type="none" />
+			</activity>
+			<activity id="NURSE">
+				<requirement type="and">
+					<requirement type="min-character" count="1">
+						<char-requirement type="trait" trait="AQUATICNURSE" />
+					</requirement>
+					<requirement type="min-occupant" count="2" />
+				</requirement>
+			</activity>
+			<activity id="WHORE">
+				<requirement type="and">
+					<requirement type="all-character">
+						<char-requirement type="trait" trait="ANYPLACE" />
+					</requirement>
+					<requirement type="min-occupant" count="1" />
+					<requirement type="max-occupant" count="3" />
+				</requirement>
+			</activity>
+		</activities>
+	</room>
+	<room id="SMALLLIBRARY" image="images/backgrounds/smalllibrary.jpg"
+		cost="3500" max-occupancy="6">
+		<slots>
+			<slot type="SMALLROOM" />
+			<slot type="LARGEROOM" />
+		</slots>
+		<activities>
+			<activity id="SLEEP">
+				<requirement type="and">
+					<requirement type="exact-occupant" count="1" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="trait" trait="CATNAP" />
+					</requirement>
+				</requirement>
+			</activity>
+			<activity id="TEACH">
+				<requirement type="and">
+					<requirement type="min-occupant" count="2" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="char-type" char-type="TRAINER" />
+					</requirement>
+				</requirement>
+			</activity>
+			<activity id="TRAIN">
+				<requirement type="and">
+					<requirement type="exact-occupant" count="2" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="char-type" char-type="TRAINER" />
+					</requirement>
+				</requirement>
+			</activity>
+			<activity id="TALK">
+				<requirement type="and">
+					<requirement type="exact-occupant" count="2" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="char-type" char-type="TRAINER" />
+					</requirement>
+				</requirement>
+			</activity>
+			<activity id="READ">
+				<requirement type="none" />
+			</activity>
+			<activity id="SEX">
+				<requirement type="exact-occupant" count="2" />
+			</activity>
+			<activity id="THREESOME">
+				<requirement type="exact-occupant" count="3" />
+			</activity>
+			<activity id="ORGY">
+				<requirement type="min-occupant" count="4" />
+			</activity>
+			<activity id="WHORE">
+				<requirement type="and">
+					<requirement type="all-character">
+						<char-requirement type="trait" trait="ANYPLACE" />
+					</requirement>
+					<requirement type="min-occupant" count="1" />
+					<requirement type="max-occupant" count="3" />
+				</requirement>
+			</activity>
+		</activities>
+	</room>
+	<room id="CLASSROOM" image="images/backgrounds/classroom.jpg"
+		cost="2500" max-occupancy="6">
+		<slots>
+			<slot type="LARGEROOM" />
+		</slots>
+		<activities>
+			<activity id="SLEEP">
+				<requirement type="and">
+					<requirement type="exact-occupant" count="1" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="trait" trait="CATNAP" />
+					</requirement>
+				</requirement>
+			</activity>
+			<activity id="CLEAN">
+				<requirement type="none" />
+			</activity>
+			<activity id="TEACH">
+				<requirement type="and">
+					<requirement type="min-occupant" count="2" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="char-type" char-type="TRAINER" />
+					</requirement>
+				</requirement>
+			</activity>
+			<activity id="TRAIN">
+				<requirement type="and">
+					<requirement type="exact-occupant" count="2" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="char-type" char-type="TRAINER" />
+					</requirement>
+				</requirement>
+			</activity>
+			<activity id="TALK">
+				<requirement type="and">
+					<requirement type="exact-occupant" count="2" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="char-type" char-type="TRAINER" />
+					</requirement>
+				</requirement>
+			</activity>
+			<activity id="SEX">
+				<requirement type="exact-occupant" count="2" />
+			</activity>
+			<activity id="THREESOME">
+				<requirement type="exact-occupant" count="3" />
+			</activity>
+			<activity id="ORGY">
+				<requirement type="min-occupant" count="4" />
+			</activity>
+			<activity id="WHORE">
+				<requirement type="and">
+					<requirement type="all-character">
+						<char-requirement type="trait" trait="ANYPLACE" />
+					</requirement>
+					<requirement type="min-occupant" count="1" />
+					<requirement type="max-occupant" count="3" />
+				</requirement>
+			</activity>
+		</activities>
+	</room>
+	<room id="LOBBY" image="images/backgrounds/lobby.jpg"
+	cost="8400" max-occupancy="4">
+		<slots>
+			<slot type="LARGEROOM" />
+		</slots>
+		<activities>
+			<activity id="SLEEP">
+				<requirement type="and">
+					<requirement type="exact-occupant" count="1" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="trait" trait="CATNAP" />
+					</requirement>
+				</requirement>
+			</activity>
+			<activity id="ADVERTISE">
+				<requirement type="none" />
+			</activity>
+			<activity id="PUBLICIZE">
+				<requirement type="none" />
+			</activity>
+			<activity id="WHORE">
+				<requirement type="and">
+					<requirement type="all-character">
+						<char-requirement type="trait" trait="ANYPLACE" />
+					</requirement>
+					<requirement type="min-occupant" count="1" />
+					<requirement type="max-occupant" count="2" />
+				</requirement>
+			</activity>
+		</activities>
+	</room>
+	<room id="GARDEN" image="images/backgrounds/garden.jpg"
+		cost="0" max-occupancy="6">
+		<slots>
+			<slot type="OUTDOOR" />
+		</slots>
+		<activities>
+			<activity id="SLEEP">
+				<requirement type="and">
+					<requirement type="exact-occupant" count="1" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="trait" trait="CATNAP" />
+					</requirement>
+				</requirement>
+			</activity>
+			<activity id="RELAX">
+				<requirement type="none" />
+			</activity>
+			<activity id="GARDENING">
+				<requirement type="none" />
+			</activity>
+			<activity id="WHORE">
+				<requirement type="and">
+					<requirement type="all-character">
+						<char-requirement type="trait" trait="ANYPLACE" />
+					</requirement>
+					<requirement type="min-occupant" count="1" />
+					<requirement type="max-occupant" count="3" />
+				</requirement>
+			</activity>
+		</activities>
+	</room>
+	<room id="BIGGARDEN" image="images/backgrounds/biggarden.jpg"
+		cost="0" max-occupancy="8">
+		<slots>
+			<slot type="OUTDOOR" />
+		</slots>
+		<activities>
+			<activity id="SLEEP">
+				<requirement type="and">
+					<requirement type="exact-occupant" count="1" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="trait" trait="CATNAP" />
+					</requirement>
+				</requirement>
+			</activity>
+			<activity id="RELAX">
+				<requirement type="none" />
+			</activity>
+			<activity id="GARDENING">
+				<requirement type="none" />
+			</activity>
+			<activity id="WHORE">
+				<requirement type="and">
+					<requirement type="all-character">
+						<char-requirement type="trait" trait="ANYPLACE" />
+					</requirement>
+					<requirement type="min-occupant" count="1" />
+					<requirement type="max-occupant" count="4" />
+				</requirement>
+			</activity>
+		</activities>
+	</room>
+	<room id="POND" image="images/backgrounds/pond.jpg"
+		cost="0" max-occupancy="8">
+		<slots>
+			<slot type="OUTDOOR" />
+		</slots>
+		<activities>
+			<activity id="SLEEP">
+				<requirement type="and">
+					<requirement type="exact-occupant" count="1" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="trait" trait="CATNAP" />
+					</requirement>
+				</requirement>
+			</activity>
+			<activity id="RELAX">
+				<requirement type="none" />
+			</activity>
+			<activity id="SOAK">
+				<requirement type="none" />
+			</activity>
+			<activity id="FISH">
+				<requirement type="none" />
+			</activity>
+		</activities>
+	</room>
+	<room id="CRYPT" image="images/backgrounds/crypt.jpg"
+		cost="0" max-occupancy="1">
+		<slots>
+			<slot type="UNDERGROUND" />
+		</slots>
+		<activities>
+			<activity id="SLEEP">
+				<requirement type="and">
+					<requirement type="exact-occupant" count="1" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="trait" trait="CATNAP" />
+					</requirement>
+				</requirement>
+			</activity>
+			<activity id="CLEAN">
+				<requirement type="none" />
+			</activity>
+			<activity id="READ">
+				<requirement type="none" />
+			</activity>
+			<activity id="RITUAL">
+				<requirement type="exact-occupant" count="1" />
+			</activity>			
+			<activity id="WHORE">
+				<requirement type="and">
+					<requirement type="all-character">
+						<char-requirement type="trait" trait="ANYPLACE" />
+					</requirement>
+					<requirement type="min-occupant" count="1" />
+					<requirement type="max-occupant" count="3" />
+				</requirement>
+			</activity>
+		</activities>
+	</room>
+	<room id="GYM" image="images/backgrounds/gym.jpg"
+		cost="0" max-occupancy="5">
+		<slots>
+			<slot type="LARGEROOM" />
+		</slots>
+		<activities>
+			<activity id="SLEEP">
+				<requirement type="and">
+					<requirement type="exact-occupant" count="1" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="trait" trait="CATNAP" />
+					</requirement>
+				</requirement>
+			</activity>
+			<activity id="PRACTICE">
+				<requirement type="none" />
+			</activity>
+			<activity id="WHORE">
+				<requirement type="and">
+					<requirement type="all-character">
+						<char-requirement type="trait" trait="ANYPLACE" />
+					</requirement>
+					<requirement type="min-occupant" count="1" />
+					<requirement type="max-occupant" count="2" />
+				</requirement>
+			</activity>
+		</activities>
+	</room>
+	<room id="ALTAR" image="images/backgrounds/altar.jpg"
+		cost="0" max-occupancy="4">
+		<slots>
+			<slot type="OUTDOOR" />
+		</slots>
+		<activities>
+			<activity id="SLEEP">
+				<requirement type="and">
+					<requirement type="exact-occupant" count="1" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="trait" trait="CATNAP" />
+					</requirement>
+				</requirement>
+			</activity>
+			<activity id="PRAY">
+				<requirement type="none" />
+			</activity>
+			<activity id="OFFERINGS">
+				<requirement type="none" />
+			</activity>
+			<activity id="WHORE">
+				<requirement type="and">
+					<requirement type="all-character">
+						<char-requirement type="trait" trait="ANYPLACE" />
+					</requirement>
+					<requirement type="min-occupant" count="1" />
+					<requirement type="max-occupant" count="2" />
+				</requirement>
+			</activity>
+		</activities>
+	</room>
+	<room id="THRONEROOM" image="images/backgrounds/office.jpg"
+		cost="0" max-occupancy="1">
+		<slots>
+			<slot type="LARGEROOM" />
+			<slot type="SMALLROOM" />
+		</slots>
+		<activities>
+			<activity id="CLEAN">
+				<requirement type="none" />
+			</activity>
+			<activity id="SLEEP">
+				<requirement type="and">
+					<requirement type="exact-occupant" count="1" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="trait" trait="CATNAP" />
+					</requirement>
+				</requirement>
+			</activity>
+			<activity id="GOVERN">
+				<requirement type="all-character">
+					<char-requirement type="specialization" specialization="TRAINER" />
+				</requirement>
+			</activity>
+			<activity id="WHORE">
+				<requirement type="and">
+					<requirement type="all-character">
+						<char-requirement type="trait" trait="ANYPLACE" />
+					</requirement>
+					<requirement type="exact-occupant" count="1" />
+				</requirement>
+			</activity>
+		</activities>
+	</room>
+	<room id="TRAININGGROUNDS" image="images/backgrounds/garrison_morning.jpg"
+		cost="0" max-occupancy="8">
+		<slots>
+			<slot type="OUTDOOR" />
+		</slots>
+		<activities>
+			<activity id="SLEEP">
+				<requirement type="and">
+					<requirement type="exact-occupant" count="1" />
+					<requirement type="min-character" count="1">
+						<char-requirement type="trait" trait="CATNAP" />
+					</requirement>
+				</requirement>
+			</activity>
+			<activity id="TRAINTOFIGHT">
+				<requirement type="none" />
+			</activity>
+			<activity id="PRACTICE">
+				<requirement type="all-character">
+					<char-requirement type="specialization" specialization="FIGHTER" />
+				</requirement>
+			</activity>
+			<activity id="WHORE">
+				<requirement type="and">
+					<requirement type="all-character">
+						<char-requirement type="trait" trait="ANYPLACE" />
+					</requirement>
+					<requirement type="exact-occupant" count="1" />
+				</requirement>
+			</activity>
+		</activities>
+	</room>
+</rooms>

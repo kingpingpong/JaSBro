@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="info" strict="true" name="JasbroLog4jConfig">
+	<Properties>
+		<Property name="logfile">jasbro.log</Property>
+	</Properties>
+	
+	<Appenders>
+		<Appender type="Console" name="STDOUT">
+			<Layout type="PatternLayout" pattern="%d{HH:mm:ss} %C{1}.%M %m %ex%n" />
+		</Appender>
+		<Appender type="File" name="File" fileName="${logfile}">
+			<Layout type="PatternLayout" pattern="%d{HH:mm:ss} %C{1}.%M %m %ex%n" />
+		</Appender>
+	</Appenders>
+	
+	<Loggers>
+		<Root level="debug">
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="File" />
+		</Root>
+	</Loggers>
+</Configuration>
