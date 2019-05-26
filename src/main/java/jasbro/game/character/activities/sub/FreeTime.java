@@ -136,7 +136,8 @@ public class FreeTime extends RunningActivity  implements BusinessSecondaryActiv
 		else{
 			characterCanDo.put(Occupation.COOK, 0);
 		}
-		if(character.getFinalValue(SpecializationAttribute.WELLNESS)>=1 && freebath==true){
+		/*
+		if(character.getFinalValue(SpecializationAttribute.WELLNESS)>=1 && freebath==true){ // TODO Figure out Wellness C-L
 			chance=Util.getInt(1,100);
 			 
 			characterCanDo.put(Occupation.BATHATTENDANT, chance);
@@ -145,7 +146,7 @@ public class FreeTime extends RunningActivity  implements BusinessSecondaryActiv
 		}
 		else{
 			characterCanDo.put(Occupation.BATHATTENDANT, 0);
-		}
+		}*/
 		if(freebath==true){
 			chance=Util.getInt(1,100);
 			 

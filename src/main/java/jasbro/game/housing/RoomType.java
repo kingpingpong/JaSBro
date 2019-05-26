@@ -9,7 +9,8 @@ import jasbro.texts.TextUtil;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public enum RoomType implements UnlockObject, LocationTypeInterface {
 	EMPTYROOM(6, 10, RoomSlotType.SMALLROOM, RoomSlotType.LARGEROOM, RoomSlotType.UNDERGROUND), 
@@ -41,7 +42,7 @@ public enum RoomType implements UnlockObject, LocationTypeInterface {
 	LOBBY(4, 8400, RoomSlotType.LARGEROOM);
 	
     @SuppressWarnings("unused")
-    private final static Logger log = Logger.getLogger(RoomType.class);
+    private final static Logger log = LogManager.getLogger(RoomType.class);
     private int cost = 100;
     private int maxPeople;
     private boolean locked = false;
@@ -86,13 +87,13 @@ public enum RoomType implements UnlockObject, LocationTypeInterface {
 
     public Room getRoom() {
         if (this == GARDEN || this == BIGGARDEN) {
-            return new Garden(this);
+            return new Garden(this.getRoomInfo());
         }
-        return new ConfigurableRoom(this);
+        return new ConfigurableRoom(this.getRoomInfo());
     }
 
     public boolean isOfType(Room room) {
-        return room.getRoomType().equals(this);
+        return room.getRoomInfo().getId().equals(this.toString());
     }
 
     public int getMaxPeople() {
@@ -104,7 +105,7 @@ public enum RoomType implements UnlockObject, LocationTypeInterface {
     }
     
     public RoomInfo getRoomInfo() {
-        return RoomInfoUtil.getRoomInfo(this);
+        return RoomInfoUtil.getRoomInfo(this.toString());
     }
 
     @Override
@@ -122,5 +123,15 @@ public enum RoomType implements UnlockObject, LocationTypeInterface {
     
     public boolean fitsInSlot(RoomSlotType roomSlotType) {
         return getSlotTypes().contains(roomSlotType);
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(this);
+    }
+
+    @Override
+    public boolean isValidLocation(LocationTypeInterface location) {
+        return location == this;
     }
 }

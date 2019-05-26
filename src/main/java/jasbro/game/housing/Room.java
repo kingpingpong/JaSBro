@@ -100,4 +100,11 @@ public abstract class Room extends CharacterLocation {
 	public Map<Time, PlannedActivity> getUsageMap() {
 		return usageMap;
 	}
+
+	public RoomType getRoomType() {
+		for (RoomType rt: RoomType.values()) {
+			if (rt.isOfType(this)) return rt;
+		}
+		return null;
+	}
 }
