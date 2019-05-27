@@ -3,7 +3,7 @@ apply plugin: 'eclipse'
 apply plugin: 'distribution'
 
 sourceCompatibility = 1.7
-version = '1.0'
+version = '0.1.3'
 
 eclipse {
 	classpath {
@@ -14,11 +14,11 @@ eclipse {
 
 
 repositories {
-    mavenCentral()
-    // SpringSource has a JAI implementation on their Maven repo
-    // maven {
-    //	url 'http://repository.springsource.com/maven/bundles/external'
-    // }
+	mavenCentral()
+	// SpringSource has a JAI implementation on their Maven repo
+	// maven {
+	//	url 'http://repository.springsource.com/maven/bundles/external'
+	// }
 }
 
 dependencies {
@@ -105,6 +105,22 @@ task jasbroAll {
 	dependsOn(itemJar)
 	dependsOn(charJar)
 	dependsOn(eventJar)
+}
+
+task jasbroZip (type: Zip){
+	dependsOn(jasbroAll)
+
+	from(".") {
+		include "characters/**"
+		include "events/**"
+		include "images/**"
+		include "items/**"
+		include "npcs/**"
+		include "quests/**"
+		include "fameUnlocks.xml"
+		include "rooms.xml"
+	}
+	from "$buildDir/libs"
 }
 
 test {
