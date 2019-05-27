@@ -13,7 +13,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public enum RoomType implements UnlockObject, LocationTypeInterface {
-    EMPTYSPACE(0, 900000, RoomSlotType.EMPTYSPACE),
+    EMPTYSPACE(0, 0, RoomSlotType.EMPTYSPACE),
 	EMPTYROOM(6, 10, RoomSlotType.SMALLROOM, RoomSlotType.LARGEROOM, RoomSlotType.UNDERGROUND), 
 	SMALLBEDROOM(2, 100), 
 	BEDROOM(4, 500), 
