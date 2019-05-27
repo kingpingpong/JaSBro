@@ -35,6 +35,8 @@ import jasbro.gui.pictures.ImageData;
 import jasbro.texts.TextUtil;
 import jasbro.util.ConfigHandler;
 import jasbro.util.Settings;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class RealEstateMenu extends JPanel {
 	private List<JButton> buyButtons = new ArrayList<JButton>();
@@ -59,7 +61,7 @@ public class RealEstateMenu extends JPanel {
 		int backHomeBtnWidth = (int) (150*width/1280);
 		int backHomeBtnHeight = (int) (50*width/1280);
 		
-		/*ImageIcon buyPlotIcon1 = new ImageIcon("images/buttons/buyplot.png");
+		ImageIcon buyPlotIcon1 = new ImageIcon("images/buttons/buyplot.png");
 		Image buyPlotImage1 = buyPlotIcon1.getImage().getScaledInstance( backHomeBtnWidth, backHomeBtnHeight,  java.awt.Image.SCALE_SMOOTH ) ;  
 		buyPlotIcon1 = new ImageIcon(buyPlotImage1);
 		
@@ -75,18 +77,20 @@ public class RealEstateMenu extends JPanel {
 		buyPlotButton.setContentAreaFilled(false); 
 		buyPlotButton.setFocusPainted(false); 
 		buyPlotButton.setOpaque(false);
+		/* TODO Add the feature to replace bought plots with an owned sign. Also to actually implement plots.
 	    try {
 			add(buyPlotButton);
 	    } catch (java.lang.NullPointerException e) {
 	    	// We need a way to remove this error
 	    }
+		 */
 		buyPlotButton.addActionListener(new  ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Jasbro.getInstance().getGui().showBuyPlotMapScreen("map1");
 			}
-		});*/
+		});
 		
 		ImageIcon homeIcon1 = new ImageIcon("images/buttons/home.png");
 		Image homeImage1 = homeIcon1.getImage().getScaledInstance( backHomeBtnWidth, backHomeBtnHeight,  java.awt.Image.SCALE_SMOOTH ) ;  

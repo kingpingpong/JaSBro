@@ -137,7 +137,7 @@ public class BuyPlotMapMenu extends MyImage {
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					if (JOptionPane.showConfirmDialog (Jasbro.getInstance().getGui(), TextUtil.t("Do you really want to buy this plot?"), TextUtil.t("ui.confirmResetPerks.title"), JOptionPane.OK_CANCEL_OPTION) == 
+					if (JOptionPane.showConfirmDialog (Jasbro.getInstance().getGui(), TextUtil.t("ui.realestate.buyplot"), TextUtil.t("ui.confirmResetPerks.title"), JOptionPane.OK_CANCEL_OPTION) ==
 							JOptionPane.YES_NO_OPTION) {
 						Jasbro.getInstance().getData().spendMoney(100000, "");
 					}

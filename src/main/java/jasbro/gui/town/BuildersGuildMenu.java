@@ -17,6 +17,7 @@ import jasbro.gui.objects.div.MyImage;
 import jasbro.gui.pictures.ImageData;
 import jasbro.util.ConfigHandler;
 import jasbro.util.Settings;
+import org.apache.logging.log4j.LogManager;
 
 public class BuildersGuildMenu extends MyImage {
 	
