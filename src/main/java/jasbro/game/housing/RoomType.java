@@ -13,6 +13,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public enum RoomType implements UnlockObject, LocationTypeInterface {
+    EMPTYSPACE(0, 900000, RoomSlotType.EMPTYSPACE),
 	EMPTYROOM(6, 10, RoomSlotType.SMALLROOM, RoomSlotType.LARGEROOM, RoomSlotType.UNDERGROUND), 
 	SMALLBEDROOM(2, 100), 
 	BEDROOM(4, 500), 
@@ -125,10 +126,6 @@ public enum RoomType implements UnlockObject, LocationTypeInterface {
         return getSlotTypes().contains(roomSlotType);
     }
 
-    @Override
-    public String toString() {
-        return String.valueOf(this);
-    }
 
     @Override
     public boolean isValidLocation(LocationTypeInterface location) {

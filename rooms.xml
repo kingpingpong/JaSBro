@@ -1,4 +1,12 @@
 <rooms>
+	<room id="EMPTYSPACE" image="image/backgrounds/emptyspace.jpg"
+		  cost="0" max-occupancy="0">
+		  <slots>
+			  <slot type="EMPTYSPACE" />
+			  <slot type="OUTDOOR" />
+		  </slots>
+		<activities />
+	</room>
 	<room id="EMPTYROOM" image="images/backgrounds/emptyroom.jpg"
 		cost="10" max-occupancy="6">
 		<slots>
