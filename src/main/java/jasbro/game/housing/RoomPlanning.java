@@ -101,7 +101,9 @@ public class RoomPlanning {
 				    roomSlot.getRoom().empty();
 					newRoom.setHouse(house);
 					roomSlot.setRoom(newRoom);
-					roomSlot.setDownTime(roomSlot.getSlotType().getDownTime());
+
+					if (roomSlot.getDownTime() == 0) // If the room is already being rebuilt, consider this a bonus to time.
+						roomSlot.setDownTime(roomSlot.getSlotType().getDownTime());
 				}
 			}
 		}
