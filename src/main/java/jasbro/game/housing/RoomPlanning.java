@@ -119,6 +119,7 @@ public class RoomPlanning {
 
 	public void reset() {
 		newRooms = getRoomInfoList(house);
+		newRoomSlots = getRoomTypeList(house);
 	}
 
 	public List<RoomSlotType> getRoomTypeList(final House house) {
