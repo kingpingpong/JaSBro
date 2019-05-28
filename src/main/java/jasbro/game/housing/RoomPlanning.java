@@ -42,7 +42,8 @@ public class RoomPlanning {
 		for (int i = 0; i < newRoomSlots.size(); i++) {
 			RoomSlotType newSlotType = newRoomSlots.get(i);
 			if (newSlotType != roomSlotList.get(i)) {
-				if (!newRooms.get(i).fitsInSlot(newSlotType)) {
+				if (newRooms.get(i) != roomTypeList.get(i) &&
+					!newRooms.get(i).fitsInSlot(newSlotType)) {
 					costs -= newRooms.get(i).getCost(); // Basically refunding for the new room since it won't get built
 														// The GUI will need to display a warning for this
 				}
