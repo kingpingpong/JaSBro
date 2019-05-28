@@ -81,8 +81,9 @@ public class RPGView extends JFrame {
 	private int resolutionWidth = ConfigHandler.getResolution(Settings.RESOLUTIONWIDTH);
 	
 	private enum Screen { TOWN, BUILDER, SLAVE, SCHOOL, MARKET, MARKET2 , GUILD, ARCHITECT, CARPENTRY, REALESTATE,
-						BOOKSTORE, MAGICSHOP, ADULTSTORE, GENERALSTORE,  TAILOR, ADVENTURERSTORE, SLAVEPENS,
-						AUCTIONHOUSE, LABORATORY, ALCHEMIST, TRAVELING, BLACKMARKET, TRAINERBAR, ADVENTURERSGUILD, NONE };
+						BOOKSTORE, MAGICSHOP, ADULTSTORE, GENERALSTORE,  TAILOR, ADVENTURERSTORE, SLAVEPENS, MAINMENU,
+						AUCTIONHOUSE, LABORATORY, ALCHEMIST, TRAVELING, BLACKMARKET, TRAINERBAR, ADVENTURERSGUILD, NONE;
+	};
 	private Screen actualScreen = Screen.NONE;
 	
 	//Filtered character list
@@ -117,6 +118,7 @@ public class RPGView extends JFrame {
 	public void showMainMenu() {
 		synchronized (getTreeLock()) {
 			removeAllLayers();
+			actualScreen = Screen.MAINMENU;
 			addLayer(new MainMenu());
 		}
 	}
@@ -617,6 +619,7 @@ public class RPGView extends JFrame {
 		case MAGICSHOP: showShopScreen("alchemist");; break;
 		case MARKET: showGeneralMarketScreen(1); break;
 		case MARKET2: showGeneralMarketScreen(2); break;
+		case MAINMENU: showMainMenu(); break;
 		case REALESTATE: showRealEstate(); break;
 		case SCHOOL: showSchoolScreen(); break;
 		case SLAVE: showSlaveMarketScreen(); break;
@@ -629,6 +632,8 @@ public class RPGView extends JFrame {
 		default: break;
 		
 		}
-		actualScreen = Screen.NONE;
+
+		// TODO Figure out why this is here C-L
+		// actualScreen = Screen.NONE;
 	}
 }
